@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/bookshop")
+@RequestMapping("/")
 public class MainPageControllerImpl implements MainPageController {
 
     private final BookService bookServiceJdbcImpl;
@@ -19,7 +19,7 @@ public class MainPageControllerImpl implements MainPageController {
         this.bookServiceJdbcImpl = bookServiceJdbcImpl;
     }
 
-    @GetMapping("/main")
+    @GetMapping
     public String mainPage(Model model) {
         model.addAttribute("bookData", bookServiceJdbcImpl.getBooksData());
         return "index";
