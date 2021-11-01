@@ -22,12 +22,13 @@ public class BookServiceJdbcImpl implements BookService {
 
     public List<Book> getBooksData() {
 
-        List<Book> books = jdbcTemplate.query("SELECT * FROM books;", (ResultSet rs, int rowNum) -> {
+        List<Book> books = jdbcTemplate.query("SELECT b.id, b.title, b.price_old, b.price, a.name AS author " +
+                "FROM books b JOIN authors a ON a.id = b.author_id", (ResultSet rs, int rowNum) -> {
             Book book = new Book();
             book.setId(rs.getInt("id"));
             book.setAuthor(rs.getString("author"));
             book.setTitle(rs.getString("title"));
-            book.setPriceOld(rs.getFloat("priceold"));
+            book.setPriceOld(rs.getFloat("price_old"));
             book.setPrice(rs.getFloat("price"));
             return book;
         });
