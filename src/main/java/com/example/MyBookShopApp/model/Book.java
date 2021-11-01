@@ -1,12 +1,12 @@
-package com.example.MyBookShopApp.data;
+package com.example.MyBookShopApp.model;
 
 public class Book {
 
     private Integer id;
     private String author;
     private String title;
-    private Integer priceOld;
-    private Integer price;
+    private Float priceOld;
+    private Float price;
 
     @Override
     public String toString() {
@@ -43,19 +43,19 @@ public class Book {
         this.title = title;
     }
 
-    public Integer getPriceOld() {
+    public Float getPriceOld() {
         return priceOld;
     }
 
-    public void setPriceOld(Integer priceOld) {
+    public void setPriceOld(Float priceOld) {
         this.priceOld = priceOld;
     }
 
-    public Integer getPrice() {
+    public Float getPrice() {
         return price;
     }
 
-    public void setPrice(Integer price) {
+    public void setPrice(Float price) {
         this.price = price;
     }
 }
