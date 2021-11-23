@@ -8,3 +8,12 @@ spring:
     url: jdbc:h2:mem:book_store
   messages:
     basename: lang.messages
+  web:
+    resources:
+      static-locations: classpath:/spring-frontend/
+  thymeleaf:
+    prefix: classpath:/spring-frontend/
+  sql:
+    init:
+      schema-locations: classpath:schema.sql
+      data-locations: classpath:book.sql, classpath:author.sql

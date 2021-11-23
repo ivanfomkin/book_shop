@@ -1,13 +1,10 @@
 package com.example.MyBookShopApp.model;
 
+import lombok.Data;
+
+@Data
 public class Author {
-    private String name;
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
+    private Integer id;
+    private String firstName;
+    private String lastName;
 }

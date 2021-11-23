@@ -4,8 +4,10 @@ import com.example.MyBookShopApp.model.Book;
 
 import java.util.List;
 
-public interface MainPageController {
+public interface BooksController {
     List<Book> recommendedBooks();
 
-    String mainPage();
+    String recentBooks();
+
+    String popularBooks();
 }

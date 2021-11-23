@@ -3,10 +3,10 @@ package com.example.MyBookShopApp.service.impl;
 import com.example.MyBookShopApp.model.Book;
 import com.example.MyBookShopApp.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
-import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,10 +20,10 @@ public class BookServiceJdbcImpl implements BookService {
         this.jdbcTemplate = jdbcTemplate;
     }
 
+    @Cacheable("books")
     public List<Book> getBooksData() {
-
-        List<Book> books = jdbcTemplate.query("SELECT b.id, b.title, b.price_old, b.price, a.name AS author " +
-                "FROM books b JOIN authors a ON a.id = b.author_id", (ResultSet rs, int rowNum) -> {
+        List<Book> books = jdbcTemplate.query("SELECT b.id, b.title, b.price_old, b.price, CONCAT(a.last_name, ' ', a.first_name) AS author " +
+                "FROM books b JOIN authors a ON a.id = b.author_id", (rs, rowNum) -> {
             Book book = new Book();
             book.setId(rs.getInt("id"));
             book.setAuthor(rs.getString("author"));
