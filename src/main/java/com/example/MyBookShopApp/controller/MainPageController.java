@@ -1,11 +1,29 @@
 package com.example.MyBookShopApp.controller;
 
 import com.example.MyBookShopApp.model.Book;
+import com.example.MyBookShopApp.service.BookService;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
 import java.util.List;
 
-public interface MainPageController {
-    List<Book> recommendedBooks();
+@Controller
+public class MainPageController {
 
-    String mainPage();
+    private final BookService bookService;
+
+    public MainPageController(BookService bookService) {
+        this.bookService = bookService;
+    }
+
+    @ModelAttribute("recommendedBooks")
+    public List<Book> recommendedBooks() {
+        return bookService.getBooksData();
+    }
+
+    @GetMapping
+    public String mainPage() {
+        return "index";
+    }
 }
