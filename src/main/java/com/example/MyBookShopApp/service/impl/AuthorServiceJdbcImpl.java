@@ -2,7 +2,6 @@ package com.example.MyBookShopApp.service.impl;
 
 import com.example.MyBookShopApp.model.Author;
 import com.example.MyBookShopApp.service.AuthorService;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +17,6 @@ public class AuthorServiceJdbcImpl implements AuthorService {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    @Cacheable("authors")
     public Map<String, List<Author>> getAuthorsMap() {
         var allAuthors = jdbcTemplate.query("SELECT * FROM authors", (rs, rowNumber) -> {
             Author author = new Author();

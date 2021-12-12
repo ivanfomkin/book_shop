@@ -1,12 +1,22 @@
 package com.example.MyBookShopApp.model;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+import javax.persistence.*;
+
+@Getter
+@Setter
+@Entity
+@Table(name = "books")
 public class Book {
-    private Integer id;
-    private String author;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String title;
     private Float priceOld;
     private Float price;
+    @ManyToOne
+    @JoinColumn(name = "author_id")
+    private Author author;
 }
