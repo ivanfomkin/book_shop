@@ -1,6 +1,6 @@
 package com.example.MyBookShopApp.controller;
 
-import com.example.MyBookShopApp.model.Book;
+import com.example.MyBookShopApp.entity.book.BookEntity;
 import com.example.MyBookShopApp.service.BookService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,7 +19,7 @@ public class BooksController {
     }
 
     @ModelAttribute("recommendedBooks")
-    public List<Book> recommendedBooks() {
+    public List<BookEntity> recommendedBooks() {
         return bookService.getBooksData();
     }
 

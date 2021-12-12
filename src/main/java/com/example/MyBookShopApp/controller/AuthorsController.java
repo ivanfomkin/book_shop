@@ -1,6 +1,6 @@
 package com.example.MyBookShopApp.controller;
 
-import com.example.MyBookShopApp.model.Author;
+import com.example.MyBookShopApp.entity.author.AuthorEntity;
 import com.example.MyBookShopApp.service.AuthorService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,7 +22,7 @@ public class AuthorsController {
     }
 
     @ModelAttribute("authorsMap")
-    public Map<String, List<Author>> getAuthors() {
+    public Map<String, List<AuthorEntity>> getAuthors() {
         return authorService.getAuthorsMap();
     }
 

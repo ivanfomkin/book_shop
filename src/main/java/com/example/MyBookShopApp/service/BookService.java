@@ -1,9 +1,9 @@
 package com.example.MyBookShopApp.service;
 
-import com.example.MyBookShopApp.model.Book;
+import com.example.MyBookShopApp.entity.book.BookEntity;
 
 import java.util.List;
 
 public interface BookService {
-    List<Book> getBooksData();
+    List<BookEntity> getBooksData();
 }

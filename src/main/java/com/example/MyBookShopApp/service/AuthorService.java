@@ -1,10 +1,10 @@
 package com.example.MyBookShopApp.service;
 
-import com.example.MyBookShopApp.model.Author;
+import com.example.MyBookShopApp.entity.author.AuthorEntity;
 
 import java.util.List;
 import java.util.Map;
 
 public interface AuthorService {
-    Map<String, List<Author>> getAuthorsMap();
+    Map<String, List<AuthorEntity>> getAuthorsMap();
 }

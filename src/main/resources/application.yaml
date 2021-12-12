@@ -12,7 +12,6 @@ spring:
       static-locations: classpath:/spring-frontend/
   thymeleaf:
     prefix: classpath:/spring-frontend/
-  sql:
-    init:
-      schema-locations: classpath:schema.sql
-      data-locations: classpath:book.sql, classpath:author.sql
+  jpa:
+    hibernate:
+      ddl-auto: create-drop

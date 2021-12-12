@@ -1,6 +1,6 @@
 package com.example.MyBookShopApp.service.impl;
 
-import com.example.MyBookShopApp.model.Author;
+import com.example.MyBookShopApp.entity.author.AuthorEntity;
 import com.example.MyBookShopApp.repository.AuthorRepository;
 import com.example.MyBookShopApp.service.AuthorService;
 import lombok.extern.slf4j.Slf4j;
@@ -22,9 +22,9 @@ public class AuthorServiceJpaImpl implements AuthorService {
     }
 
     @Override
-    public Map<String, List<Author>> getAuthorsMap() {
+    public Map<String, List<AuthorEntity>> getAuthorsMap() {
         log.info("Получаю авторов в JPA репозитории");
         var allAuthors = authorRepository.findAll();
-        return allAuthors.stream().collect(Collectors.groupingBy(a -> a.getLastName().substring(0, 1)));
+        return allAuthors.stream().collect(Collectors.groupingBy(a -> a.getName().substring(0, 1)));
     }
 }

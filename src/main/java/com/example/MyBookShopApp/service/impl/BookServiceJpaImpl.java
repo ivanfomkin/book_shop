@@ -1,6 +1,6 @@
 package com.example.MyBookShopApp.service.impl;
 
-import com.example.MyBookShopApp.model.Book;
+import com.example.MyBookShopApp.entity.book.BookEntity;
 import com.example.MyBookShopApp.repository.BookRepository;
 import com.example.MyBookShopApp.service.BookService;
 import org.springframework.context.annotation.Primary;
@@ -18,7 +18,7 @@ public class BookServiceJpaImpl implements BookService {
     }
 
     @Override
-    public List<Book> getBooksData() {
+    public List<BookEntity> getBooksData() {
         return bookRepository.findAll();
     }
 }
