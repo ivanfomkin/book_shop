@@ -1,11 +1,10 @@
 server:
   port: 8085
 spring:
-  h2:
-    console:
-      enabled: true
   datasource:
-    url: jdbc:h2:mem:book_store
+    url: jdbc:postgresql://localhost:5433/book_shop
+    username: book_shop_admin
+    password: myRandomPassword
   messages:
     basename: lang.messages
   web:

@@ -1,0 +1,11 @@
+version: "3.9"
+services:
+  fomkin_postgres:
+    image: postgres
+    restart: always
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_PASSWORD: myRandomPassword
+      POSTGRES_USER: book_shop_admin
+      POSTGRES_DB: book_shop
