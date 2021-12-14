@@ -15,7 +15,7 @@
                             <strong class="Card-title"><a href="/books/slug.html" th:text="${book.title}">Техника</a>
                             </strong>
                             <div class="Card-description"
-                                 th:text="${book.author.name}">Кондратенко Валерий
+                                 th:text="${book.author.get(0).name}">Кондратенко Валерий
                                 Петрович
                             </div>
                             <div class="Card-cost"><span class="Card-priceOld"

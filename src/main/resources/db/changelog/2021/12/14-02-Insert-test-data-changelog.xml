@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <changeSet author="ivan.fomkin" id="2">
+        <insert tableName="books">
+            <column name="description"
+                    value="На первый взгляд Уве – самый угрюмый человек на свете. Он, как и многие из нас, полагает, что его окружают преимущественно идиоты – соседи, которые неправильно паркуют свои машины; продавцы в магазине, говорящие на птичьем языке; бюрократы, портящие жизнь нормальным людям…"/>
+            <column name="is_bestseller" valueBoolean="true"/>
+            <column name="discount" valueNumeric="0"/>
+            <column name="price" valueNumeric="299"/>
+            <column name="pub_date" valueDate="2021-12-14"/>
+            <column name="slug" value="uve"/>
+            <column name="title" value="Вторая жизнь Уве"/>
+        </insert>
+        <insert tableName="books">
+            <column name="description"
+                    value="За последние 15 лет эта книга стала настольным руководством для тех, кто занимается коучингом и наставничеством (менторингом) на индивидуальном, командном и организационном уровнях. Здесь вы найдете информацию обо всех видах коучинга и наставничества – чем они различаются и какие инструменты используют, чтобы добиться высочайшего результата. "/>
+            <column name="is_bestseller" valueBoolean="false"/>
+            <column name="discount" valueNumeric="0"/>
+            <column name="price" valueNumeric="1999"/>
+            <column name="pub_date" valueDate="2021-12-07"/>
+            <column name="slug" value="kouch"/>
+            <column name="title" value="Коучинг и наставничество. Практические методы обучения и развития"/>
+        </insert>
+        <insert tableName="books">
+            <column name="description"
+                    value="Придет время, и Тмутаракань станет частью Руси. Но сейчас захваченный русами князя Олега Киевского Самкерц-Таматарху удержать невозможно. Нескольким сотням русов и норманнов не устоять против тысячных армий. Вопрос лишь в том, кто первым сумеет ее захватить: византийцы или хазары. Бывший князь-воевода Сергей, а ныне княжий отрок Вартислав прекрасно это понимает. И упорно ищет ответ на вопрос: зачем Олегу понадобился Самкерц?"/>
+            <column name="is_bestseller" valueBoolean="false"/>
+            <column name="discount" valueNumeric="0"/>
+            <column name="price" valueNumeric="339"/>
+            <column name="pub_date" valueDate="2021-12-11"/>
+            <column name="slug" value="varyag-derz"/>
+            <column name="title" value="Варяг. Дерзкий"/>
+        </insert>
+        <insert tableName="books">
+            <column name="description" value="Цель издания этой книги – личное счастье каждого, кто ее прочитает."/>
+            <column name="is_bestseller" valueBoolean="true"/>
+            <column name="discount" valueNumeric="0"/>
+            <column name="price" valueNumeric="279"/>
+            <column name="pub_date" valueDate="2021-12-13"/>
+            <column name="slug" value="prinyat"/>
+            <column name="title" value="Хочу и буду: Принять себя, полюбить жизнь и стать счастливым"/>
+        </insert>
+        <insert tableName="authors">
+            <column name="name" value="Мелвилл Лидхем"/>
+            <column name="slug" value="lidhem"/>
+        </insert>
+        <insert tableName="authors">
+            <column name="name" value="Фредрик Бакман"/>
+            <column name="slug" value="Backman"/>
+        </insert>
+        <insert tableName="authors">
+            <column name="name" value="Александр Мазин"/>
+            <column name="slug" value="Mazin"/>
+        </insert>
+        <insert tableName="authors">
+            <column name="name" value="Михаил Лабковский"/>
+            <column name="slug" value="Labkovskiy"/>
+        </insert>
+        <insert tableName="book2author">
+            <column name="author_id" valueNumeric="4"/>
+            <column name="book_id" valueNumeric="4"/>
+        </insert>
+        <insert tableName="book2author">
+            <column name="author_id" valueNumeric="3"/>
+            <column name="book_id" valueNumeric="3"/>
+        </insert>
+        <insert tableName="book2author">
+            <column name="author_id" valueNumeric="2"/>
+            <column name="book_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="book2author">
+            <column name="author_id" valueNumeric="1"/>
+            <column name="book_id" valueNumeric="2"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>

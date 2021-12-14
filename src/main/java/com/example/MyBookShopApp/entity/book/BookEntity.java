@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Getter
 @Setter
@@ -19,7 +20,7 @@ public class BookEntity {
     @Column(name = "pub_date", columnDefinition = "DATE NOT NULL")
     private LocalDate publishDate;
 
-    @Column(columnDefinition = "SMALLINT NOT NULL")
+    @Column(columnDefinition = "BOOL NOT NULL")
     private Boolean isBestseller;
 
     @Column(columnDefinition = "VARCHAR(255) NOT NULL")
@@ -38,9 +39,11 @@ public class BookEntity {
     private Integer price;
 
     @Column(columnDefinition = "SMALLINT NOT NULL DEFAULT 0")
-    private Byte discount;
+    private Short discount;
 
-    @ManyToOne
-    @JoinColumn(name = "author_id")
-    private AuthorEntity author;
+    @ManyToMany
+    @JoinTable(name = "book2author",
+            joinColumns = @JoinColumn(name = "book_id"),
+            inverseJoinColumns = @JoinColumn(name = "author_id"))
+    private List<AuthorEntity> author;
 }

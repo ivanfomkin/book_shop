@@ -31,6 +31,9 @@ public class AuthorEntity {
     @Column(columnDefinition = "TEXT")
     private String description;
 
-    @OneToMany(mappedBy = "author")
+    @ManyToMany
+    @JoinTable(name = "book2author",
+            joinColumns = @JoinColumn(name = "author_id"),
+            inverseJoinColumns = @JoinColumn(name = "book_id"))
     private List<BookEntity> books;
 }
