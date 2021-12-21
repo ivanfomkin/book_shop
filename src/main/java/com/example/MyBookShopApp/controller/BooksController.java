@@ -1,13 +1,10 @@
 package com.example.MyBookShopApp.controller;
 
-import com.example.MyBookShopApp.entity.book.BookEntity;
 import com.example.MyBookShopApp.service.BookService;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import java.util.List;
 
 @Controller
 @RequestMapping("/books")
@@ -18,18 +15,15 @@ public class BooksController {
         this.bookService = bookService;
     }
 
-    @ModelAttribute("recommendedBooks")
-    public List<BookEntity> recommendedBooks() {
-        return bookService.getBooksData();
-    }
-
     @GetMapping("/recent")
-    public String recentBooks() {
+    public String recentBooks(Model model) {
+        model.addAttribute("bookList", bookService.getPageableRecentBooks(0, 20));
         return "books/recent";
     }
 
     @GetMapping("/popular")
-    public String popularBooks() {
+    public String popularBooks(Model model) {
+        model.addAttribute("bookList", bookService.getPageablePopularBooks(0, 20));
         return "books/popular";
     }
 }

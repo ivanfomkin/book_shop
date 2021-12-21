@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <changeSet author="ivan.fomkin" id="1640075405047-4">
+        <insert tableName="book2user_type">
+            <column name="code" value="KEPT"/>
+            <column name="name" value="KEPT"/>
+        </insert>
+        <insert tableName="book2user_type">
+            <column name="code" value="CART"/>
+            <column name="name" value="CART"/>
+        </insert>
+        <insert tableName="book2user_type">
+            <column name="code" value="PAID"/>
+            <column name="name" value="PAID"/>
+        </insert>
+        <insert tableName="book2user_type">
+            <column name="code" value="ARCHIVED"/>
+            <column name="name" value="ARCHIVED"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>

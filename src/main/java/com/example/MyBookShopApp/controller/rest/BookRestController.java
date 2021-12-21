@@ -18,7 +18,7 @@ public class BookRestController {
 
     @GetMapping("/recommended")
     public BookListDto getRecommendedBooks(@RequestParam(value = "offset", required = false, defaultValue = "0") Integer offset,
-                                           @RequestParam(value = "limit", required = false, defaultValue = "6") Integer limit) {
+                                           @RequestParam(value = "limit", required = false, defaultValue = "20") Integer limit) {
         return bookService.getPageableRecommendedBooks(offset, limit);
     }
 }

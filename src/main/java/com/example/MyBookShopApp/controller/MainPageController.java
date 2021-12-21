@@ -3,6 +3,7 @@ package com.example.MyBookShopApp.controller;
 import com.example.MyBookShopApp.dto.book.BookListDto;
 import com.example.MyBookShopApp.service.BookService;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
@@ -15,13 +16,13 @@ public class MainPageController {
         this.bookService = bookService;
     }
 
-    @ModelAttribute("recommendedBooks")
+    @ModelAttribute("bookList")
     public BookListDto recommendedBooks() {
         return bookService.getPageableRecommendedBooks(0, 20);
     }
 
     @GetMapping
-    public String mainPage() {
+    public String mainPage(Model model) {
         return "index";
     }
 }

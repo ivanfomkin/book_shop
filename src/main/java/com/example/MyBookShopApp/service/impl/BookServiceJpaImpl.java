@@ -25,17 +25,30 @@ public class BookServiceJpaImpl implements BookService {
     }
 
     @Override
-    public List<BookEntity> getBooksData() {
-        return bookRepository.findAll();
+    public BookListDto getPageableRecommendedBooks(Integer offset, Integer limit) {
+        Pageable pageable = PageRequest.of(offset, limit);
+        Page<BookEntity> bookEntityPage = bookRepository.finRecommendedBooks(pageable);
+        return createBookListDtoFromPage(bookEntityPage);
     }
 
     @Override
-    public BookListDto getPageableRecommendedBooks(Integer offset, Integer limit) {
+    public BookListDto getPageableRecentBooks(Integer offset, Integer limit) {
         Pageable pageable = PageRequest.of(offset, limit);
-        Page<BookEntity> booksFromDb = bookRepository.finRecommendedBooks(pageable);
+        Page<BookEntity> bookEntityPage = bookRepository.findRecentBooks(pageable);
+        return createBookListDtoFromPage(bookEntityPage);
+    }
+
+    @Override
+    public BookListDto getPageablePopularBooks(int offset, int limit) {
+        Pageable pageable = PageRequest.of(offset, limit);
+        Page<BookEntity> bookEntityPage = bookRepository.findPopularBooks(pageable);
+        return createBookListDtoFromPage(bookEntityPage);
+    }
+
+    private BookListDto createBookListDtoFromPage(Page<BookEntity> bookEntityPage) {
         BookListDto dto = new BookListDto();
-        dto.setCount(booksFromDb.getTotalElements());
-        dto.setBooks(convertManyBookEntityToBookDto(booksFromDb.getContent()));
+        dto.setCount(bookEntityPage.getTotalElements());
+        dto.setBooks(convertManyBookEntityToBookDto(bookEntityPage.getContent()));
         return dto;
     }
 
