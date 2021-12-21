@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <div class="Cards Cards_refresh" th:fragment="pool">
-    <div class="Card" th:each="book : ${recommendedBooks}">
+    <div class="Card" th:each="book : ${recommendedBooks.books}">
         <div class="Card-picture"><a href="#"><img src="/assets/img/content/main/card.jpg" alt="card.jpg"/></a>
         </div>
         <div class="Card-content">
             <strong class="Card-title"><a href="#" th:text="${book.title}">Техника</a>
             </strong>
-            <div class="Card-description" th:text="${book.author.get(0).name}">Кондратенко
+            <div class="Card-description" th:text="${book.authors}">Кондратенко
                 Александр Петрович
             </div>
             <div class="Card-cost"><span class="Card-priceOld"
-                                         th:text="${book.price} + (${book.price}*${book.discount}/100)">₽300.00</span><span
-                    class="Card-price" th:text="${book.price}">₽190.00</span>
+                                         th:text="${book.price}">₽300.00</span><span
+                    class="Card-price" th:text="${book.discountPrice}">₽190.00</span>
             </div>
         </div>
     </div>
