@@ -27,7 +27,7 @@ public interface BookRepository extends JpaRepository<BookEntity, Integer> {
             SELECT b FROM BookEntity b LEFT OUTER JOIN Book2UserEntity b2u ON b2u.bookId = b.id
             LEFT OUTER JOIN Book2UserTypeEntity b2ut ON b2ut.id = b2u.typeId
             GROUP BY b.id
-            ORDER BY SUM(CASE WHEN b2ut.name = 'PAID' THEN 1 WHEN (b2ut.name = 'CART') THEN 0.7 WHEN (b2ut.name = 'KEPT') THEN 0.4 ELSE 0 END) DESC
+            ORDER BY SUM(CASE WHEN b2ut.name = 'PAID' THEN 1 WHEN (b2ut.name = 'CART') THEN 0.7 WHEN (b2ut.name = 'KEPT') THEN 0.4 ELSE 0 END) DESC, b.publishDate DESC
             """)
     Page<BookEntity> findPopularBooks(Pageable pageable);
 }

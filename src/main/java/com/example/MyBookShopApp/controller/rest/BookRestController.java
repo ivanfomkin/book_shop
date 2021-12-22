@@ -32,4 +32,10 @@ public class BookRestController {
         return bookService.getPageableRecentBooks(offset, limit, fromDate, toDate);
     }
 
+    @GetMapping("/popular")
+    public BookListDto getPopularBooks(@RequestParam(value = "offset", required = false, defaultValue = "0") Integer offset,
+                                       @RequestParam(value = "limit", required = false, defaultValue = "20") Integer limit) {
+        return bookService.getPageablePopularBooks(offset, limit);
+    }
+
 }

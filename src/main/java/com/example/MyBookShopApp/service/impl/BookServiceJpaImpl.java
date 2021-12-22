@@ -5,6 +5,7 @@ import com.example.MyBookShopApp.dto.book.BookListDto;
 import com.example.MyBookShopApp.entity.book.BookEntity;
 import com.example.MyBookShopApp.repository.BookRepository;
 import com.example.MyBookShopApp.service.BookService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -15,6 +16,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+@Slf4j
 @Service
 @Primary
 public class BookServiceJpaImpl implements BookService {
@@ -48,7 +50,8 @@ public class BookServiceJpaImpl implements BookService {
 
     @Override
     public BookListDto getPageablePopularBooks(int offset, int limit) {
-        Pageable pageable = PageRequest.of(offset, limit);
+        Pageable pageable = PageRequest.of(offset / limit, limit);
+        log.info("Запрос популярных книг offset {} limit {} pageable {}", offset, limit, pageable);
         Page<BookEntity> bookEntityPage = bookRepository.findPopularBooks(pageable);
         return createBookListDtoFromPage(bookEntityPage);
     }
