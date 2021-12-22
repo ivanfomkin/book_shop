@@ -11,17 +11,25 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Service
 @Primary
 public class BookServiceJpaImpl implements BookService {
     private final BookRepository bookRepository;
+    private final DateTimeFormatter dateTimeFormatter;
 
     private final String manyAuthorsAppender = " и другие";
+    private final LocalDate minLocalDate;
+    private final LocalDate maxLocalDate;
 
     public BookServiceJpaImpl(BookRepository bookRepository) {
         this.bookRepository = bookRepository;
+        dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+        minLocalDate = LocalDate.of(1000, 1, 1);
+        maxLocalDate = LocalDate.of(3000, 12, 31);
     }
 
     @Override
@@ -43,6 +51,24 @@ public class BookServiceJpaImpl implements BookService {
         Pageable pageable = PageRequest.of(offset, limit);
         Page<BookEntity> bookEntityPage = bookRepository.findPopularBooks(pageable);
         return createBookListDtoFromPage(bookEntityPage);
+    }
+
+    @Override
+    public BookListDto getPageableRecentBooks(Integer offset, Integer limit, String fromDate, String toDate) {
+        Pageable pageable = PageRequest.of(offset, limit);
+        LocalDate from = parseFromDate(fromDate);
+        LocalDate to = from.equals(LocalDate.MIN) ? parseToDate(toDate) : LocalDate.now();
+        Page<BookEntity> bookEntityPage =
+                bookRepository.findBookEntitiesByPublishDateBetweenOrderByPublishDateDesc(from, to, pageable);
+        return createBookListDtoFromPage(bookEntityPage);
+    }
+
+    private LocalDate parseToDate(String stringDate) {
+        return stringDate.equals("0") ? maxLocalDate : LocalDate.parse(stringDate, dateTimeFormatter);
+    }
+
+    private LocalDate parseFromDate(String stringDate) {
+        return stringDate.equals("0") ? minLocalDate : LocalDate.parse(stringDate, dateTimeFormatter);
     }
 
     private BookListDto createBookListDtoFromPage(Page<BookEntity> bookEntityPage) {

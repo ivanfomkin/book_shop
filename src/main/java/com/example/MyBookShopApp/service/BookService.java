@@ -8,4 +8,6 @@ public interface BookService {
     BookListDto getPageableRecentBooks(Integer offset, Integer limit);
 
     BookListDto getPageablePopularBooks(int offset, int limit);
+
+    BookListDto getPageableRecentBooks(Integer offset, Integer limit, String fromDate, String toDate);
 }

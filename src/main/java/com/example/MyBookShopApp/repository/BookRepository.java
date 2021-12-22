@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
+
 @Repository
 public interface BookRepository extends JpaRepository<BookEntity, Integer> {
     @Query("""
@@ -18,6 +20,8 @@ public interface BookRepository extends JpaRepository<BookEntity, Integer> {
 
     @Query("SELECT b FROM BookEntity b WHERE b.publishDate <= CURRENT_DATE ORDER BY b.publishDate")
     Page<BookEntity> findRecentBooks(Pageable pageable);
+
+    Page<BookEntity> findBookEntitiesByPublishDateBetweenOrderByPublishDateDesc(LocalDate fromDate, LocalDate toDate, Pageable pageable);
 
     @Query("""
             SELECT b FROM BookEntity b LEFT OUTER JOIN Book2UserEntity b2u ON b2u.bookId = b.id
