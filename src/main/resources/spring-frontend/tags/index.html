@@ -25,7 +25,7 @@
                 th:replace="~{fragments/breadcrumb_fragment :: breadcrumps(category='Психологическая проза')}"></ul>
             <div class="Section">
                 <div class="Section-header">
-                    <h1 class="Section-title">Психологическая проза
+                    <h1 class="Section-title" th:text="${tagName}">Психологическая проза
                     </h1>
                     <div class="Section-header-links"><a class="Section-header-link" th:href="@{/}" href="/index.html#tags">Все
                         тэги</a>

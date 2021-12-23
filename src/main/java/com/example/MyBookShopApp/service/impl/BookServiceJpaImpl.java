@@ -5,8 +5,6 @@ import com.example.MyBookShopApp.dto.book.BookListDto;
 import com.example.MyBookShopApp.entity.book.BookEntity;
 import com.example.MyBookShopApp.repository.BookRepository;
 import com.example.MyBookShopApp.service.BookService;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.annotation.Primary;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -16,9 +14,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-@Slf4j
 @Service
-@Primary
 public class BookServiceJpaImpl implements BookService {
     private final BookRepository bookRepository;
     private final DateTimeFormatter dateTimeFormatter;
@@ -51,7 +47,6 @@ public class BookServiceJpaImpl implements BookService {
     @Override
     public BookListDto getPageablePopularBooks(int offset, int limit) {
         Pageable pageable = PageRequest.of(offset / limit, limit);
-        log.info("Запрос популярных книг offset {} limit {} pageable {}", offset, limit, pageable);
         Page<BookEntity> bookEntityPage = bookRepository.findPopularBooks(pageable);
         return createBookListDtoFromPage(bookEntityPage);
     }
@@ -63,6 +58,13 @@ public class BookServiceJpaImpl implements BookService {
         LocalDate to = from.equals(LocalDate.MIN) ? parseToDate(toDate) : LocalDate.now();
         Page<BookEntity> bookEntityPage =
                 bookRepository.findBookEntitiesByPublishDateBetweenOrderByPublishDateDesc(from, to, pageable);
+        return createBookListDtoFromPage(bookEntityPage);
+    }
+
+    @Override
+    public BookListDto getPageableBooksByTag(Integer offset, Integer limit, String tag) {
+        Pageable pageable = PageRequest.of(offset, limit);
+        Page<BookEntity> bookEntityPage = bookRepository.findBookEntityByTagName(tag, pageable);
         return createBookListDtoFromPage(bookEntityPage);
     }
 

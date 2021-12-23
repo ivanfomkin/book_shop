@@ -30,4 +30,8 @@ public interface BookRepository extends JpaRepository<BookEntity, Integer> {
             ORDER BY SUM(CASE WHEN b2ut.name = 'PAID' THEN 1 WHEN (b2ut.name = 'CART') THEN 0.7 WHEN (b2ut.name = 'KEPT') THEN 0.4 ELSE 0 END) DESC, b.publishDate DESC
             """)
     Page<BookEntity> findPopularBooks(Pageable pageable);
+
+    @Query("SELECT b FROM BookEntity b JOIN Book2TagEntity b2t ON b2t.bookId = b.id " +
+            "JOIN TagEntity t ON t.id = b2t.tagId WHERE t.name = :tagName")
+    Page<BookEntity> findBookEntityByTagName(String tagName, Pageable pageable);
 }

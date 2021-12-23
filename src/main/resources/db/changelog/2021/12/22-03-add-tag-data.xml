@@ -1,0 +1,2159 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+    <changeSet author="ivan.fomkin" id="1640205948457-1">
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="336"/>
+            <column name="tag_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="463"/>
+            <column name="tag_id" valueNumeric="2"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="368"/>
+            <column name="tag_id" valueNumeric="44"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="493"/>
+            <column name="tag_id" valueNumeric="35"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="375"/>
+            <column name="tag_id" valueNumeric="33"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="339"/>
+            <column name="tag_id" valueNumeric="33"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="408"/>
+            <column name="tag_id" valueNumeric="35"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="438"/>
+            <column name="tag_id" valueNumeric="20"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="236"/>
+            <column name="tag_id" valueNumeric="3"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="389"/>
+            <column name="tag_id" valueNumeric="45"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="318"/>
+            <column name="tag_id" valueNumeric="32"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="222"/>
+            <column name="tag_id" valueNumeric="49"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="346"/>
+            <column name="tag_id" valueNumeric="30"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="204"/>
+            <column name="tag_id" valueNumeric="6"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="481"/>
+            <column name="tag_id" valueNumeric="41"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="226"/>
+            <column name="tag_id" valueNumeric="36"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="268"/>
+            <column name="tag_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="209"/>
+            <column name="tag_id" valueNumeric="7"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="410"/>
+            <column name="tag_id" valueNumeric="48"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="491"/>
+            <column name="tag_id" valueNumeric="41"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="349"/>
+            <column name="tag_id" valueNumeric="17"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="264"/>
+            <column name="tag_id" valueNumeric="3"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="344"/>
+            <column name="tag_id" valueNumeric="34"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="333"/>
+            <column name="tag_id" valueNumeric="37"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="369"/>
+            <column name="tag_id" valueNumeric="18"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="251"/>
+            <column name="tag_id" valueNumeric="7"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="267"/>
+            <column name="tag_id" valueNumeric="9"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="263"/>
+            <column name="tag_id" valueNumeric="11"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="369"/>
+            <column name="tag_id" valueNumeric="42"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="204"/>
+            <column name="tag_id" valueNumeric="11"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="242"/>
+            <column name="tag_id" valueNumeric="8"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="445"/>
+            <column name="tag_id" valueNumeric="50"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="209"/>
+            <column name="tag_id" valueNumeric="21"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="279"/>
+            <column name="tag_id" valueNumeric="39"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="358"/>
+            <column name="tag_id" valueNumeric="18"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="239"/>
+            <column name="tag_id" valueNumeric="7"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="217"/>
+            <column name="tag_id" valueNumeric="49"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="245"/>
+            <column name="tag_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="492"/>
+            <column name="tag_id" valueNumeric="43"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="340"/>
+            <column name="tag_id" valueNumeric="42"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="248"/>
+            <column name="tag_id" valueNumeric="14"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="324"/>
+            <column name="tag_id" valueNumeric="28"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="414"/>
+            <column name="tag_id" valueNumeric="10"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="446"/>
+            <column name="tag_id" valueNumeric="50"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="452"/>
+            <column name="tag_id" valueNumeric="29"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="361"/>
+            <column name="tag_id" valueNumeric="24"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="300"/>
+            <column name="tag_id" valueNumeric="7"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="300"/>
+            <column name="tag_id" valueNumeric="35"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="429"/>
+            <column name="tag_id" valueNumeric="23"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="234"/>
+            <column name="tag_id" valueNumeric="4"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="312"/>
+            <column name="tag_id" valueNumeric="10"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="346"/>
+            <column name="tag_id" valueNumeric="9"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="437"/>
+            <column name="tag_id" valueNumeric="17"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="338"/>
+            <column name="tag_id" valueNumeric="34"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="251"/>
+            <column name="tag_id" valueNumeric="19"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="326"/>
+            <column name="tag_id" valueNumeric="36"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="204"/>
+            <column name="tag_id" valueNumeric="23"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="334"/>
+            <column name="tag_id" valueNumeric="7"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="325"/>
+            <column name="tag_id" valueNumeric="33"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="258"/>
+            <column name="tag_id" valueNumeric="4"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="251"/>
+            <column name="tag_id" valueNumeric="21"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="261"/>
+            <column name="tag_id" valueNumeric="20"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="313"/>
+            <column name="tag_id" valueNumeric="27"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="265"/>
+            <column name="tag_id" valueNumeric="6"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="392"/>
+            <column name="tag_id" valueNumeric="44"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="365"/>
+            <column name="tag_id" valueNumeric="5"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="315"/>
+            <column name="tag_id" valueNumeric="9"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="415"/>
+            <column name="tag_id" valueNumeric="39"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="328"/>
+            <column name="tag_id" valueNumeric="19"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="289"/>
+            <column name="tag_id" valueNumeric="10"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="374"/>
+            <column name="tag_id" valueNumeric="19"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="360"/>
+            <column name="tag_id" valueNumeric="12"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="234"/>
+            <column name="tag_id" valueNumeric="9"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="404"/>
+            <column name="tag_id" valueNumeric="4"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="453"/>
+            <column name="tag_id" valueNumeric="12"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="489"/>
+            <column name="tag_id" valueNumeric="16"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="489"/>
+            <column name="tag_id" valueNumeric="45"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="456"/>
+            <column name="tag_id" valueNumeric="14"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="346"/>
+            <column name="tag_id" valueNumeric="4"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="458"/>
+            <column name="tag_id" valueNumeric="42"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="347"/>
+            <column name="tag_id" valueNumeric="16"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="454"/>
+            <column name="tag_id" valueNumeric="31"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="262"/>
+            <column name="tag_id" valueNumeric="21"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="369"/>
+            <column name="tag_id" valueNumeric="34"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="237"/>
+            <column name="tag_id" valueNumeric="41"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="267"/>
+            <column name="tag_id" valueNumeric="21"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="373"/>
+            <column name="tag_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="272"/>
+            <column name="tag_id" valueNumeric="11"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="364"/>
+            <column name="tag_id" valueNumeric="15"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="403"/>
+            <column name="tag_id" valueNumeric="40"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="326"/>
+            <column name="tag_id" valueNumeric="7"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="500"/>
+            <column name="tag_id" valueNumeric="43"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="399"/>
+            <column name="tag_id" valueNumeric="5"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="320"/>
+            <column name="tag_id" valueNumeric="22"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="440"/>
+            <column name="tag_id" valueNumeric="25"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="459"/>
+            <column name="tag_id" valueNumeric="35"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="269"/>
+            <column name="tag_id" valueNumeric="24"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="267"/>
+            <column name="tag_id" valueNumeric="50"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="419"/>
+            <column name="tag_id" valueNumeric="25"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="254"/>
+            <column name="tag_id" valueNumeric="39"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="315"/>
+            <column name="tag_id" valueNumeric="42"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="366"/>
+            <column name="tag_id" valueNumeric="37"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="401"/>
+            <column name="tag_id" valueNumeric="30"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="447"/>
+            <column name="tag_id" valueNumeric="7"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="362"/>
+            <column name="tag_id" valueNumeric="11"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="329"/>
+            <column name="tag_id" valueNumeric="33"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="275"/>
+            <column name="tag_id" valueNumeric="8"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="297"/>
+            <column name="tag_id" valueNumeric="45"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="261"/>
+            <column name="tag_id" valueNumeric="41"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="339"/>
+            <column name="tag_id" valueNumeric="15"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="406"/>
+            <column name="tag_id" valueNumeric="15"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="300"/>
+            <column name="tag_id" valueNumeric="13"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="325"/>
+            <column name="tag_id" valueNumeric="48"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="275"/>
+            <column name="tag_id" valueNumeric="38"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="346"/>
+            <column name="tag_id" valueNumeric="31"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="456"/>
+            <column name="tag_id" valueNumeric="49"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="480"/>
+            <column name="tag_id" valueNumeric="32"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="466"/>
+            <column name="tag_id" valueNumeric="34"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="403"/>
+            <column name="tag_id" valueNumeric="9"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="340"/>
+            <column name="tag_id" valueNumeric="34"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="278"/>
+            <column name="tag_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="445"/>
+            <column name="tag_id" valueNumeric="33"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="463"/>
+            <column name="tag_id" valueNumeric="28"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="242"/>
+            <column name="tag_id" valueNumeric="40"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="301"/>
+            <column name="tag_id" valueNumeric="45"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="378"/>
+            <column name="tag_id" valueNumeric="37"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="352"/>
+            <column name="tag_id" valueNumeric="41"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="393"/>
+            <column name="tag_id" valueNumeric="13"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="500"/>
+            <column name="tag_id" valueNumeric="41"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="379"/>
+            <column name="tag_id" valueNumeric="28"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="205"/>
+            <column name="tag_id" valueNumeric="13"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="237"/>
+            <column name="tag_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="235"/>
+            <column name="tag_id" valueNumeric="7"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="446"/>
+            <column name="tag_id" valueNumeric="4"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="296"/>
+            <column name="tag_id" valueNumeric="20"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="259"/>
+            <column name="tag_id" valueNumeric="32"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="370"/>
+            <column name="tag_id" valueNumeric="9"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="489"/>
+            <column name="tag_id" valueNumeric="47"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="441"/>
+            <column name="tag_id" valueNumeric="14"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="473"/>
+            <column name="tag_id" valueNumeric="32"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="483"/>
+            <column name="tag_id" valueNumeric="24"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="462"/>
+            <column name="tag_id" valueNumeric="46"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="204"/>
+            <column name="tag_id" valueNumeric="31"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="403"/>
+            <column name="tag_id" valueNumeric="36"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="383"/>
+            <column name="tag_id" valueNumeric="6"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="252"/>
+            <column name="tag_id" valueNumeric="12"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="320"/>
+            <column name="tag_id" valueNumeric="34"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="417"/>
+            <column name="tag_id" valueNumeric="9"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="277"/>
+            <column name="tag_id" valueNumeric="38"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="410"/>
+            <column name="tag_id" valueNumeric="45"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="487"/>
+            <column name="tag_id" valueNumeric="39"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="353"/>
+            <column name="tag_id" valueNumeric="33"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="434"/>
+            <column name="tag_id" valueNumeric="42"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="371"/>
+            <column name="tag_id" valueNumeric="3"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="470"/>
+            <column name="tag_id" valueNumeric="13"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="208"/>
+            <column name="tag_id" valueNumeric="47"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="475"/>
+            <column name="tag_id" valueNumeric="14"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="487"/>
+            <column name="tag_id" valueNumeric="21"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="387"/>
+            <column name="tag_id" valueNumeric="46"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="333"/>
+            <column name="tag_id" valueNumeric="14"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="256"/>
+            <column name="tag_id" valueNumeric="41"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="226"/>
+            <column name="tag_id" valueNumeric="21"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="302"/>
+            <column name="tag_id" valueNumeric="15"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="484"/>
+            <column name="tag_id" valueNumeric="11"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="463"/>
+            <column name="tag_id" valueNumeric="41"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="348"/>
+            <column name="tag_id" valueNumeric="36"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="332"/>
+            <column name="tag_id" valueNumeric="13"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="214"/>
+            <column name="tag_id" valueNumeric="6"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="351"/>
+            <column name="tag_id" valueNumeric="19"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="249"/>
+            <column name="tag_id" valueNumeric="7"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="331"/>
+            <column name="tag_id" valueNumeric="39"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="400"/>
+            <column name="tag_id" valueNumeric="26"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="267"/>
+            <column name="tag_id" valueNumeric="23"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="403"/>
+            <column name="tag_id" valueNumeric="17"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="325"/>
+            <column name="tag_id" valueNumeric="34"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="494"/>
+            <column name="tag_id" valueNumeric="49"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="243"/>
+            <column name="tag_id" valueNumeric="17"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="392"/>
+            <column name="tag_id" valueNumeric="15"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="235"/>
+            <column name="tag_id" valueNumeric="4"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="226"/>
+            <column name="tag_id" valueNumeric="25"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="428"/>
+            <column name="tag_id" valueNumeric="17"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="413"/>
+            <column name="tag_id" valueNumeric="19"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="436"/>
+            <column name="tag_id" valueNumeric="12"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="267"/>
+            <column name="tag_id" valueNumeric="22"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="488"/>
+            <column name="tag_id" valueNumeric="37"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="247"/>
+            <column name="tag_id" valueNumeric="16"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="201"/>
+            <column name="tag_id" valueNumeric="44"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="346"/>
+            <column name="tag_id" valueNumeric="44"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="415"/>
+            <column name="tag_id" valueNumeric="35"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="251"/>
+            <column name="tag_id" valueNumeric="5"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="482"/>
+            <column name="tag_id" valueNumeric="45"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="491"/>
+            <column name="tag_id" valueNumeric="36"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="207"/>
+            <column name="tag_id" valueNumeric="32"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="284"/>
+            <column name="tag_id" valueNumeric="19"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="282"/>
+            <column name="tag_id" valueNumeric="44"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="247"/>
+            <column name="tag_id" valueNumeric="2"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="206"/>
+            <column name="tag_id" valueNumeric="44"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="479"/>
+            <column name="tag_id" valueNumeric="25"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="288"/>
+            <column name="tag_id" valueNumeric="34"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="485"/>
+            <column name="tag_id" valueNumeric="50"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="456"/>
+            <column name="tag_id" valueNumeric="27"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="417"/>
+            <column name="tag_id" valueNumeric="5"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="342"/>
+            <column name="tag_id" valueNumeric="17"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="472"/>
+            <column name="tag_id" valueNumeric="37"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="348"/>
+            <column name="tag_id" valueNumeric="28"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="353"/>
+            <column name="tag_id" valueNumeric="24"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="279"/>
+            <column name="tag_id" valueNumeric="43"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="449"/>
+            <column name="tag_id" valueNumeric="4"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="273"/>
+            <column name="tag_id" valueNumeric="32"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="358"/>
+            <column name="tag_id" valueNumeric="49"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="230"/>
+            <column name="tag_id" valueNumeric="2"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="339"/>
+            <column name="tag_id" valueNumeric="34"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="415"/>
+            <column name="tag_id" valueNumeric="32"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="351"/>
+            <column name="tag_id" valueNumeric="39"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="484"/>
+            <column name="tag_id" valueNumeric="14"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="236"/>
+            <column name="tag_id" valueNumeric="23"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="326"/>
+            <column name="tag_id" valueNumeric="45"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="497"/>
+            <column name="tag_id" valueNumeric="22"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="303"/>
+            <column name="tag_id" valueNumeric="39"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="360"/>
+            <column name="tag_id" valueNumeric="37"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="442"/>
+            <column name="tag_id" valueNumeric="13"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="245"/>
+            <column name="tag_id" valueNumeric="7"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="366"/>
+            <column name="tag_id" valueNumeric="2"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="247"/>
+            <column name="tag_id" valueNumeric="31"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="470"/>
+            <column name="tag_id" valueNumeric="37"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="418"/>
+            <column name="tag_id" valueNumeric="45"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="239"/>
+            <column name="tag_id" valueNumeric="30"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="369"/>
+            <column name="tag_id" valueNumeric="9"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="321"/>
+            <column name="tag_id" valueNumeric="37"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="319"/>
+            <column name="tag_id" valueNumeric="19"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="468"/>
+            <column name="tag_id" valueNumeric="24"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="351"/>
+            <column name="tag_id" valueNumeric="2"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="248"/>
+            <column name="tag_id" valueNumeric="25"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="367"/>
+            <column name="tag_id" valueNumeric="11"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="481"/>
+            <column name="tag_id" valueNumeric="8"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="396"/>
+            <column name="tag_id" valueNumeric="20"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="420"/>
+            <column name="tag_id" valueNumeric="11"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="364"/>
+            <column name="tag_id" valueNumeric="28"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="489"/>
+            <column name="tag_id" valueNumeric="24"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="248"/>
+            <column name="tag_id" valueNumeric="19"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="418"/>
+            <column name="tag_id" valueNumeric="10"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="217"/>
+            <column name="tag_id" valueNumeric="31"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="379"/>
+            <column name="tag_id" valueNumeric="25"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="457"/>
+            <column name="tag_id" valueNumeric="50"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="201"/>
+            <column name="tag_id" valueNumeric="30"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="277"/>
+            <column name="tag_id" valueNumeric="33"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="416"/>
+            <column name="tag_id" valueNumeric="38"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="343"/>
+            <column name="tag_id" valueNumeric="5"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="290"/>
+            <column name="tag_id" valueNumeric="15"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="396"/>
+            <column name="tag_id" valueNumeric="17"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="405"/>
+            <column name="tag_id" valueNumeric="44"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="292"/>
+            <column name="tag_id" valueNumeric="17"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="278"/>
+            <column name="tag_id" valueNumeric="27"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="217"/>
+            <column name="tag_id" valueNumeric="49"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="315"/>
+            <column name="tag_id" valueNumeric="22"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="285"/>
+            <column name="tag_id" valueNumeric="42"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="308"/>
+            <column name="tag_id" valueNumeric="40"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="252"/>
+            <column name="tag_id" valueNumeric="4"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="317"/>
+            <column name="tag_id" valueNumeric="22"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="487"/>
+            <column name="tag_id" valueNumeric="41"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="205"/>
+            <column name="tag_id" valueNumeric="34"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="380"/>
+            <column name="tag_id" valueNumeric="35"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="460"/>
+            <column name="tag_id" valueNumeric="41"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="288"/>
+            <column name="tag_id" valueNumeric="49"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="294"/>
+            <column name="tag_id" valueNumeric="12"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="278"/>
+            <column name="tag_id" valueNumeric="44"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="290"/>
+            <column name="tag_id" valueNumeric="38"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="478"/>
+            <column name="tag_id" valueNumeric="15"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="274"/>
+            <column name="tag_id" valueNumeric="2"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="492"/>
+            <column name="tag_id" valueNumeric="6"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="208"/>
+            <column name="tag_id" valueNumeric="49"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="444"/>
+            <column name="tag_id" valueNumeric="33"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="476"/>
+            <column name="tag_id" valueNumeric="11"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="223"/>
+            <column name="tag_id" valueNumeric="21"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="262"/>
+            <column name="tag_id" valueNumeric="32"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="378"/>
+            <column name="tag_id" valueNumeric="50"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="200"/>
+            <column name="tag_id" valueNumeric="37"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="367"/>
+            <column name="tag_id" valueNumeric="4"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="417"/>
+            <column name="tag_id" valueNumeric="18"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="275"/>
+            <column name="tag_id" valueNumeric="10"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="354"/>
+            <column name="tag_id" valueNumeric="6"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="264"/>
+            <column name="tag_id" valueNumeric="36"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="364"/>
+            <column name="tag_id" valueNumeric="29"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="454"/>
+            <column name="tag_id" valueNumeric="12"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="448"/>
+            <column name="tag_id" valueNumeric="43"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="454"/>
+            <column name="tag_id" valueNumeric="30"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="389"/>
+            <column name="tag_id" valueNumeric="4"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="290"/>
+            <column name="tag_id" valueNumeric="36"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="255"/>
+            <column name="tag_id" valueNumeric="36"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="403"/>
+            <column name="tag_id" valueNumeric="31"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="447"/>
+            <column name="tag_id" valueNumeric="46"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="219"/>
+            <column name="tag_id" valueNumeric="48"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="246"/>
+            <column name="tag_id" valueNumeric="8"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="440"/>
+            <column name="tag_id" valueNumeric="19"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="478"/>
+            <column name="tag_id" valueNumeric="7"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="451"/>
+            <column name="tag_id" valueNumeric="16"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="485"/>
+            <column name="tag_id" valueNumeric="33"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="263"/>
+            <column name="tag_id" valueNumeric="8"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="224"/>
+            <column name="tag_id" valueNumeric="19"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="218"/>
+            <column name="tag_id" valueNumeric="42"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="395"/>
+            <column name="tag_id" valueNumeric="33"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="482"/>
+            <column name="tag_id" valueNumeric="5"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="347"/>
+            <column name="tag_id" valueNumeric="5"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="329"/>
+            <column name="tag_id" valueNumeric="18"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="377"/>
+            <column name="tag_id" valueNumeric="7"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="496"/>
+            <column name="tag_id" valueNumeric="37"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="333"/>
+            <column name="tag_id" valueNumeric="25"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="231"/>
+            <column name="tag_id" valueNumeric="10"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="428"/>
+            <column name="tag_id" valueNumeric="24"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="419"/>
+            <column name="tag_id" valueNumeric="40"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="243"/>
+            <column name="tag_id" valueNumeric="20"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="464"/>
+            <column name="tag_id" valueNumeric="47"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="216"/>
+            <column name="tag_id" valueNumeric="34"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="475"/>
+            <column name="tag_id" valueNumeric="42"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="313"/>
+            <column name="tag_id" valueNumeric="48"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="472"/>
+            <column name="tag_id" valueNumeric="25"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="499"/>
+            <column name="tag_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="500"/>
+            <column name="tag_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="476"/>
+            <column name="tag_id" valueNumeric="25"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="255"/>
+            <column name="tag_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="300"/>
+            <column name="tag_id" valueNumeric="3"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="241"/>
+            <column name="tag_id" valueNumeric="3"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="302"/>
+            <column name="tag_id" valueNumeric="33"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="228"/>
+            <column name="tag_id" valueNumeric="27"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="443"/>
+            <column name="tag_id" valueNumeric="2"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="392"/>
+            <column name="tag_id" valueNumeric="40"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="378"/>
+            <column name="tag_id" valueNumeric="45"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="491"/>
+            <column name="tag_id" valueNumeric="42"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="427"/>
+            <column name="tag_id" valueNumeric="20"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="229"/>
+            <column name="tag_id" valueNumeric="4"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="475"/>
+            <column name="tag_id" valueNumeric="19"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="331"/>
+            <column name="tag_id" valueNumeric="40"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="461"/>
+            <column name="tag_id" valueNumeric="2"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="476"/>
+            <column name="tag_id" valueNumeric="47"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="347"/>
+            <column name="tag_id" valueNumeric="44"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="277"/>
+            <column name="tag_id" valueNumeric="20"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="480"/>
+            <column name="tag_id" valueNumeric="19"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="341"/>
+            <column name="tag_id" valueNumeric="46"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="378"/>
+            <column name="tag_id" valueNumeric="22"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="406"/>
+            <column name="tag_id" valueNumeric="16"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="421"/>
+            <column name="tag_id" valueNumeric="18"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="449"/>
+            <column name="tag_id" valueNumeric="22"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="472"/>
+            <column name="tag_id" valueNumeric="28"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="384"/>
+            <column name="tag_id" valueNumeric="13"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="324"/>
+            <column name="tag_id" valueNumeric="34"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="382"/>
+            <column name="tag_id" valueNumeric="46"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="440"/>
+            <column name="tag_id" valueNumeric="17"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="258"/>
+            <column name="tag_id" valueNumeric="5"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="392"/>
+            <column name="tag_id" valueNumeric="20"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="318"/>
+            <column name="tag_id" valueNumeric="20"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="288"/>
+            <column name="tag_id" valueNumeric="5"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="362"/>
+            <column name="tag_id" valueNumeric="49"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="430"/>
+            <column name="tag_id" valueNumeric="16"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="418"/>
+            <column name="tag_id" valueNumeric="33"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="333"/>
+            <column name="tag_id" valueNumeric="44"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="460"/>
+            <column name="tag_id" valueNumeric="30"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="442"/>
+            <column name="tag_id" valueNumeric="28"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="456"/>
+            <column name="tag_id" valueNumeric="38"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="404"/>
+            <column name="tag_id" valueNumeric="33"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="482"/>
+            <column name="tag_id" valueNumeric="37"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="410"/>
+            <column name="tag_id" valueNumeric="34"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="258"/>
+            <column name="tag_id" valueNumeric="24"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="314"/>
+            <column name="tag_id" valueNumeric="21"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="452"/>
+            <column name="tag_id" valueNumeric="43"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="332"/>
+            <column name="tag_id" valueNumeric="5"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="293"/>
+            <column name="tag_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="365"/>
+            <column name="tag_id" valueNumeric="25"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="412"/>
+            <column name="tag_id" valueNumeric="47"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="482"/>
+            <column name="tag_id" valueNumeric="37"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="385"/>
+            <column name="tag_id" valueNumeric="13"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="442"/>
+            <column name="tag_id" valueNumeric="42"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="444"/>
+            <column name="tag_id" valueNumeric="21"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="343"/>
+            <column name="tag_id" valueNumeric="8"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="201"/>
+            <column name="tag_id" valueNumeric="31"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="411"/>
+            <column name="tag_id" valueNumeric="28"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="369"/>
+            <column name="tag_id" valueNumeric="6"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="317"/>
+            <column name="tag_id" valueNumeric="24"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="499"/>
+            <column name="tag_id" valueNumeric="41"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="295"/>
+            <column name="tag_id" valueNumeric="42"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="298"/>
+            <column name="tag_id" valueNumeric="35"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="287"/>
+            <column name="tag_id" valueNumeric="29"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="466"/>
+            <column name="tag_id" valueNumeric="50"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="231"/>
+            <column name="tag_id" valueNumeric="20"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="212"/>
+            <column name="tag_id" valueNumeric="8"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="316"/>
+            <column name="tag_id" valueNumeric="16"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="297"/>
+            <column name="tag_id" valueNumeric="44"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="487"/>
+            <column name="tag_id" valueNumeric="27"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="392"/>
+            <column name="tag_id" valueNumeric="41"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="325"/>
+            <column name="tag_id" valueNumeric="2"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="364"/>
+            <column name="tag_id" valueNumeric="46"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="302"/>
+            <column name="tag_id" valueNumeric="17"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="211"/>
+            <column name="tag_id" valueNumeric="46"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="323"/>
+            <column name="tag_id" valueNumeric="18"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="305"/>
+            <column name="tag_id" valueNumeric="10"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="302"/>
+            <column name="tag_id" valueNumeric="17"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="234"/>
+            <column name="tag_id" valueNumeric="39"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="286"/>
+            <column name="tag_id" valueNumeric="26"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="237"/>
+            <column name="tag_id" valueNumeric="28"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="386"/>
+            <column name="tag_id" valueNumeric="33"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="457"/>
+            <column name="tag_id" valueNumeric="30"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="451"/>
+            <column name="tag_id" valueNumeric="3"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="456"/>
+            <column name="tag_id" valueNumeric="7"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="454"/>
+            <column name="tag_id" valueNumeric="22"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="397"/>
+            <column name="tag_id" valueNumeric="17"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="213"/>
+            <column name="tag_id" valueNumeric="44"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="374"/>
+            <column name="tag_id" valueNumeric="38"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="444"/>
+            <column name="tag_id" valueNumeric="37"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="458"/>
+            <column name="tag_id" valueNumeric="7"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="337"/>
+            <column name="tag_id" valueNumeric="32"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="296"/>
+            <column name="tag_id" valueNumeric="23"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="240"/>
+            <column name="tag_id" valueNumeric="16"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="330"/>
+            <column name="tag_id" valueNumeric="12"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="446"/>
+            <column name="tag_id" valueNumeric="10"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="278"/>
+            <column name="tag_id" valueNumeric="14"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="373"/>
+            <column name="tag_id" valueNumeric="24"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="373"/>
+            <column name="tag_id" valueNumeric="36"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="300"/>
+            <column name="tag_id" valueNumeric="7"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="315"/>
+            <column name="tag_id" valueNumeric="49"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="348"/>
+            <column name="tag_id" valueNumeric="7"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="491"/>
+            <column name="tag_id" valueNumeric="15"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="252"/>
+            <column name="tag_id" valueNumeric="36"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="209"/>
+            <column name="tag_id" valueNumeric="11"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="457"/>
+            <column name="tag_id" valueNumeric="10"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="237"/>
+            <column name="tag_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="365"/>
+            <column name="tag_id" valueNumeric="18"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="399"/>
+            <column name="tag_id" valueNumeric="7"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="230"/>
+            <column name="tag_id" valueNumeric="42"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="234"/>
+            <column name="tag_id" valueNumeric="45"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="285"/>
+            <column name="tag_id" valueNumeric="17"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="212"/>
+            <column name="tag_id" valueNumeric="12"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="499"/>
+            <column name="tag_id" valueNumeric="20"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="447"/>
+            <column name="tag_id" valueNumeric="27"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="425"/>
+            <column name="tag_id" valueNumeric="36"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="212"/>
+            <column name="tag_id" valueNumeric="10"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="449"/>
+            <column name="tag_id" valueNumeric="43"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="430"/>
+            <column name="tag_id" valueNumeric="9"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="216"/>
+            <column name="tag_id" valueNumeric="30"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="381"/>
+            <column name="tag_id" valueNumeric="41"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="300"/>
+            <column name="tag_id" valueNumeric="43"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="231"/>
+            <column name="tag_id" valueNumeric="3"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="307"/>
+            <column name="tag_id" valueNumeric="16"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="364"/>
+            <column name="tag_id" valueNumeric="23"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="231"/>
+            <column name="tag_id" valueNumeric="5"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="359"/>
+            <column name="tag_id" valueNumeric="41"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="492"/>
+            <column name="tag_id" valueNumeric="2"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="431"/>
+            <column name="tag_id" valueNumeric="49"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="474"/>
+            <column name="tag_id" valueNumeric="7"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="383"/>
+            <column name="tag_id" valueNumeric="29"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="390"/>
+            <column name="tag_id" valueNumeric="48"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="259"/>
+            <column name="tag_id" valueNumeric="38"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="383"/>
+            <column name="tag_id" valueNumeric="39"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="442"/>
+            <column name="tag_id" valueNumeric="8"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="370"/>
+            <column name="tag_id" valueNumeric="18"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="266"/>
+            <column name="tag_id" valueNumeric="10"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="304"/>
+            <column name="tag_id" valueNumeric="18"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="456"/>
+            <column name="tag_id" valueNumeric="47"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="346"/>
+            <column name="tag_id" valueNumeric="20"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="485"/>
+            <column name="tag_id" valueNumeric="29"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="260"/>
+            <column name="tag_id" valueNumeric="18"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="434"/>
+            <column name="tag_id" valueNumeric="48"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="420"/>
+            <column name="tag_id" valueNumeric="44"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="497"/>
+            <column name="tag_id" valueNumeric="33"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="476"/>
+            <column name="tag_id" valueNumeric="30"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="447"/>
+            <column name="tag_id" valueNumeric="9"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="398"/>
+            <column name="tag_id" valueNumeric="5"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="351"/>
+            <column name="tag_id" valueNumeric="12"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="273"/>
+            <column name="tag_id" valueNumeric="13"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="346"/>
+            <column name="tag_id" valueNumeric="3"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="230"/>
+            <column name="tag_id" valueNumeric="4"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="384"/>
+            <column name="tag_id" valueNumeric="34"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="385"/>
+            <column name="tag_id" valueNumeric="36"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="300"/>
+            <column name="tag_id" valueNumeric="31"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="304"/>
+            <column name="tag_id" valueNumeric="46"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="315"/>
+            <column name="tag_id" valueNumeric="32"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="331"/>
+            <column name="tag_id" valueNumeric="35"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="313"/>
+            <column name="tag_id" valueNumeric="36"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="452"/>
+            <column name="tag_id" valueNumeric="48"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="473"/>
+            <column name="tag_id" valueNumeric="20"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="289"/>
+            <column name="tag_id" valueNumeric="27"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="468"/>
+            <column name="tag_id" valueNumeric="25"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="424"/>
+            <column name="tag_id" valueNumeric="29"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="305"/>
+            <column name="tag_id" valueNumeric="39"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="315"/>
+            <column name="tag_id" valueNumeric="41"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="461"/>
+            <column name="tag_id" valueNumeric="31"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="453"/>
+            <column name="tag_id" valueNumeric="29"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="481"/>
+            <column name="tag_id" valueNumeric="43"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="389"/>
+            <column name="tag_id" valueNumeric="35"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="399"/>
+            <column name="tag_id" valueNumeric="17"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="333"/>
+            <column name="tag_id" valueNumeric="48"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="359"/>
+            <column name="tag_id" valueNumeric="20"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="482"/>
+            <column name="tag_id" valueNumeric="33"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="325"/>
+            <column name="tag_id" valueNumeric="13"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="343"/>
+            <column name="tag_id" valueNumeric="4"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="369"/>
+            <column name="tag_id" valueNumeric="43"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="354"/>
+            <column name="tag_id" valueNumeric="13"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="360"/>
+            <column name="tag_id" valueNumeric="26"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="349"/>
+            <column name="tag_id" valueNumeric="12"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="289"/>
+            <column name="tag_id" valueNumeric="42"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="294"/>
+            <column name="tag_id" valueNumeric="26"/>
+        </insert>
+        <insert tableName="book2tag">
+            <column name="book_id" valueNumeric="496"/>
+            <column name="tag_id" valueNumeric="39"/>
+        </insert>
+    </changeSet>
+    <changeSet author="ivan.fomkin" id="1640205948457-2">
+        <insert tableName="tags">
+            <column name="name" value="quam"/>
+        </insert>
+        <insert tableName="tags">
+            <column name="name" value="vestibulum ante ipsum"/>
+        </insert>
+        <insert tableName="tags">
+            <column name="name" value="primis in faucibus"/>
+        </insert>
+        <insert tableName="tags">
+            <column name="name" value="cubilia curae"/>
+        </insert>
+        <insert tableName="tags">
+            <column name="name" value="ac"/>
+        </insert>
+        <insert tableName="tags">
+            <column name="name" value="ac est lacinia"/>
+        </insert>
+        <insert tableName="tags">
+            <column name="name" value="arcu sed augue"/>
+        </insert>
+        <insert tableName="tags">
+            <column name="name" value="nisi eu orci"/>
+        </insert>
+        <insert tableName="tags">
+            <column name="name" value="interdum mauris ullamcorper"/>
+        </insert>
+        <insert tableName="tags">
+            <column name="name" value="magnis dis"/>
+        </insert>
+        <insert tableName="tags">
+            <column name="name" value="ipsum integer"/>
+        </insert>
+        <insert tableName="tags">
+            <column name="name" value="in faucibus orci"/>
+        </insert>
+        <insert tableName="tags">
+            <column name="name" value="justo pellentesque"/>
+        </insert>
+        <insert tableName="tags">
+            <column name="name" value="blandit"/>
+        </insert>
+        <insert tableName="tags">
+            <column name="name" value="luctus et ultrices"/>
+        </insert>
+        <insert tableName="tags">
+            <column name="name" value="in"/>
+        </insert>
+        <insert tableName="tags">
+            <column name="name" value="parturient montes nascetur"/>
+        </insert>
+        <insert tableName="tags">
+            <column name="name" value="faucibus orci luctus"/>
+        </insert>
+        <insert tableName="tags">
+            <column name="name" value="sagittis sapien cum"/>
+        </insert>
+        <insert tableName="tags">
+            <column name="name" value="non"/>
+        </insert>
+        <insert tableName="tags">
+            <column name="name" value="pellentesque quisque"/>
+        </insert>
+        <insert tableName="tags">
+            <column name="name" value="luctus tincidunt"/>
+        </insert>
+        <insert tableName="tags">
+            <column name="name" value="bibendum morbi non"/>
+        </insert>
+        <insert tableName="tags">
+            <column name="name" value="tempus semper est"/>
+        </insert>
+        <insert tableName="tags">
+            <column name="name" value="ac consequat metus"/>
+        </insert>
+        <insert tableName="tags">
+            <column name="name" value="eleifend"/>
+        </insert>
+        <insert tableName="tags">
+            <column name="name" value="bibendum morbi"/>
+        </insert>
+        <insert tableName="tags">
+            <column name="name" value="platea dictumst"/>
+        </insert>
+        <insert tableName="tags">
+            <column name="name" value="non quam nec"/>
+        </insert>
+        <insert tableName="tags">
+            <column name="name" value="nibh fusce"/>
+        </insert>
+        <insert tableName="tags">
+            <column name="name" value="metus sapien ut"/>
+        </insert>
+        <insert tableName="tags">
+            <column name="name" value="interdum testus word"/>
+        </insert>
+        <insert tableName="tags">
+            <column name="name" value="varius"/>
+        </insert>
+        <insert tableName="tags">
+            <column name="name" value="integer"/>
+        </insert>
+        <insert tableName="tags">
+            <column name="name" value="sed accumsan felis"/>
+        </insert>
+        <insert tableName="tags">
+            <column name="name" value="vestibulum eget"/>
+        </insert>
+        <insert tableName="tags">
+            <column name="name" value="fringilla"/>
+        </insert>
+        <insert tableName="tags">
+            <column name="name" value="aliquet"/>
+        </insert>
+        <insert tableName="tags">
+            <column name="name" value="non ligula"/>
+        </insert>
+        <insert tableName="tags">
+            <column name="name" value="molestie nibh"/>
+        </insert>
+        <insert tableName="tags">
+            <column name="name" value="dignissim vestibulum"/>
+        </insert>
+        <insert tableName="tags">
+            <column name="name" value="ante ipsum"/>
+        </insert>
+        <insert tableName="tags">
+            <column name="name" value="est risus"/>
+        </insert>
+        <insert tableName="tags">
+            <column name="name" value="et tempus semper"/>
+        </insert>
+        <insert tableName="tags">
+            <column name="name" value="sapien"/>
+        </insert>
+        <insert tableName="tags">
+            <column name="name" value="hac habitasse"/>
+        </insert>
+        <insert tableName="tags">
+            <column name="name" value="tincidunt ante vel"/>
+        </insert>
+        <insert tableName="tags">
+            <column name="name" value="nulla"/>
+        </insert>
+        <insert tableName="tags">
+            <column name="name" value="gravida sem"/>
+        </insert>
+        <insert tableName="tags">
+            <column name="name" value="parturient montes"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>

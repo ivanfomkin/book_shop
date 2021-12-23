@@ -7,4 +7,6 @@
     <include file="/db/changelog/2021/12/19-01-Insert-test-books-and-authors.xml"/>
     <include file="/db/changelog/2021/12/21-02-insert-book2user-type.xml"/>
     <include file="/db/changelog/2021/12/22-01-insert-book2user-data.xml"/>
+    <include file="/db/changelog/2021/12/22-02-add-tag-tables.xml"/>
+    <include file="/db/changelog/2021/12/22-03-add-tag-data.xml"/>
 </databaseChangeLog>

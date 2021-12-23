@@ -17,3 +17,4 @@ spring:
       ddl-auto: validate
   liquibase:
     change-log: classpath:db/changelog/master-changelog.xml
+    enabled: false
