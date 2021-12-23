@@ -3,10 +3,7 @@ package com.example.MyBookShopApp.controller.rest;
 import com.example.MyBookShopApp.dto.book.BookListDto;
 import com.example.MyBookShopApp.service.BookService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
@@ -19,8 +16,8 @@ public class BookRestController {
     }
 
     @GetMapping("/recommended")
-    public BookListDto getRecommendedBooks(@RequestParam(value = "offset", required = false, defaultValue = "0") Integer offset,
-                                           @RequestParam(value = "limit", required = false, defaultValue = "20") Integer limit) {
+    public BookListDto recommendedBooks(@RequestParam(value = "offset", required = false, defaultValue = "0") Integer offset,
+                                        @RequestParam(value = "limit", required = false, defaultValue = "20") Integer limit) {
         return bookService.getPageableRecommendedBooks(offset, limit);
     }
 
@@ -33,9 +30,17 @@ public class BookRestController {
     }
 
     @GetMapping("/popular")
-    public BookListDto getPopularBooks(@RequestParam(value = "offset", required = false, defaultValue = "0") Integer offset,
-                                       @RequestParam(value = "limit", required = false, defaultValue = "20") Integer limit) {
+    public BookListDto popularBooks(@RequestParam(value = "offset", required = false, defaultValue = "0") Integer offset,
+                                    @RequestParam(value = "limit", required = false, defaultValue = "20") Integer limit) {
         return bookService.getPageablePopularBooks(offset, limit);
+    }
+
+    @GetMapping("/tag/{name}")
+    public BookListDto booksByTag(
+            @PathVariable(name = "name") String tag,
+            @RequestParam(value = "offset", required = false, defaultValue = "0") Integer offset,
+            @RequestParam(value = "limit", required = false, defaultValue = "20") Integer limit) {
+        return bookService.getPageableBooksByTag(offset, limit, tag);
     }
 
 }
