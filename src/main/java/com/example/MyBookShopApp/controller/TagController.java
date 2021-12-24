@@ -1,12 +1,10 @@
 package com.example.MyBookShopApp.controller;
 
+import com.example.MyBookShopApp.dto.search.SearchDto;
 import com.example.MyBookShopApp.service.BookService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/tags")
@@ -15,6 +13,11 @@ public class TagController {
 
     public TagController(BookService bookService) {
         this.bookService = bookService;
+    }
+
+    @ModelAttribute("searchDto")
+    public SearchDto searchWord() {
+        return new SearchDto();
     }
 
     @GetMapping("/{tag}")

@@ -1,5 +1,6 @@
 package com.example.MyBookShopApp.controller;
 
+import com.example.MyBookShopApp.dto.search.SearchDto;
 import com.example.MyBookShopApp.entity.author.AuthorEntity;
 import com.example.MyBookShopApp.service.AuthorService;
 import org.springframework.stereotype.Controller;
@@ -19,6 +20,11 @@ public class AuthorsController {
 
     public AuthorsController(AuthorService authorService) {
         this.authorService = authorService;
+    }
+
+    @ModelAttribute("searchDto")
+    public SearchDto searchWord() {
+        return new SearchDto();
     }
 
     @ModelAttribute("authorsMap")
