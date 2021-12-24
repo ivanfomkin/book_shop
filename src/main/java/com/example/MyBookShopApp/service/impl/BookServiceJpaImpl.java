@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -31,14 +32,14 @@ public class BookServiceJpaImpl implements BookService {
     }
 
     @Override
-    public BookListDto getPageableRecommendedBooks(Integer offset, Integer limit) {
+    public BookListDto getPageableRecommendedBooks(int offset, int limit) {
         Pageable pageable = PageRequest.of(offset, limit);
         Page<BookEntity> bookEntityPage = bookRepository.finRecommendedBooks(pageable);
         return createBookListDtoFromPage(bookEntityPage);
     }
 
     @Override
-    public BookListDto getPageableRecentBooks(Integer offset, Integer limit) {
+    public BookListDto getPageableRecentBooks(int offset, int limit) {
         Pageable pageable = PageRequest.of(offset, limit);
         Page<BookEntity> bookEntityPage = bookRepository.findRecentBooks(pageable);
         return createBookListDtoFromPage(bookEntityPage);
@@ -52,7 +53,7 @@ public class BookServiceJpaImpl implements BookService {
     }
 
     @Override
-    public BookListDto getPageableRecentBooks(Integer offset, Integer limit, String fromDate, String toDate) {
+    public BookListDto getPageableRecentBooks(int offset, int limit, String fromDate, String toDate) {
         Pageable pageable = PageRequest.of(offset, limit);
         LocalDate from = parseFromDate(fromDate);
         LocalDate to = from.equals(LocalDate.MIN) ? parseToDate(toDate) : LocalDate.now();
@@ -62,9 +63,16 @@ public class BookServiceJpaImpl implements BookService {
     }
 
     @Override
-    public BookListDto getPageableBooksByTag(Integer offset, Integer limit, String tag) {
+    public BookListDto getPageableBooksByTag(int offset, int limit, String tag) {
         Pageable pageable = PageRequest.of(offset, limit);
         Page<BookEntity> bookEntityPage = bookRepository.findBookEntityByTagName(tag, pageable);
+        return createBookListDtoFromPage(bookEntityPage);
+    }
+
+    @Override
+    public BookListDto getPageableBooksByTitle(int offset, int limit, String title) {
+        Pageable pageable = PageRequest.of(offset / limit, limit);
+        Page<BookEntity> bookEntityPage = bookRepository.findBookEntityByTitleContainingOrderByTitle(title, pageable);
         return createBookListDtoFromPage(bookEntityPage);
     }
 
@@ -84,7 +92,11 @@ public class BookServiceJpaImpl implements BookService {
     }
 
     private List<BookDto> convertManyBookEntityToBookDto(List<BookEntity> bookEntities) {
-        return bookEntities.stream().map(this::convertSingleBookEntityToBookDto).toList();
+        if (bookEntities == null || bookEntities.size() == 0) {
+            return new ArrayList<>();
+        } else {
+            return bookEntities.stream().map(this::convertSingleBookEntityToBookDto).toList();
+        }
     }
 
     private BookDto convertSingleBookEntityToBookDto(BookEntity bookEntity) {

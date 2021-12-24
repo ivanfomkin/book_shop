@@ -1,6 +1,7 @@
 package com.example.MyBookShopApp.controller;
 
 import com.example.MyBookShopApp.dto.book.BookListDto;
+import com.example.MyBookShopApp.dto.search.SearchDto;
 import com.example.MyBookShopApp.entity.tag.TagWithWeightObject;
 import com.example.MyBookShopApp.service.BookService;
 import com.example.MyBookShopApp.service.TagService;
@@ -25,6 +26,11 @@ public class MainPageController {
     @ModelAttribute("bookList")
     public BookListDto recommendedBooks() {
         return bookService.getPageableRecommendedBooks(0, 20);
+    }
+
+    @ModelAttribute("searchDto")
+    public SearchDto searchWord() {
+        return new SearchDto();
     }
 
     @ModelAttribute("tags")

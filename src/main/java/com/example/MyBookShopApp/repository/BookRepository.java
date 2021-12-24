@@ -34,4 +34,6 @@ public interface BookRepository extends JpaRepository<BookEntity, Integer> {
     @Query("SELECT b FROM BookEntity b JOIN Book2TagEntity b2t ON b2t.bookId = b.id " +
             "JOIN TagEntity t ON t.id = b2t.tagId WHERE t.name = :tagName")
     Page<BookEntity> findBookEntityByTagName(String tagName, Pageable pageable);
+
+    Page<BookEntity> findBookEntityByTitleContainingOrderByTitle(String searchRequest, Pageable pageable);
 }

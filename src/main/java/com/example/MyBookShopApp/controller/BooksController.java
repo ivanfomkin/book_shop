@@ -29,8 +29,10 @@ public class BooksController {
     }
 
     @GetMapping("/popular")
-    public String popularBooks(Model model) {
-        model.addAttribute("bookList", bookService.getPageablePopularBooks(0, 20));
+    public String popularBooks(Model model,
+                               @RequestParam(name = "offset", required = false, defaultValue = "0") Integer offset,
+                               @RequestParam(name = "limit", required = false, defaultValue = "20") Integer limit) {
+        model.addAttribute("bookList", bookService.getPageablePopularBooks(offset, limit));
         return "books/popular";
     }
 }

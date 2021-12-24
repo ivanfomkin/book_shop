@@ -25,10 +25,12 @@
             </h1>
             <div class="Section">
                 <div class="search">
-                    <form class="form form_search" action="#" method="post" data-searchlimit="20">
+                    <form action="#" class="form form_search" data-searchlimit="20" method="post"
+                          th:object="${searchDto}">
                         <input class="search-input" id="querypage" name="querypage" type="text"
                                placeholder="Search over 30 million book titles" value="Техника"
-                               th:placeholder="#{searchbar.placeholder}"/>
+                               th:input="*{searchQuery}"
+                               th:placeholder="#{searchbar.placeholder}" th:value="*{searchQuery}"/>
                         <button class="search-button" type="submit" name="searchpage" id="searchpage">Поиск
                         </button>
                     </form>
@@ -36,11 +38,12 @@
             </div>
             <div class="Section Section_close">
                 <header class="Section-header">
-                    <h2 class="Section-title Middle-searchHeader">Найдено 40 книг
+                    <h2 class="Section-title Middle-searchHeader" th:text="'Найдено ' + ${bookList.count} + ' книг'">
+                        Найдено 40 книг
                     </h2>
                 </header>
                 <div class="Cards Cards_refresh"
-                     th:replace="~{fragments/books_pool_fragment :: pool(category='search')}"></div>
+                     th:replace="~{fragments/books_pool_fragment :: pool(category='search', refreshQuery=${searchDto.searchQuery})}"></div>
             </div>
         </main>
     </div>
