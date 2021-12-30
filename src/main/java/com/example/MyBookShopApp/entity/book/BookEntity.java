@@ -1,6 +1,7 @@
 package com.example.MyBookShopApp.entity.book;
 
 import com.example.MyBookShopApp.entity.author.AuthorEntity;
+import com.example.MyBookShopApp.entity.genre.GenreEntity;
 import com.example.MyBookShopApp.entity.tag.TagEntity;
 import lombok.Getter;
 import lombok.Setter;
@@ -53,4 +54,10 @@ public class BookEntity {
             joinColumns = @JoinColumn(name = "book_id"),
             inverseJoinColumns = @JoinColumn(name = "tag_id"))
     private List<TagEntity> tags;
+
+    @ManyToMany
+    @JoinTable(name = "book2genre",
+            joinColumns = @JoinColumn(name = "book_id"),
+            inverseJoinColumns = @JoinColumn(name = "genre_id"))
+    private List<GenreEntity> genres;
 }

@@ -2,6 +2,7 @@ package com.example.MyBookShopApp.controller.rest;
 
 import com.example.MyBookShopApp.dto.book.BookListDto;
 import com.example.MyBookShopApp.service.BookService;
+import com.example.MyBookShopApp.service.GenreService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,9 +11,11 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("api/books")
 public class BookRestController {
     private final BookService bookService;
+    private final GenreService genreService;
 
-    public BookRestController(BookService bookService) {
+    public BookRestController(BookService bookService, GenreService genreService) {
         this.bookService = bookService;
+        this.genreService = genreService;
     }
 
     @GetMapping("/recommended")
@@ -41,6 +44,14 @@ public class BookRestController {
             @RequestParam(value = "offset", required = false, defaultValue = "0") Integer offset,
             @RequestParam(value = "limit", required = false, defaultValue = "20") Integer limit) {
         return bookService.getPageableBooksByTag(offset, limit, tag);
+    }
+
+    @GetMapping("/genre/{slug}")
+    public BookListDto booksByGenre(@RequestParam(value = "offset", required = false, defaultValue = "0") Integer offset,
+                                    @RequestParam(value = "limit", required = false, defaultValue = "20") Integer limit,
+                                    @PathVariable String slug) {
+        var genre = genreService.getGenreBySlug(slug);
+        return bookService.getPageableBooksByGenre(offset, limit, genre);
     }
 
 }

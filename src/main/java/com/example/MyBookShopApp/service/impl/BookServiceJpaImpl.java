@@ -3,6 +3,7 @@ package com.example.MyBookShopApp.service.impl;
 import com.example.MyBookShopApp.dto.book.BookDto;
 import com.example.MyBookShopApp.dto.book.BookListDto;
 import com.example.MyBookShopApp.entity.book.BookEntity;
+import com.example.MyBookShopApp.entity.genre.GenreEntity;
 import com.example.MyBookShopApp.repository.BookRepository;
 import com.example.MyBookShopApp.service.BookService;
 import org.springframework.data.domain.Page;
@@ -64,7 +65,7 @@ public class BookServiceJpaImpl implements BookService {
 
     @Override
     public BookListDto getPageableBooksByTag(int offset, int limit, String tag) {
-        Pageable pageable = PageRequest.of(offset, limit);
+        Pageable pageable = PageRequest.of(offset / limit, limit);
         Page<BookEntity> bookEntityPage = bookRepository.findBookEntityByTagName(tag, pageable);
         return createBookListDtoFromPage(bookEntityPage);
     }
@@ -73,6 +74,13 @@ public class BookServiceJpaImpl implements BookService {
     public BookListDto getPageableBooksByTitle(int offset, int limit, String title) {
         Pageable pageable = PageRequest.of(offset / limit, limit);
         Page<BookEntity> bookEntityPage = bookRepository.findBookEntityByTitleContainingOrderByTitle(title, pageable);
+        return createBookListDtoFromPage(bookEntityPage);
+    }
+
+    @Override
+    public BookListDto getPageableBooksByGenre(int offset, int limit, GenreEntity genre) {
+        Pageable pageable = PageRequest.of(offset / limit, limit);
+        Page<BookEntity> bookEntityPage = bookRepository.findBookEntityByGenresContaining(genre, pageable);
         return createBookListDtoFromPage(bookEntityPage);
     }
 

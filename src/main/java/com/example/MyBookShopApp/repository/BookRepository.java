@@ -1,6 +1,7 @@
 package com.example.MyBookShopApp.repository;
 
 import com.example.MyBookShopApp.entity.book.BookEntity;
+import com.example.MyBookShopApp.entity.genre.GenreEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -36,4 +37,6 @@ public interface BookRepository extends JpaRepository<BookEntity, Integer> {
     Page<BookEntity> findBookEntityByTagName(String tagName, Pageable pageable);
 
     Page<BookEntity> findBookEntityByTitleContainingOrderByTitle(String searchRequest, Pageable pageable);
+
+    Page<BookEntity> findBookEntityByGenresContaining(GenreEntity genre, Pageable pageable);
 }

@@ -2,11 +2,9 @@ package com.example.MyBookShopApp.dto.book;
 
 import com.example.MyBookShopApp.dto.Dto;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-@Getter
-@Setter
+@Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class BookDto implements Dto {
     private int id;

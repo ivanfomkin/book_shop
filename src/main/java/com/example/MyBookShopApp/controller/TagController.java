@@ -27,7 +27,6 @@ public class TagController {
                           @PathVariable(required = false) String tag) {
         model.addAttribute("bookList", bookService.getPageableBooksByTag(offset, limit, tag));
         model.addAttribute("tagName", tag);
-        model.addAttribute("category", "refreshid");
         return "tags/index";
     }
 }

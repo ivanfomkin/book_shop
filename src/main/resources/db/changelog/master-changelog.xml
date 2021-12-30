@@ -9,4 +9,6 @@
     <include file="/db/changelog/2021/12/22-01-insert-book2user-data.xml"/>
     <include file="/db/changelog/2021/12/22-02-add-tag-tables.xml"/>
     <include file="/db/changelog/2021/12/22-03-add-tag-data.xml"/>
+    <include file="/db/changelog/2021/12/29-01-add-genres.xml"/>
+    <include file="/db/changelog/2021/12/30-01-add-books2genre-relations.xml"/>
 </databaseChangeLog>
