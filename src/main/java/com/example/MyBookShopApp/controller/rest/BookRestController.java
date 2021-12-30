@@ -38,6 +38,14 @@ public class BookRestController {
         return bookService.getPageablePopularBooks(offset, limit);
     }
 
+    @GetMapping("/author/{slug}")
+    public BookListDto booksByAuthor(
+            @PathVariable(name = "slug") String slug,
+            @RequestParam(value = "offset", required = false, defaultValue = "0") Integer offset,
+            @RequestParam(value = "limit", required = false, defaultValue = "20") Integer limit) {
+        return bookService.getPageableBooksByAuthorSlug(offset, limit, slug);
+    }
+
     @GetMapping("/tag/{name}")
     public BookListDto booksByTag(
             @PathVariable(name = "name") String tag,

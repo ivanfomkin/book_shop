@@ -7,4 +7,6 @@ import java.util.Map;
 
 public interface AuthorService {
     Map<String, List<AuthorEntity>> getAuthorsMap();
+
+    AuthorEntity getAuthorBySlug(String slug);
 }

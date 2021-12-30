@@ -24,4 +24,9 @@ public class AuthorServiceJpaImpl implements AuthorService {
         var allAuthors = authorRepository.findAll();
         return allAuthors.stream().collect(Collectors.groupingBy(a -> a.getName().substring(0, 1)));
     }
+
+    @Override
+    public AuthorEntity getAuthorBySlug(String slug) {
+        return authorRepository.findAuthorEntityBySlug(slug);
+    }
 }

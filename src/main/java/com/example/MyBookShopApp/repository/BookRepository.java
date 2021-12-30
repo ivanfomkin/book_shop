@@ -1,5 +1,6 @@
 package com.example.MyBookShopApp.repository;
 
+import com.example.MyBookShopApp.entity.author.AuthorEntity;
 import com.example.MyBookShopApp.entity.book.BookEntity;
 import com.example.MyBookShopApp.entity.genre.GenreEntity;
 import org.springframework.data.domain.Page;
@@ -19,7 +20,7 @@ public interface BookRepository extends JpaRepository<BookEntity, Integer> {
             """)
     Page<BookEntity> finRecommendedBooks(Pageable pageable);
 
-    @Query("SELECT b FROM BookEntity b WHERE b.publishDate <= CURRENT_DATE ORDER BY b.publishDate")
+    @Query("SELECT b FROM BookEntity b WHERE b.publishDate <= CURRENT_DATE ORDER BY b.publishDate DESC")
     Page<BookEntity> findRecentBooks(Pageable pageable);
 
     Page<BookEntity> findBookEntitiesByPublishDateBetweenOrderByPublishDateDesc(LocalDate fromDate, LocalDate toDate, Pageable pageable);
@@ -39,4 +40,12 @@ public interface BookRepository extends JpaRepository<BookEntity, Integer> {
     Page<BookEntity> findBookEntityByTitleContainingOrderByTitle(String searchRequest, Pageable pageable);
 
     Page<BookEntity> findBookEntityByGenresContaining(GenreEntity genre, Pageable pageable);
+
+    Page<BookEntity> findBookEntityByAuthorsContaining(AuthorEntity author, Pageable pageable);
+
+    @Query("""
+            SELECT b FROM BookEntity b JOIN Book2AuthorEntity b2a ON b.id = b2a.bookId
+            JOIN AuthorEntity a ON a.id = b2a.authorId WHERE a.slug = :authorSlug
+            """)
+    Page<BookEntity> findBookEntityByAuthorsSlug(String authorSlug, Pageable pageable);
 }

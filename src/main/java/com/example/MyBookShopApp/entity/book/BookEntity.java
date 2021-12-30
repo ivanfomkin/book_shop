@@ -47,7 +47,7 @@ public class BookEntity {
     @JoinTable(name = "book2author",
             joinColumns = @JoinColumn(name = "book_id"),
             inverseJoinColumns = @JoinColumn(name = "author_id"))
-    private List<AuthorEntity> author;
+    private List<AuthorEntity> authors;
 
     @ManyToMany
     @JoinTable(name = "book2tag",

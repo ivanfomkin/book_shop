@@ -2,6 +2,7 @@ package com.example.MyBookShopApp.service.impl;
 
 import com.example.MyBookShopApp.dto.book.BookDto;
 import com.example.MyBookShopApp.dto.book.BookListDto;
+import com.example.MyBookShopApp.entity.author.AuthorEntity;
 import com.example.MyBookShopApp.entity.book.BookEntity;
 import com.example.MyBookShopApp.entity.genre.GenreEntity;
 import com.example.MyBookShopApp.repository.BookRepository;
@@ -9,6 +10,7 @@ import com.example.MyBookShopApp.service.BookService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -84,6 +86,20 @@ public class BookServiceJpaImpl implements BookService {
         return createBookListDtoFromPage(bookEntityPage);
     }
 
+    @Override
+    public BookListDto getPageableBooksByAuthor(int offset, int limit, AuthorEntity author) {
+        Pageable pageable = PageRequest.of(offset, limit, Sort.Direction.DESC, "isBestseller", "discount");
+        Page<BookEntity> bookEntityPage = bookRepository.findBookEntityByAuthorsContaining(author, pageable);
+        return createBookListDtoFromPage(bookEntityPage);
+    }
+
+    @Override
+    public BookListDto getPageableBooksByAuthorSlug(int offset, int limit, String authorSlug) {
+        Pageable pageable = PageRequest.of(offset, limit, Sort.Direction.DESC, "isBestseller", "discount");
+        Page<BookEntity> bookEntityPage = bookRepository.findBookEntityByAuthorsSlug(authorSlug, pageable);
+        return createBookListDtoFromPage(bookEntityPage);
+    }
+
     private LocalDate parseToDate(String stringDate) {
         return stringDate.equals("0") ? maxLocalDate : LocalDate.parse(stringDate, dateTimeFormatter);
     }
@@ -112,10 +128,10 @@ public class BookServiceJpaImpl implements BookService {
         dto.setId(bookEntity.getId());
         dto.setSlug(bookEntity.getSlug());
         dto.setImage(bookEntity.getImage());
-        if (bookEntity.getAuthor().size() > 1) {
-            dto.setAuthors(bookEntity.getAuthor().get(0).getName() + manyAuthorsAppender);
+        if (bookEntity.getAuthors().size() > 1) {
+            dto.setAuthors(bookEntity.getAuthors().get(0).getName() + manyAuthorsAppender);
         } else {
-            dto.setAuthors(bookEntity.getAuthor().get(0).getName());
+            dto.setAuthors(bookEntity.getAuthors().get(0).getName());
         }
         dto.setTitle(bookEntity.getTitle());
         dto.setDiscount(bookEntity.getDiscount());
