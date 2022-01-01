@@ -17,13 +17,24 @@
                         <div class="Card-content">
                             <strong class="Card-title"><a href="/books/slug.html" th:text="${book.title}">Техника</a>
                             </strong>
+                            <div class="Card-ribbon">
+                                <span class="Card-ribbonText" th:if="${book.isBestseller}">Бестселлер</span>
+                                <a class="Card-status" th:if="${#strings.equals(book.status, 'PAID')}"
+                                   title="Куплена"><img
+                                        alt="Куплена" src="/assets/img/icons/check.svg"></a>
+                                <a class="Card-status" th:if="${#strings.equals(book.status, 'CART')}"
+                                   title="В корзине"><img
+                                        alt="В корзине" src="/assets/img/icons/shopping-basket.svg"></a>
+                                <a class="Card-status" th:if="${#strings.equals(book.status, 'KEPT')}" title="Отложена"><img
+                                        alt="Отложена" src="/assets/img/icons/heart.svg"></a>
+                            </div>
                             <div class="Card-description"
                                  th:text="${book.authors}">Кондратенко Валерий
                                 Петрович
                             </div>
                             <div class="Card-cost"><span class="Card-priceOld"
-                                                         th:text="${book.price}">₽300.00</span><span
-                                    class="Card-price" th:text="${book.discountPrice}">₽190.00</span>
+                                                         th:text="'₽' + ${book.price}">₽300.00</span><span
+                                    class="Card-price" th:text="'₽' + ${book.discountPrice}">₽190.00</span>
                             </div>
                         </div>
                     </div>
