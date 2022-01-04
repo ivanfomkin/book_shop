@@ -6,8 +6,11 @@ import com.example.MyBookShopApp.entity.genre.GenreEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 
@@ -48,4 +51,11 @@ public interface BookRepository extends JpaRepository<BookEntity, Integer> {
             JOIN AuthorEntity a ON a.id = b2a.authorId WHERE a.slug = :authorSlug
             """)
     Page<BookEntity> findBookEntityByAuthorsSlug(String authorSlug, Pageable pageable);
+
+    BookEntity findBookEntityBySlug(String slug);
+
+    @Modifying
+    @Transactional
+    @Query("UPDATE BookEntity SET image = :image WHERE slug = :slug")
+    void updateBookImageBySlug(String slug, @Param("image") String imagePath);
 }

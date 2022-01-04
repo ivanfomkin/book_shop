@@ -15,7 +15,8 @@
                             src="/assets/img/content/main/card.jpg"
                             th:src="${book.image}"/></a>
                         <div class="Card-content">
-                            <strong class="Card-title"><a href="/books/slug.html" th:text="${book.title}">Техника</a>
+                            <strong class="Card-title"><a href="/books/slug.html" th:href="'/books/' + ${book.slug}"
+                                                          th:text="${book.title}">Техника</a>
                             </strong>
                             <div class="Card-ribbon">
                                 <span class="Card-ribbonText" th:if="${book.isBestseller}">Бестселлер</span>

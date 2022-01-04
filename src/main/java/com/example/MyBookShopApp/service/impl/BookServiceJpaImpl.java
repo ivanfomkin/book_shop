@@ -12,6 +12,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -98,6 +99,17 @@ public class BookServiceJpaImpl implements BookService {
         Pageable pageable = PageRequest.of(offset, limit, Sort.Direction.DESC, "isBestseller", "discount");
         Page<BookEntity> bookEntityPage = bookRepository.findBookEntityByAuthorsSlug(authorSlug, pageable);
         return createBookListDtoFromPage(bookEntityPage);
+    }
+
+    @Override
+    public BookDto getBookBySlug(String slug) {
+        return convertSingleBookEntityToBookDto(bookRepository.findBookEntityBySlug(slug));
+    }
+
+    @Transactional
+    @Override
+    public void updateBookImageBySlug(String slug, String imagePath) {
+        bookRepository.updateBookImageBySlug(slug, imagePath);
     }
 
     private LocalDate parseToDate(String stringDate) {

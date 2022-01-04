@@ -6,7 +6,8 @@
                                                    th:src="${book.image}"/></a>
         </div>
         <div class="Card-content">
-            <strong class="Card-title"><a href="#" th:text="${book.title}">Техника</a>
+            <strong class="Card-title"><a href="#" th:href="'/books/' + ${book.slug}"
+                                          th:text="${book.title}">Техника</a>
             </strong>
             <div class="Card-ribbon">
                 <span class="Card-ribbonText" th:if="${book.isBestseller}">Бестселлер</span>
