@@ -1,6 +1,5 @@
 package com.example.MyBookShopApp.controller.rest;
 
-import com.example.MyBookShopApp.dto.book.BookDto;
 import com.example.MyBookShopApp.dto.book.BookListDto;
 import com.example.MyBookShopApp.service.BookService;
 import com.example.MyBookShopApp.service.GenreService;
@@ -62,10 +61,4 @@ public class BookRestController {
         var genre = genreService.getGenreBySlug(slug);
         return bookService.getPageableBooksByGenre(offset, limit, genre);
     }
-
-    @GetMapping("/{slug}")
-    public BookDto booksBySlug(@PathVariable String slug) {
-        return bookService.getBookBySlug(slug);
-    }
-
 }

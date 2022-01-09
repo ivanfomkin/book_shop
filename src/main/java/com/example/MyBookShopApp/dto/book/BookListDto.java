@@ -8,5 +8,5 @@ import java.util.List;
 @Data
 public class BookListDto implements Dto {
     private long count;
-    private List<BookDto> books;
+    private List<BookListElement> books;
 }

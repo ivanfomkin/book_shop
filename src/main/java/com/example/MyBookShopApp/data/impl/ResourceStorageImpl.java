@@ -1,14 +1,17 @@
 package com.example.MyBookShopApp.data.impl;
 
 import com.example.MyBookShopApp.data.ResourceStorage;
+import com.example.MyBookShopApp.repository.BookFileRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URLConnection;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -18,6 +21,14 @@ import java.nio.file.Paths;
 public class ResourceStorageImpl implements ResourceStorage {
     @Value("${bookshop.upload.path}")
     private String uploadPath;
+
+    private final BookFileRepository bookFileRepository;
+    @Value("${bookshop.download.path}")
+    private String downloadPath;
+
+    public ResourceStorageImpl(BookFileRepository bookFileRepository) {
+        this.bookFileRepository = bookFileRepository;
+    }
 
     @Override
     public String saveNewBookImage(MultipartFile file, String slug) throws IOException {
@@ -33,5 +44,25 @@ public class ResourceStorageImpl implements ResourceStorage {
             file.transferTo(dstPath);
         }
         return resourceUri;
+    }
+
+    @Override
+    public Path getBookPathByHash(String hash) {
+        var bookFileFromDb = bookFileRepository.findBookFileEntityByHash(hash);
+        return Paths.get(bookFileFromDb.getPath());
+    }
+
+    @Override
+    public MediaType getBookFileMime(String hash) {
+        var bookFileFromDb = bookFileRepository.findBookFileEntityByHash(hash);
+        var mimeType = URLConnection.guessContentTypeFromName(Paths.get(bookFileFromDb.getPath()).getFileName().toString());
+        return mimeType == null ? MediaType.APPLICATION_OCTET_STREAM : MediaType.parseMediaType(mimeType);
+    }
+
+    @Override
+    public byte[] getBookFileByteArray(String hash) throws IOException {
+        var bookFileFromDb = bookFileRepository.findBookFileEntityByHash(hash);
+        Path path = Paths.get(downloadPath, bookFileFromDb.getPath());
+        return Files.readAllBytes(path);
     }
 }

@@ -5,12 +5,16 @@ import com.example.MyBookShopApp.dto.search.SearchDto;
 import com.example.MyBookShopApp.service.AuthorService;
 import com.example.MyBookShopApp.service.BookService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.nio.file.Path;
 
 @Slf4j
 @Controller
@@ -70,5 +74,17 @@ public class BooksController {
         String newBookImage = resourceStorage.saveNewBookImage(bookImage, slug);
         bookService.updateBookImageBySlug(slug, newBookImage);
         return "redirect:/books/" + slug;
+    }
+
+    @GetMapping("/download/{hash}")
+    public ResponseEntity<ByteArrayResource> bookFileByHash(@PathVariable String hash) throws IOException {
+        Path path = resourceStorage.getBookPathByHash(hash);
+        byte[] data = resourceStorage.getBookFileByteArray(hash);
+        return ResponseEntity
+                .ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + path.getFileName().toString())
+                .contentType(resourceStorage.getBookFileMime(hash))
+                .contentLength(data.length)
+                .body(new ByteArrayResource(data));
     }
 }

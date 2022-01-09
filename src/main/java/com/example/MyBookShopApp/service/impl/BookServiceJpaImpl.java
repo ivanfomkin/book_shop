@@ -1,7 +1,7 @@
 package com.example.MyBookShopApp.service.impl;
 
-import com.example.MyBookShopApp.dto.book.BookDto;
 import com.example.MyBookShopApp.dto.book.BookListDto;
+import com.example.MyBookShopApp.dto.book.BookListElement;
 import com.example.MyBookShopApp.entity.author.AuthorEntity;
 import com.example.MyBookShopApp.entity.book.BookEntity;
 import com.example.MyBookShopApp.entity.genre.GenreEntity;
@@ -102,8 +102,8 @@ public class BookServiceJpaImpl implements BookService {
     }
 
     @Override
-    public BookDto getBookBySlug(String slug) {
-        return convertSingleBookEntityToBookDto(bookRepository.findBookEntityBySlug(slug));
+    public BookEntity getBookBySlug(String slug) {
+        return bookRepository.findBookEntityBySlug(slug);
     }
 
     @Transactional
@@ -127,7 +127,7 @@ public class BookServiceJpaImpl implements BookService {
         return dto;
     }
 
-    private List<BookDto> convertManyBookEntityToBookDto(List<BookEntity> bookEntities) {
+    private List<BookListElement> convertManyBookEntityToBookDto(List<BookEntity> bookEntities) {
         if (bookEntities == null || bookEntities.size() == 0) {
             return new ArrayList<>();
         } else {
@@ -135,8 +135,8 @@ public class BookServiceJpaImpl implements BookService {
         }
     }
 
-    private BookDto convertSingleBookEntityToBookDto(BookEntity bookEntity) {
-        BookDto dto = new BookDto();
+    private BookListElement convertSingleBookEntityToBookDto(BookEntity bookEntity) {
+        BookListElement dto = new BookListElement();
         dto.setId(bookEntity.getId());
         dto.setSlug(bookEntity.getSlug());
         dto.setImage(bookEntity.getImage());

@@ -11,4 +11,5 @@
     <include file="/db/changelog/2021/12/22-03-add-tag-data.xml"/>
     <include file="/db/changelog/2021/12/29-01-add-genres.xml"/>
     <include file="/db/changelog/2021/12/30-01-add-books2genre-relations.xml"/>
+    <include file="/db/changelog/2022/01/04-01-add-column-to-book-file-table.xml"/>
 </databaseChangeLog>

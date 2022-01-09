@@ -33,6 +33,17 @@
                     class="btn-content">В архив</span>
             </button>
         </div>
+        <div id="myPopup">
+            <p>Ссылки для скачивания</p>
+            <div th:each="bookFile : ${book.files}">
+                <a href="#" th:href="${'/books/download/' + bookFile.hash}"
+                   th:text="${bookFile.getBookFileExtensionString()}"></a>
+            </div>
+            <span class="close" id="myPopup__close">❌</span>
+        </div>
+        <div id="myOverlay">
+
+        </div>
     </div>
 </div>
 </html>

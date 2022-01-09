@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class BookDto implements Dto {
+public class BookListElement implements Dto {
     private int id;
     private String slug;
     private String image;

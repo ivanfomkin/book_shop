@@ -1,6 +1,7 @@
 package com.example.MyBookShopApp.entity.book;
 
 import com.example.MyBookShopApp.entity.author.AuthorEntity;
+import com.example.MyBookShopApp.entity.book.file.BookFileEntity;
 import com.example.MyBookShopApp.entity.genre.GenreEntity;
 import com.example.MyBookShopApp.entity.tag.TagEntity;
 import lombok.Getter;
@@ -60,4 +61,7 @@ public class BookEntity {
             joinColumns = @JoinColumn(name = "book_id"),
             inverseJoinColumns = @JoinColumn(name = "genre_id"))
     private List<GenreEntity> genres;
+
+    @OneToMany(mappedBy = "book")
+    private List<BookFileEntity> files;
 }
