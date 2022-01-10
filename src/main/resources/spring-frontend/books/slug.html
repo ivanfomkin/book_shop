@@ -34,7 +34,7 @@
                                                                                   src="/assets/img/content/main/card.jpg"
                                                                                   th:src="${book.image}"/>
                             </div>
-                            <input id="dialog" name="file" style="display: none" type="file"/>
+                            <input accept="image/*" id="dialog" name="file" style="display: none" type="file"/>
                         </form>
                     </div>
                     <div class="ProductCard-desc" th:replace="~{fragments/book_description_fragment :: bookDesc}"></div>

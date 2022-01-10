@@ -2,6 +2,7 @@ package com.example.MyBookShopApp.controller;
 
 import com.example.MyBookShopApp.dto.book.BookListDto;
 import com.example.MyBookShopApp.dto.search.SearchDto;
+import com.example.MyBookShopApp.exception.EmptySearchQueryException;
 import com.example.MyBookShopApp.service.BookService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,9 +34,12 @@ public class SearchController {
                              @RequestParam(name = "offset", required = false, defaultValue = "0") Integer offset,
                              @RequestParam(name = "limit", required = false, defaultValue = "20") Integer limit,
                              @PathVariable(name = "searchWord", required = false) SearchDto searchDto) {
-
-        model.addAttribute("searchDto", searchDto);
-        model.addAttribute("bookList", bookService.getPageableBooksByTitle(offset, limit, searchDto.searchQuery()));
-        return "search/index";
+        if (searchDto != null && !searchDto.searchQuery().isEmpty()) {
+            model.addAttribute("searchDto", searchDto);
+            model.addAttribute("bookList", bookService.getPageableBooksByTitle(offset, limit, searchDto.searchQuery()));
+            return "search/index";
+        } else {
+            throw new EmptySearchQueryException("Строка поиска не может быть пустой"); // TODO: 10.01.2022 Передавать сюда локализованное сообщение
+        }
     }
 }
