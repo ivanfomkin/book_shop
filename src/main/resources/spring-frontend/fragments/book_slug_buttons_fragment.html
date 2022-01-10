@@ -11,7 +11,9 @@
             </button>
         </div>
         <div class="ProductCard-cartElement">
-            <button class="btn btn_primary btn_outline" data-sendstatus="CART" data-bookid="[1111]"
+            <button class="btn btn_primary btn_outline" data-bookid="[1111]"
+                    data-sendstatus="CART"
+                    th:attr="data-bookid = ${book.slug}"
                     data-btntype="check" data-btnradio="buyblock" data-check="false"
                     data-alttext="В корзине"><span class="btn-icon"><img
                     src="/assets/img/icons/shopping-basket.svg"

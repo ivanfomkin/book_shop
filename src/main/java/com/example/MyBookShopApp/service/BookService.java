@@ -5,6 +5,8 @@ import com.example.MyBookShopApp.entity.author.AuthorEntity;
 import com.example.MyBookShopApp.entity.book.BookEntity;
 import com.example.MyBookShopApp.entity.genre.GenreEntity;
 
+import java.util.List;
+
 public interface BookService {
     BookListDto getPageableRecommendedBooks(int offset, int limit);
 
@@ -27,4 +29,8 @@ public interface BookService {
     BookEntity getBookBySlug(String slug);
 
     void updateBookImageBySlug(String slug, String imagePath);
+
+    List<BookEntity> getBooksBySlugIn(String[] cookieSlug);
+
+    int calculateBookDiscountPrice(int price, Short percentDiscount);
 }

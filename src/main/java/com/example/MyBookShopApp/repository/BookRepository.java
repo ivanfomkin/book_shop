@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Repository
 public interface BookRepository extends JpaRepository<BookEntity, Integer> {
@@ -51,6 +52,8 @@ public interface BookRepository extends JpaRepository<BookEntity, Integer> {
             JOIN AuthorEntity a ON a.id = b2a.authorId WHERE a.slug = :authorSlug
             """)
     Page<BookEntity> findBookEntityByAuthorsSlug(String authorSlug, Pageable pageable);
+
+    List<BookEntity> findBookEntityBySlugIn(String[] slugs);
 
     BookEntity findBookEntityBySlug(String slug);
 

@@ -112,6 +112,11 @@ public class BookServiceJpaImpl implements BookService {
         bookRepository.updateBookImageBySlug(slug, imagePath);
     }
 
+    @Override
+    public List<BookEntity> getBooksBySlugIn(String[] cookieSlug) {
+        return bookRepository.findBookEntityBySlugIn(cookieSlug);
+    }
+
     private LocalDate parseToDate(String stringDate) {
         return stringDate.equals("0") ? maxLocalDate : LocalDate.parse(stringDate, dateTimeFormatter);
     }
@@ -151,11 +156,12 @@ public class BookServiceJpaImpl implements BookService {
         dto.setRating("false"); //ToDo (ivan.fomkin) 21.12.21: Пока тут заглушка. Реализовать корректное заполнение этого поля
         dto.setStatus("false"); //ToDo (ivan.fomkin) 21.12.21: Пока тут заглушка. Реализовать корректное заполнение этого поля
         dto.setPrice(bookEntity.getPrice());
-        dto.setDiscountPrice(calculateDiscountPrice(bookEntity.getPrice(), bookEntity.getDiscount()));
+        dto.setDiscountPrice(calculateBookDiscountPrice(bookEntity.getPrice(), bookEntity.getDiscount()));
         return dto;
     }
 
-    private Integer calculateDiscountPrice(int price, Short percentDiscount) {
+    @Override
+    public int calculateBookDiscountPrice(int price, Short percentDiscount) {
         if (percentDiscount == null || percentDiscount == 0) {
             return price;
         }
