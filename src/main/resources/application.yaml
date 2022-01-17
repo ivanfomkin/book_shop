@@ -1,10 +1,20 @@
 server:
   port: 8085
+  servlet:
+    session:
+      timeout: 24h
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5433/book_shop
     username: book_shop_admin
     password: myRandomPassword
+  session:
+    timeout: ${server.servlet.session.timeout}
+    store-type: jdbc
+    jdbc:
+      #      table-name: session_store
+      #      schema: public
+      initialize-schema: always
   messages:
     basename: lang.messages
   web:

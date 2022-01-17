@@ -3,7 +3,9 @@ package com.example.MyBookShopApp.service;
 import com.example.MyBookShopApp.dto.book.BookListDto;
 import com.example.MyBookShopApp.entity.author.AuthorEntity;
 import com.example.MyBookShopApp.entity.book.BookEntity;
+import com.example.MyBookShopApp.entity.enums.Book2UserType;
 import com.example.MyBookShopApp.entity.genre.GenreEntity;
+import com.example.MyBookShopApp.entity.user.UserEntity;
 
 import java.util.List;
 
@@ -30,7 +32,9 @@ public interface BookService {
 
     void updateBookImageBySlug(String slug, String imagePath);
 
-    List<BookEntity> getBooksBySlugIn(String[] cookieSlug);
-
     int calculateBookDiscountPrice(int price, Short percentDiscount);
+
+    List<BookEntity> getBooksByUserAndType(UserEntity user, Book2UserType cart);
+
+    Integer getBookIdBuSlug(String slug);
 }

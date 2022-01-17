@@ -2,7 +2,9 @@ package com.example.MyBookShopApp.repository;
 
 import com.example.MyBookShopApp.entity.author.AuthorEntity;
 import com.example.MyBookShopApp.entity.book.BookEntity;
+import com.example.MyBookShopApp.entity.enums.Book2UserType;
 import com.example.MyBookShopApp.entity.genre.GenreEntity;
+import com.example.MyBookShopApp.entity.user.UserEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -61,4 +63,10 @@ public interface BookRepository extends JpaRepository<BookEntity, Integer> {
     @Transactional
     @Query("UPDATE BookEntity SET image = :image WHERE slug = :slug")
     void updateBookImageBySlug(String slug, @Param("image") String imagePath);
+
+    @Query("SELECT b FROM BookEntity b JOIN Book2UserEntity b2u ON b2u.bookId = b.id JOIN Book2UserTypeEntity b2ute ON b2ute.id = b2u.typeId JOIN UserEntity u ON b2u.userId = u.id WHERE b2ute.name = :type AND u = :user")
+    List<BookEntity> findBookEntitiesByUserAndType(UserEntity user, Book2UserType type);
+
+    @Query("SELECT id FROM BookEntity where slug = :slug")
+    Integer findBookIdBySlug(String slug);
 }

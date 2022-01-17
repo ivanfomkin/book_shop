@@ -4,7 +4,9 @@ import com.example.MyBookShopApp.dto.book.BookListDto;
 import com.example.MyBookShopApp.dto.book.BookListElement;
 import com.example.MyBookShopApp.entity.author.AuthorEntity;
 import com.example.MyBookShopApp.entity.book.BookEntity;
+import com.example.MyBookShopApp.entity.enums.Book2UserType;
 import com.example.MyBookShopApp.entity.genre.GenreEntity;
+import com.example.MyBookShopApp.entity.user.UserEntity;
 import com.example.MyBookShopApp.repository.BookRepository;
 import com.example.MyBookShopApp.service.BookService;
 import org.springframework.data.domain.Page;
@@ -113,8 +115,13 @@ public class BookServiceJpaImpl implements BookService {
     }
 
     @Override
-    public List<BookEntity> getBooksBySlugIn(String[] cookieSlug) {
-        return bookRepository.findBookEntityBySlugIn(cookieSlug);
+    public List<BookEntity> getBooksByUserAndType(UserEntity user, Book2UserType book2UserType) {
+        return bookRepository.findBookEntitiesByUserAndType(user, book2UserType);
+    }
+
+    @Override
+    public Integer getBookIdBuSlug(String slug) {
+        return bookRepository.findBookIdBySlug(slug);
     }
 
     private LocalDate parseToDate(String stringDate) {

@@ -1,26 +1,26 @@
 package com.example.MyBookShopApp.controller;
 
-import com.example.MyBookShopApp.dto.CartDto;
+import com.example.MyBookShopApp.dto.cart.CartDto;
 import com.example.MyBookShopApp.dto.search.SearchDto;
+import com.example.MyBookShopApp.entity.enums.Book2UserType;
 import com.example.MyBookShopApp.service.CartService;
+import com.example.MyBookShopApp.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
-import java.util.Arrays;
+import javax.servlet.http.HttpSession;
 import java.util.List;
-import java.util.StringJoiner;
 
 @Controller
 @RequestMapping("/cart")
 public class CartController {
     private final CartService cartService;
+    private final UserService userService;
 
-    public CartController(CartService cartService) {
+    public CartController(CartService cartService, UserService userService) {
         this.cartService = cartService;
+        this.userService = userService;
     }
 
     @ModelAttribute("searchDto")
@@ -34,54 +34,30 @@ public class CartController {
     }
 
     @GetMapping
-    public String cartPage(@CookieValue(name = "cartContents", required = false) String cartContents,
+    public String cartPage(HttpSession session,
                            Model model) {
-        if (cartContents == null || cartContents.isEmpty()) {
-            model.addAttribute("isCartEmpty", true);
-        } else {
-            model.addAttribute("isCartEmpty", false);
-            model.addAttribute("bookCart", cartService.getCartDtoByCookie(cartContents));
-        }
+        var user = userService.getUserBySession(session);
+        var cartDto = cartService.getCartDtoByUser(user);
+        model.addAttribute("isCartEmpty", cartDto.books().size() == 0);
+        model.addAttribute("bookCart", cartDto);
         return "cart";
     }
 
     @PostMapping("/changeBookStatus/{slug}")
     @ResponseBody
     public String changeBookStatus(@PathVariable String slug,
-                                   @CookieValue(name = "cartContents", required = false) String cartContents,
-                                   HttpServletResponse response,
+                                   @RequestParam(name = "status") Book2UserType status,
+                                   HttpSession session,
                                    Model model) {
-        if (cartContents == null || cartContents.isEmpty()) {
-            Cookie cookie = new Cookie("cartContents", slug);
-            cookie.setPath("/");
-            response.addCookie(cookie);
-            model.addAttribute("isCartEmpty", false);
-        } else if (!cartContents.contains(slug)) {
-            StringJoiner stringJoiner = new StringJoiner("/");
-            stringJoiner.add(cartContents).add(slug);
-            Cookie cookie = new Cookie("cartContents", stringJoiner.toString());
-            cookie.setPath("/");
-            response.addCookie(cookie);
-            model.addAttribute("isCartEmpty", false);
-        }
+        cartService.addBookToCart(userService.getUserBySession(session), status, slug);
         return "redirect:/books/" + slug;
     }
 
     @PostMapping("/changeBookStatus/cart/remove/{slug}")
     public String removeBookFromCart(@PathVariable String slug,
-                                     @CookieValue(name = "cartContents", required = false) String cartContents,
-                                     HttpServletResponse response,
+                                     HttpSession session,
                                      Model model) {
-        if (cartContents != null || !cartContents.isEmpty()) {
-            var bookSlugs = new ArrayList<>(Arrays.asList(cartContents.split("/")));
-            bookSlugs.remove(slug);
-            Cookie cookie = new Cookie("cartContents", String.join("/", bookSlugs));
-            cookie.setPath("/");
-            response.addCookie(cookie);
-            model.addAttribute("isCartEmpty", bookSlugs.size() > 0);
-        } else {
-            model.addAttribute("isCartEmpty", true);
-        }
+        cartService.deleteBookFromCart(userService.getUserBySession(session), slug);
         return "redirect:/books/" + slug;
     }
 }

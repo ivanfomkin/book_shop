@@ -1,10 +1,15 @@
 package com.example.MyBookShopApp.service.impl;
 
-import com.example.MyBookShopApp.dto.AuthorElementDto;
-import com.example.MyBookShopApp.dto.CartBookElementDto;
-import com.example.MyBookShopApp.dto.CartDto;
+import com.example.MyBookShopApp.dto.cart.AuthorElementDto;
+import com.example.MyBookShopApp.dto.cart.CartBookElementDto;
+import com.example.MyBookShopApp.dto.cart.CartDto;
 import com.example.MyBookShopApp.entity.author.AuthorEntity;
 import com.example.MyBookShopApp.entity.book.BookEntity;
+import com.example.MyBookShopApp.entity.book.links.Book2UserEntity;
+import com.example.MyBookShopApp.entity.enums.Book2UserType;
+import com.example.MyBookShopApp.entity.user.UserEntity;
+import com.example.MyBookShopApp.repository.Book2UserRepository;
+import com.example.MyBookShopApp.repository.Book2UserTypeRepository;
 import com.example.MyBookShopApp.service.BookService;
 import com.example.MyBookShopApp.service.CartService;
 import org.springframework.stereotype.Service;
@@ -15,20 +20,29 @@ import java.util.List;
 @Service
 public class CartServiceImpl implements CartService {
     private final BookService bookService;
+    private final Book2UserRepository book2UserRepository;
+    private final Book2UserTypeRepository book2UserTypeRepository;
 
-    public CartServiceImpl(BookService bookService) {
+    public CartServiceImpl(BookService bookService, Book2UserRepository book2UserRepository, Book2UserTypeRepository book2UserTypeRepository) {
         this.bookService = bookService;
+        this.book2UserRepository = book2UserRepository;
+        this.book2UserTypeRepository = book2UserTypeRepository;
     }
 
     @Override
-    public CartDto getCartDtoByCookie(String cookie) {
-        cookie = cookie.startsWith("/") ? cookie.substring(1) : cookie;
-        cookie = cookie.endsWith("/") ? cookie.substring(0, cookie.length() - 1) : cookie;
-        String[] cookieSlug = cookie.split("/");
-        var books = bookService.getBooksBySlugIn(cookieSlug);
-        var bookPrice = books.stream().mapToInt(b -> bookService.calculateBookDiscountPrice(b.getPrice(), b.getDiscount())).sum();
-        var bookPriceOld = books.stream().mapToInt(BookEntity::getPrice).sum();
-        return new CartDto(convertBooksToDto(books), bookPrice, bookPriceOld);
+    public CartDto getCartDtoByUser(UserEntity user) {
+        if (user == null) {
+            return new CartDto(List.of(), 0, 0);
+        }
+        var books = bookService.getBooksByUserAndType(user, Book2UserType.CART);
+        return getCartDtoFromBookList(books);
+    }
+
+    private CartDto getCartDtoFromBookList(List<BookEntity> bookEntities) {
+        var cartAmount = bookEntities.stream().mapToInt(b -> bookService.calculateBookDiscountPrice(b.getPrice(), b.getDiscount())).sum();
+        var cartAmountOld = bookEntities.stream().mapToInt(BookEntity::getPrice).sum();
+        var bookDtoList = convertBooksToDto(bookEntities);
+        return new CartDto(bookDtoList, cartAmount, cartAmountOld);
     }
 
     private List<CartBookElementDto> convertBooksToDto(List<BookEntity> entities) {
@@ -36,6 +50,24 @@ public class CartServiceImpl implements CartService {
             return new ArrayList<>();
         } else {
             return entities.stream().map(this::convertOneBookToDto).toList();
+        }
+    }
+
+    @Override
+    public void deleteBookFromCart(UserEntity user, String bookSlug) {
+        book2UserRepository.deleteBookFromCart(user, bookSlug);
+    }
+
+    @Override
+    public void addBookToCart(UserEntity userBySession, Book2UserType status, String slug) {
+        var bookId = bookService.getBookIdBuSlug(slug);
+        var userId = userBySession.getId();
+        if (Boolean.FALSE.equals(book2UserRepository.existsBook2UserEntityByBookIdAndAndUserId(bookId, userId))) {
+            Book2UserEntity book2UserEntity = new Book2UserEntity();
+            book2UserEntity.setUserId(userBySession.getId());
+            book2UserEntity.setBookId(bookService.getBookIdBuSlug(slug));
+            book2UserEntity.setTypeId(book2UserTypeRepository.findBook2UserTypeEntityByName(status).getId());
+            book2UserRepository.save(book2UserEntity);
         }
     }
 

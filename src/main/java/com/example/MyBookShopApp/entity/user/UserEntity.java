@@ -1,10 +1,13 @@
 package com.example.MyBookShopApp.entity.user;
 
+import com.example.MyBookShopApp.entity.book.BookEntity;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -19,13 +22,19 @@ public class UserEntity {
     @Column(columnDefinition = "VARCHAR(255) NOT NULL")
     private String hash;
 
+    @CreationTimestamp
     @Column(columnDefinition = "TIMESTAMP NOT NULL")
     private LocalDateTime regTime;
 
     @Column(columnDefinition = "INT NOT NULL")
-    private Integer balance;
+    private Integer balance = 0;
 
     @Column(columnDefinition = "VARCHAR(255) NOT NULL")
     private String name;
 
+    @ManyToMany
+    @JoinTable(name = "book2user",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "book_id"))
+    private List<BookEntity> userBooks;
 }

@@ -1,4 +1,4 @@
-package com.example.MyBookShopApp.dto;
+package com.example.MyBookShopApp.dto.cart;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 

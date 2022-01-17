@@ -1,5 +1,6 @@
 package com.example.MyBookShopApp.entity.book.links;
 
+import com.example.MyBookShopApp.entity.enums.Book2UserType;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,7 +19,8 @@ public class Book2UserTypeEntity {
     @Column(columnDefinition = "VARCHAR(255) NOT NULL")
     private String code;
 
+    @Enumerated(EnumType.STRING)
     @Column(columnDefinition = "VARCHAR(255) NOT NULL")
-    private String name;
+    private Book2UserType name;
 
 }
