@@ -2,8 +2,7 @@ package com.example.MyBookShopApp.controller;
 
 import com.example.MyBookShopApp.data.ResourceStorage;
 import com.example.MyBookShopApp.dto.search.SearchDto;
-import com.example.MyBookShopApp.service.AuthorService;
-import com.example.MyBookShopApp.service.BookService;
+import com.example.MyBookShopApp.service.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpHeaders;
@@ -13,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.nio.file.Path;
 
@@ -23,16 +23,32 @@ public class BooksController {
     private final BookService bookService;
     private final AuthorService authorService;
     private final ResourceStorage resourceStorage;
+    private final UserService userService;
+    private final CartService cartService;
+    private final KeptService keptService;
 
-    public BooksController(BookService bookService, AuthorService authorService, ResourceStorage resourceStorage) {
+    public BooksController(BookService bookService, AuthorService authorService, ResourceStorage resourceStorage, UserService userService, CartService cartService, KeptService keptService) {
         this.bookService = bookService;
         this.authorService = authorService;
         this.resourceStorage = resourceStorage;
+        this.userService = userService;
+        this.cartService = cartService;
+        this.keptService = keptService;
     }
 
     @ModelAttribute("searchDto")
     public SearchDto searchWord() {
         return new SearchDto();
+    }
+
+    @ModelAttribute("cartAmount")
+    public int cartAmount(HttpSession httpSession) {
+        return cartService.getCartAmount(userService.getUserBySession(httpSession));
+    }
+
+    @ModelAttribute("keptAmount")
+    public int keptAmount(HttpSession httpSession) {
+        return keptService.getKeptAmount(userService.getUserBySession(httpSession));
     }
 
     @GetMapping("/recent")

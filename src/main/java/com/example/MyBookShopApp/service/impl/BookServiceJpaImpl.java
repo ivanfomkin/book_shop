@@ -1,13 +1,17 @@
 package com.example.MyBookShopApp.service.impl;
 
+import com.example.MyBookShopApp.dto.book.BookFileDto;
 import com.example.MyBookShopApp.dto.book.BookListDto;
 import com.example.MyBookShopApp.dto.book.BookListElement;
+import com.example.MyBookShopApp.dto.book.BookSlugDto;
 import com.example.MyBookShopApp.entity.author.AuthorEntity;
 import com.example.MyBookShopApp.entity.book.BookEntity;
 import com.example.MyBookShopApp.entity.enums.Book2UserType;
 import com.example.MyBookShopApp.entity.genre.GenreEntity;
+import com.example.MyBookShopApp.entity.tag.TagEntity;
 import com.example.MyBookShopApp.entity.user.UserEntity;
 import com.example.MyBookShopApp.repository.BookRepository;
+import com.example.MyBookShopApp.service.AuthorService;
 import com.example.MyBookShopApp.service.BookService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -24,14 +28,16 @@ import java.util.List;
 @Service
 public class BookServiceJpaImpl implements BookService {
     private final BookRepository bookRepository;
+    private final AuthorService authorService;
     private final DateTimeFormatter dateTimeFormatter;
 
     private final String manyAuthorsAppender = " и другие";
     private final LocalDate minLocalDate;
     private final LocalDate maxLocalDate;
 
-    public BookServiceJpaImpl(BookRepository bookRepository) {
+    public BookServiceJpaImpl(BookRepository bookRepository, AuthorService authorService) {
         this.bookRepository = bookRepository;
+        this.authorService = authorService;
         dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         minLocalDate = LocalDate.of(1000, 1, 1);
         maxLocalDate = LocalDate.of(3000, 12, 31);
@@ -104,8 +110,8 @@ public class BookServiceJpaImpl implements BookService {
     }
 
     @Override
-    public BookEntity getBookBySlug(String slug) {
-        return bookRepository.findBookEntityBySlug(slug);
+    public BookSlugDto getBookBySlug(String slug) {
+        return convertSingleBookEntityToBookSlugDto(bookRepository.findBookEntityBySlug(slug));
     }
 
     @Transactional
@@ -143,11 +149,25 @@ public class BookServiceJpaImpl implements BookService {
         if (bookEntities == null || bookEntities.size() == 0) {
             return new ArrayList<>();
         } else {
-            return bookEntities.stream().map(this::convertSingleBookEntityToBookDto).toList();
+            return bookEntities.stream().map(this::convertSingleBookEntityToBookListElementDto).toList();
         }
     }
 
-    private BookListElement convertSingleBookEntityToBookDto(BookEntity bookEntity) {
+    private BookSlugDto convertSingleBookEntityToBookSlugDto(BookEntity bookEntity) {
+        BookSlugDto dto = new BookSlugDto();
+        dto.setAuthors(authorService.convertAuthorsToDto(bookEntity.getAuthors()));
+        dto.setDescription(bookEntity.getDescription());
+        dto.setTitle(bookEntity.getTitle());
+        dto.setPrice(bookEntity.getPrice());
+        dto.setDiscountPrice(calculateBookDiscountPrice(bookEntity.getPrice(), bookEntity.getDiscount()));
+        dto.setImage(bookEntity.getImage());
+        dto.setSlug(bookEntity.getSlug());
+        dto.setTags(bookEntity.getTags().stream().map(TagEntity::getName).toList());
+        dto.setFiles(bookEntity.getFiles().stream().map(f -> new BookFileDto(f.getHash(), f.getBookFileExtensionString())).toList());
+        return dto;
+    }
+
+    private BookListElement convertSingleBookEntityToBookListElementDto(BookEntity bookEntity) {
         BookListElement dto = new BookListElement();
         dto.setId(bookEntity.getId());
         dto.setSlug(bookEntity.getSlug());

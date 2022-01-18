@@ -10,4 +10,6 @@ public interface CartService {
     void deleteBookFromCart(UserEntity user, String bookSlug);
 
     void addBookToCart(UserEntity userBySession, Book2UserType status, String slug);
+
+    int getCartAmount(UserEntity user);
 }

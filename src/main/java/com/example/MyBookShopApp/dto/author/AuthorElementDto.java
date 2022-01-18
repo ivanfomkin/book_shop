@@ -1,4 +1,4 @@
-package com.example.MyBookShopApp.dto.cart;
+package com.example.MyBookShopApp.dto.author;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -1,11 +1,13 @@
 package com.example.MyBookShopApp.service.impl;
 
+import com.example.MyBookShopApp.dto.author.AuthorElementDto;
 import com.example.MyBookShopApp.entity.author.AuthorEntity;
 import com.example.MyBookShopApp.repository.AuthorRepository;
 import com.example.MyBookShopApp.service.AuthorService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -28,5 +30,14 @@ public class AuthorServiceJpaImpl implements AuthorService {
     @Override
     public AuthorEntity getAuthorBySlug(String slug) {
         return authorRepository.findAuthorEntityBySlug(slug);
+    }
+
+    @Override
+    public List<AuthorElementDto> convertAuthorsToDto(List<AuthorEntity> authorEntities) {
+        List<AuthorElementDto> authorElementDtoList = new ArrayList<>();
+        for (AuthorEntity authorEntity : authorEntities) {
+            authorElementDtoList.add(new AuthorElementDto(authorEntity.getName(), authorEntity.getSlug()));
+        }
+        return authorElementDtoList;
     }
 }

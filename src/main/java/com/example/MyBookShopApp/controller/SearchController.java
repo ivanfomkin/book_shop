@@ -4,6 +4,9 @@ import com.example.MyBookShopApp.dto.book.BookListDto;
 import com.example.MyBookShopApp.dto.search.SearchDto;
 import com.example.MyBookShopApp.exception.EmptySearchQueryException;
 import com.example.MyBookShopApp.service.BookService;
+import com.example.MyBookShopApp.service.CartService;
+import com.example.MyBookShopApp.service.KeptService;
+import com.example.MyBookShopApp.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,12 +14,20 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpSession;
+
 @Controller
 public class SearchController {
     private final BookService bookService;
+    private final CartService cartService;
+    private final UserService userService;
+    private final KeptService keptService;
 
-    public SearchController(BookService bookService) {
+    public SearchController(BookService bookService, CartService cartService, UserService userService, KeptService keptService) {
         this.bookService = bookService;
+        this.cartService = cartService;
+        this.userService = userService;
+        this.keptService = keptService;
     }
 
     @ModelAttribute("searchDto")
@@ -27,6 +38,16 @@ public class SearchController {
     @ModelAttribute("searchResults")
     public BookListDto searchResults() {
         return new BookListDto();
+    }
+
+    @ModelAttribute("cartAmount")
+    public int cartAmount(HttpSession httpSession) {
+        return cartService.getCartAmount(userService.getUserBySession(httpSession));
+    }
+
+    @ModelAttribute("keptAmount")
+    public int keptAmount(HttpSession httpSession) {
+        return keptService.getKeptAmount(userService.getUserBySession(httpSession));
     }
 
     @GetMapping(value = {"/search", "/search/{searchWord}"})

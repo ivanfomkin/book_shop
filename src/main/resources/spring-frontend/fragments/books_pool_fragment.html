@@ -2,8 +2,9 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <div class="Cards Cards_refresh" th:fragment="pool">
     <div class="Card" th:each="book : ${bookList.books}">
-        <div class="Card-picture"><a href="#"><img alt="card.jpg" src="/assets/img/content/main/card.jpg"
-                                                   th:src="${book.image}"/></a>
+        <div class="Card-picture"><a href="#" th:href="'/books/' + ${book.slug}"><img alt="card.jpg"
+                                                                                      src="/assets/img/content/main/card.jpg"
+                                                                                      th:src="${book.image}"/></a>
         </div>
         <div class="Card-content">
             <strong class="Card-title"><a href="#" th:href="'/books/' + ${book.slug}"

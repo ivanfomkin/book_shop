@@ -1,6 +1,7 @@
 package com.example.MyBookShopApp.service;
 
 import com.example.MyBookShopApp.dto.book.BookListDto;
+import com.example.MyBookShopApp.dto.book.BookSlugDto;
 import com.example.MyBookShopApp.entity.author.AuthorEntity;
 import com.example.MyBookShopApp.entity.book.BookEntity;
 import com.example.MyBookShopApp.entity.enums.Book2UserType;
@@ -28,7 +29,7 @@ public interface BookService {
 
     BookListDto getPageableBooksByAuthorSlug(int offset, int limit, String authorSlug);
 
-    BookEntity getBookBySlug(String slug);
+    BookSlugDto getBookBySlug(String slug);
 
     void updateBookImageBySlug(String slug, String imagePath);
 
