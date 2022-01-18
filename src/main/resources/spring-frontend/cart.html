@@ -89,7 +89,7 @@
                                 <div class="Cart-buttons">
                                     <div class="Cart-btn">
                                         <button class="btn btn_primary btn_outline" data-sendstatus="KEPT"
-                                                th:attr="data-bookid=${'cart/remove/' + book.slug}"
+                                                th:attr="data-bookid = ${book.slug}"
                                                 data-bookid="[1133]"><span class="btn-icon"><img
                                                 src="/assets/img/icons/heart.svg" alt="heart.svg"/></span><span
                                                 class="btn-content">Отложить</span>
@@ -97,7 +97,7 @@
                                     </div>
                                     <div class="Cart-btn">
                                         <button class="btn btn_danger btn_outline" data-sendstatus="UNLINK"
-                                                th:attr="data-bookid=${'cart/remove/' + book.slug}"
+                                                th:attr="data-bookid = ${book.slug}"
                                                 data-bookid="[1133]"><span class="btn-icon"><img
                                                 src="/assets/img/icons/trash.svg" alt="trash.svg"/></span><span
                                                 class="btn-content">Удалить</span>
@@ -108,11 +108,13 @@
                             <div class="Cart-block Cart-block_price">
                                 <div class="Cart-priceTitle">Цена:
                                 </div>
-                                <div class="Cart-price Cart-price_old" th:text="${book.price + ' .р'}">150 р.
+                                <div class="Cart-price Cart-price_old" th:if="${book.discountPrice ne book.price}"
+                                     th:text="${book.price + ' .р'}">150 р.
                                 </div>
                                 <div class="Cart-price" th:text="${book.discountPrice + ' .р'}">100 р.
                                 </div>
-                                <div class="Cart-sale" th:text="${'-' + book.discount + '%'}">-30%
+                                <div class="Cart-sale" th:if="${book.discount > 0}"
+                                     th:text="${'-' + book.discount + '%'}">-30%
                                 </div>
                             </div>
                         </div>

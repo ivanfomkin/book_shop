@@ -3,9 +3,8 @@ package com.example.MyBookShopApp.controller;
 import com.example.MyBookShopApp.dto.book.BookListDto;
 import com.example.MyBookShopApp.dto.search.SearchDto;
 import com.example.MyBookShopApp.exception.EmptySearchQueryException;
+import com.example.MyBookShopApp.service.Book2UserService;
 import com.example.MyBookShopApp.service.BookService;
-import com.example.MyBookShopApp.service.CartService;
-import com.example.MyBookShopApp.service.KeptService;
 import com.example.MyBookShopApp.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,15 +18,13 @@ import javax.servlet.http.HttpSession;
 @Controller
 public class SearchController {
     private final BookService bookService;
-    private final CartService cartService;
     private final UserService userService;
-    private final KeptService keptService;
+    private final Book2UserService book2UserService;
 
-    public SearchController(BookService bookService, CartService cartService, UserService userService, KeptService keptService) {
+    public SearchController(BookService bookService, UserService userService, Book2UserService book2UserService) {
         this.bookService = bookService;
-        this.cartService = cartService;
         this.userService = userService;
-        this.keptService = keptService;
+        this.book2UserService = book2UserService;
     }
 
     @ModelAttribute("searchDto")
@@ -42,12 +39,12 @@ public class SearchController {
 
     @ModelAttribute("cartAmount")
     public int cartAmount(HttpSession httpSession) {
-        return cartService.getCartAmount(userService.getUserBySession(httpSession));
+        return book2UserService.getCartAmount(userService.getUserBySession(httpSession));
     }
 
     @ModelAttribute("keptAmount")
     public int keptAmount(HttpSession httpSession) {
-        return keptService.getKeptAmount(userService.getUserBySession(httpSession));
+        return book2UserService.getKeptAmount(userService.getUserBySession(httpSession));
     }
 
     @GetMapping(value = {"/search", "/search/{searchWord}"})

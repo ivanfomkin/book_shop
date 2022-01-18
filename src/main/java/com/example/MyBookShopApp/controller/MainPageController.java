@@ -2,7 +2,10 @@ package com.example.MyBookShopApp.controller;
 
 import com.example.MyBookShopApp.dto.search.SearchDto;
 import com.example.MyBookShopApp.entity.tag.TagWithWeightObject;
-import com.example.MyBookShopApp.service.*;
+import com.example.MyBookShopApp.service.Book2UserService;
+import com.example.MyBookShopApp.service.BookService;
+import com.example.MyBookShopApp.service.TagService;
+import com.example.MyBookShopApp.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,19 +17,18 @@ import java.util.List;
 @Controller
 public class MainPageController {
 
-    private final BookService bookService;
     private final TagService tagService;
     private final UserService userService;
-    private final CartService cartService;
-    private final KeptService keptService;
+    private final BookService bookService;
+    private final Book2UserService book2UserService;
 
-    public MainPageController(BookService bookService, TagService tagService, UserService userService, CartService cartService, KeptService keptService) {
-        this.bookService = bookService;
+    public MainPageController(TagService tagService, UserService userService, BookService bookService, Book2UserService book2UserService) {
         this.tagService = tagService;
         this.userService = userService;
-        this.cartService = cartService;
-        this.keptService = keptService;
+        this.bookService = bookService;
+        this.book2UserService = book2UserService;
     }
+
 
     @ModelAttribute("searchDto")
     public SearchDto searchWord() {
@@ -40,12 +42,12 @@ public class MainPageController {
 
     @ModelAttribute("cartAmount")
     public int cartAmount(HttpSession httpSession) {
-        return cartService.getCartAmount(userService.getUserBySession(httpSession));
+        return book2UserService.getCartAmount(userService.getUserBySession(httpSession));
     }
 
     @ModelAttribute("keptAmount")
     public int keptAmount(HttpSession httpSession) {
-        return keptService.getKeptAmount(userService.getUserBySession(httpSession));
+        return book2UserService.getKeptAmount(userService.getUserBySession(httpSession));
     }
 
     @GetMapping

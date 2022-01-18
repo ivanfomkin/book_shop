@@ -1,7 +1,10 @@
 package com.example.MyBookShopApp.controller;
 
 import com.example.MyBookShopApp.dto.search.SearchDto;
-import com.example.MyBookShopApp.service.*;
+import com.example.MyBookShopApp.service.Book2UserService;
+import com.example.MyBookShopApp.service.BookService;
+import com.example.MyBookShopApp.service.GenreService;
+import com.example.MyBookShopApp.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -12,18 +15,16 @@ import javax.servlet.http.HttpSession;
 @RequestMapping("/genres")
 public class GenresController {
 
-    private final GenreService genreService;
     private final BookService bookService;
     private final UserService userService;
-    private final CartService cartService;
-    private final KeptService keptService;
+    private final GenreService genreService;
+    private final Book2UserService book2UserService;
 
-    public GenresController(GenreService genreService, BookService bookService, UserService userService, CartService cartService, KeptService keptService) {
-        this.genreService = genreService;
+    public GenresController(BookService bookService, UserService userService, GenreService genreService, Book2UserService book2UserService) {
         this.bookService = bookService;
         this.userService = userService;
-        this.cartService = cartService;
-        this.keptService = keptService;
+        this.genreService = genreService;
+        this.book2UserService = book2UserService;
     }
 
     @ModelAttribute("searchDto")
@@ -33,12 +34,12 @@ public class GenresController {
 
     @ModelAttribute("cartAmount")
     public int cartAmount(HttpSession httpSession) {
-        return cartService.getCartAmount(userService.getUserBySession(httpSession));
+        return book2UserService.getCartAmount(userService.getUserBySession(httpSession));
     }
 
     @ModelAttribute("keptAmount")
     public int keptAmount(HttpSession httpSession) {
-        return keptService.getKeptAmount(userService.getUserBySession(httpSession));
+        return book2UserService.getKeptAmount(userService.getUserBySession(httpSession));
     }
 
     @GetMapping

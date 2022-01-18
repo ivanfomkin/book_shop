@@ -3,8 +3,8 @@ package com.example.MyBookShopApp.controller;
 import com.example.MyBookShopApp.dto.cart.CartDto;
 import com.example.MyBookShopApp.dto.search.SearchDto;
 import com.example.MyBookShopApp.entity.enums.Book2UserType;
+import com.example.MyBookShopApp.service.Book2UserService;
 import com.example.MyBookShopApp.service.CartService;
-import com.example.MyBookShopApp.service.KeptService;
 import com.example.MyBookShopApp.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,12 +18,12 @@ import java.util.List;
 public class CartController {
     private final CartService cartService;
     private final UserService userService;
-    private final KeptService keptService;
+    private final Book2UserService book2UserService;
 
-    public CartController(CartService cartService, UserService userService, KeptService keptService) {
+    public CartController(CartService cartService, UserService userService, Book2UserService book2UserService) {
         this.cartService = cartService;
         this.userService = userService;
-        this.keptService = keptService;
+        this.book2UserService = book2UserService;
     }
 
     @ModelAttribute("searchDto")
@@ -36,14 +36,9 @@ public class CartController {
         return new CartDto(List.of(), 0, 0);
     }
 
-    @ModelAttribute("cartAmount")
-    public int cartAmount(HttpSession httpSession) {
-        return cartService.getCartAmount(userService.getUserBySession(httpSession));
-    }
-
     @ModelAttribute("keptAmount")
     public int keptAmount(HttpSession httpSession) {
-        return keptService.getKeptAmount(userService.getUserBySession(httpSession));
+        return book2UserService.getKeptAmount(userService.getUserBySession(httpSession));
     }
 
     @GetMapping
@@ -51,6 +46,7 @@ public class CartController {
                            Model model) {
         var user = userService.getUserBySession(session);
         var cartDto = cartService.getCartDtoByUser(user);
+        model.addAttribute("cartAmount", cartDto.books().size());
         model.addAttribute("isCartEmpty", cartDto.books().size() == 0);
         model.addAttribute("bookCart", cartDto);
         return "cart";
@@ -62,15 +58,7 @@ public class CartController {
                                    @RequestParam(name = "status") Book2UserType status,
                                    HttpSession session,
                                    Model model) {
-        cartService.addBookToCart(userService.getUserBySession(session), status, slug);
-        return "redirect:/books/" + slug;
-    }
-
-    @PostMapping("/changeBookStatus/cart/remove/{slug}")
-    public String removeBookFromCart(@PathVariable String slug,
-                                     HttpSession session,
-                                     Model model) {
-        cartService.deleteBookFromCart(userService.getUserBySession(session), slug);
+        book2UserService.changeBookStatus(userService.getUserBySession(session), slug, status);
         return "redirect:/books/" + slug;
     }
 }

@@ -3,7 +3,6 @@ package com.example.MyBookShopApp.service.impl;
 import com.example.MyBookShopApp.dto.cart.CartBookElementDto;
 import com.example.MyBookShopApp.dto.cart.CartDto;
 import com.example.MyBookShopApp.entity.book.BookEntity;
-import com.example.MyBookShopApp.entity.book.links.Book2UserEntity;
 import com.example.MyBookShopApp.entity.enums.Book2UserType;
 import com.example.MyBookShopApp.entity.user.UserEntity;
 import com.example.MyBookShopApp.repository.Book2UserRepository;
@@ -39,6 +38,15 @@ public class CartServiceImpl implements CartService {
         return getCartDtoFromBookList(books);
     }
 
+    @Override
+    public List<CartBookElementDto> getPostponedBooks(UserEntity user) {
+        if (user == null) {
+            return List.of();
+        }
+        var books = bookService.getBooksByUserAndType(user, Book2UserType.KEPT);
+        return convertBooksToDto(books);
+    }
+
     private CartDto getCartDtoFromBookList(List<BookEntity> bookEntities) {
         var cartAmount = bookEntities.stream().mapToInt(b -> bookService.calculateBookDiscountPrice(b.getPrice(), b.getDiscount())).sum();
         var cartAmountOld = bookEntities.stream().mapToInt(BookEntity::getPrice).sum();
@@ -52,29 +60,6 @@ public class CartServiceImpl implements CartService {
         } else {
             return entities.stream().map(this::convertOneBookToDto).toList();
         }
-    }
-
-    @Override
-    public void deleteBookFromCart(UserEntity user, String bookSlug) {
-        book2UserRepository.deleteBookFromCart(user, bookSlug);
-    }
-
-    @Override
-    public void addBookToCart(UserEntity userBySession, Book2UserType status, String slug) {
-        var bookId = bookService.getBookIdBuSlug(slug);
-        var userId = userBySession.getId();
-        if (Boolean.FALSE.equals(book2UserRepository.existsBook2UserEntityByBookIdAndAndUserId(bookId, userId))) {
-            Book2UserEntity book2UserEntity = new Book2UserEntity();
-            book2UserEntity.setUserId(userBySession.getId());
-            book2UserEntity.setBookId(bookService.getBookIdBuSlug(slug));
-            book2UserEntity.setTypeId(book2UserTypeRepository.findBook2UserTypeEntityByName(status).getId());
-            book2UserRepository.save(book2UserEntity);
-        }
-    }
-
-    @Override
-    public int getCartAmount(UserEntity user) {
-        return book2UserRepository.countBooksByUserAndStatus(user, Book2UserType.CART);
     }
 
     private CartBookElementDto convertOneBookToDto(BookEntity bookEntity) {

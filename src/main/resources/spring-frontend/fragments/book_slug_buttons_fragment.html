@@ -4,6 +4,7 @@
     <div class="ProductCard-cart">
         <div class="ProductCard-cartElement">
             <button class="btn btn_primary btn_outline" data-sendstatus="KEPT" data-bookid="[1111]"
+                    th:attr="data-bookid = ${book.slug}"
                     data-btntype="check" data-btnradio="buyblock" data-check="false"
                     data-alttext="Отложена"><span class="btn-icon"><img
                     src="/assets/img/icons/heart.svg" alt="heart.svg"/></span><span
@@ -29,6 +30,7 @@
         </div>
         <div class="ProductCard-cartElement">
             <button class="btn btn_primary btn_outline" data-sendstatus="ARCHIVED"
+                    th:attr="data-bookid = ${book.slug}"
                     data-bookid="[1111]" data-btntype="check" data-btnradio="buyblock"
                     data-check="false" data-alttext="Вернуть из архива"><span class="btn-icon"><img
                     src="/assets/img/icons/archive.svg" alt="archive.svg"/></span><span

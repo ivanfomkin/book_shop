@@ -1,8 +1,7 @@
 package com.example.MyBookShopApp.controller;
 
 import com.example.MyBookShopApp.dto.search.SearchDto;
-import com.example.MyBookShopApp.service.CartService;
-import com.example.MyBookShopApp.service.KeptService;
+import com.example.MyBookShopApp.service.Book2UserService;
 import com.example.MyBookShopApp.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,13 +13,11 @@ import javax.servlet.http.HttpSession;
 public class DocumentsController {
 
     private final UserService userService;
-    private final CartService cartService;
-    private final KeptService keptService;
+    private final Book2UserService book2UserService;
 
-    public DocumentsController(UserService userService, CartService cartService, KeptService keptService) {
+    public DocumentsController(UserService userService, Book2UserService book2UserService) {
         this.userService = userService;
-        this.cartService = cartService;
-        this.keptService = keptService;
+        this.book2UserService = book2UserService;
     }
 
     @ModelAttribute("searchDto")
@@ -30,12 +27,12 @@ public class DocumentsController {
 
     @ModelAttribute("cartAmount")
     public int cartAmount(HttpSession httpSession) {
-        return cartService.getCartAmount(userService.getUserBySession(httpSession));
+        return book2UserService.getCartAmount(userService.getUserBySession(httpSession));
     }
 
     @ModelAttribute("keptAmount")
     public int keptAmount(HttpSession httpSession) {
-        return keptService.getKeptAmount(userService.getUserBySession(httpSession));
+        return book2UserService.getKeptAmount(userService.getUserBySession(httpSession));
     }
 
     @GetMapping("/documents")

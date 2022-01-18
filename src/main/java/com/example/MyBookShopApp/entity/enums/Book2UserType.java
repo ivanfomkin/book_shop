@@ -4,5 +4,6 @@ public enum Book2UserType {
     KEPT,
     CART,
     PAID,
-    ARCHIVED
+    ARCHIVED,
+    UNLINK
 }
