@@ -113,7 +113,7 @@ public class BookServiceJpaImpl implements BookService {
     }
 
     @Override
-    public BookSlugDto getBookBySlug(String slug) {
+    public BookSlugDto getBookSlugDtoBySlug(String slug) {
         return convertSingleBookEntityToBookSlugDto(bookRepository.findBookEntityBySlug(slug));
     }
 
@@ -131,6 +131,11 @@ public class BookServiceJpaImpl implements BookService {
     @Override
     public Integer getBookIdBuSlug(String slug) {
         return bookRepository.findBookIdBySlug(slug);
+    }
+
+    @Override
+    public BookEntity getBookEntityBySlug(String slug) {
+        return bookRepository.findBookEntityBySlug(slug);
     }
 
     private LocalDate parseToDate(String stringDate) {

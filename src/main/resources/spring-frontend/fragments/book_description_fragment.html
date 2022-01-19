@@ -275,7 +275,8 @@
         </div>
         <div class="ProductCard-assessment"><span
                 class="ProductCard-titleProp">Оцените книгу:</span><span class="Rating Rating_input"
-                                                                         data-bookid="2121"><span
+                                                                         data-bookid="2121"
+                                                                         th:attr="data-bookid = ${book.slug}"><span
                 class="Rating-stars"><span class="Rating-star">
                         <svg xmlns="http://www.w3.org/2000/svg" width="19" height="18" viewBox="0 0 19 18">
                           <g>
@@ -330,8 +331,9 @@
             </div>
         </div>
         <div class="ProductCard-cost"><span class="ProductCard-titleProp">Цена:</span><span
-                class="ProductCard-priceOld" th:text="'₽' + ${book.price}">₽300</span><span class="ProductCard-price"
-                                                                                            th:text="'₽' + ${book.discountPrice}">₽180</span>
+                class="ProductCard-priceOld" th:text="'₽' + ${book.price}" th:if="${book.price ne book.discountPrice}">₽300</span><span
+                class="ProductCard-price"
+                th:text="'₽' + ${book.discountPrice}">₽180</span>
         </div>
     </div>
     <div class="ProductCard-text">

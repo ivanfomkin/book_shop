@@ -3,6 +3,7 @@ package com.example.MyBookShopApp.service.impl;
 import com.example.MyBookShopApp.dto.book.BookRatingInfoDto;
 import com.example.MyBookShopApp.entity.book.BookEntity;
 import com.example.MyBookShopApp.entity.book.review.BookVoteEntity;
+import com.example.MyBookShopApp.entity.user.UserEntity;
 import com.example.MyBookShopApp.repository.BookVoteRepository;
 import com.example.MyBookShopApp.service.BookVoteService;
 import org.springframework.stereotype.Service;
@@ -41,6 +42,20 @@ public class BookVoteServiceImpl implements BookVoteService {
         initStarDistributionMapDefaultValues(starDistributionMap);
         ratingDto.setStarDistribution(starDistributionMap);
         return ratingDto;
+    }
+
+    @Override
+    public void rateBook(UserEntity user, BookEntity book, short rateValue) {
+        var vote = bookVoteRepository.findBookVoteEntityByUserAndBook(user, book);
+        if (vote == null) {
+            vote = new BookVoteEntity();
+            vote.setBook(book);
+            vote.setUser(user);
+            vote.setValue(rateValue);
+            bookVoteRepository.save(vote);
+        } else {
+            vote.setValue(rateValue);
+        }
     }
 
     private void initStarDistributionMapDefaultValues(Map<Integer, Integer> map) {

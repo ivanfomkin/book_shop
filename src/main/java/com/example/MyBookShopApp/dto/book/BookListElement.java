@@ -1,12 +1,11 @@
 package com.example.MyBookShopApp.dto.book;
 
-import com.example.MyBookShopApp.dto.Dto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class BookListElement implements Dto {
+public class BookListElement {
     private int id;
     private String slug;
     private String image;

@@ -1,21 +1,32 @@
 package com.example.MyBookShopApp.controller.rest;
 
 import com.example.MyBookShopApp.dto.book.BookListDto;
+import com.example.MyBookShopApp.dto.book.rate.BookRateRequestDto;
 import com.example.MyBookShopApp.service.BookService;
+import com.example.MyBookShopApp.service.BookVoteService;
 import com.example.MyBookShopApp.service.GenreService;
+import com.example.MyBookShopApp.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpSession;
+import java.util.Map;
 
 @Slf4j
 @RestController
 @RequestMapping("api/books")
 public class BookRestController {
     private final BookService bookService;
+    private final UserService userService;
     private final GenreService genreService;
+    private final BookVoteService bookVoteService;
 
-    public BookRestController(BookService bookService, GenreService genreService) {
+
+    public BookRestController(BookService bookService, UserService userService, GenreService genreService, BookVoteService bookVoteService) {
         this.bookService = bookService;
+        this.userService = userService;
         this.genreService = genreService;
+        this.bookVoteService = bookVoteService;
     }
 
     @GetMapping("/recommended")
@@ -60,5 +71,18 @@ public class BookRestController {
                                     @PathVariable String slug) {
         var genre = genreService.getGenreBySlug(slug);
         return bookService.getPageableBooksByGenre(offset, limit, genre);
+    }
+
+    @PostMapping("/rateBook")
+    public Map<String, Boolean> rateBook(BookRateRequestDto bookRateRequestDto,
+                                         HttpSession httpSession) {
+        var result = true;
+        try {
+            bookVoteService.rateBook(userService.getUserBySession(httpSession), bookService.getBookEntityBySlug(bookRateRequestDto.getBookId()), bookRateRequestDto.getValue());
+        } catch (Exception e) {
+            log.error("Book vote error: {}", e.getMessage());
+            result = false;
+        }
+        return Map.of("result", result);
     }
 }

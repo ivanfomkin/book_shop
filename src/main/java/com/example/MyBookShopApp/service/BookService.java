@@ -29,7 +29,9 @@ public interface BookService {
 
     BookListDto getPageableBooksByAuthorSlug(int offset, int limit, String authorSlug);
 
-    BookSlugDto getBookBySlug(String slug);
+    BookSlugDto getBookSlugDtoBySlug(String slug);
+
+    BookEntity getBookEntityBySlug(String slug);
 
     void updateBookImageBySlug(String slug, String imagePath);
 

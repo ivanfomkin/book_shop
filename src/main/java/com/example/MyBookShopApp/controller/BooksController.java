@@ -82,7 +82,7 @@ public class BooksController {
 
     @GetMapping("/{slug}")
     public String bookBySlug(Model model, @PathVariable String slug) {
-        model.addAttribute("book", bookService.getBookBySlug(slug));
+        model.addAttribute("book", bookService.getBookSlugDtoBySlug(slug));
         return "books/slug";
     }
 
