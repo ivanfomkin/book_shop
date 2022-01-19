@@ -13,6 +13,7 @@ import com.example.MyBookShopApp.entity.user.UserEntity;
 import com.example.MyBookShopApp.repository.BookRepository;
 import com.example.MyBookShopApp.service.AuthorService;
 import com.example.MyBookShopApp.service.BookService;
+import com.example.MyBookShopApp.service.BookVoteService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -30,14 +31,16 @@ public class BookServiceJpaImpl implements BookService {
     private final BookRepository bookRepository;
     private final AuthorService authorService;
     private final DateTimeFormatter dateTimeFormatter;
+    private final BookVoteService bookVoteService;
 
     private final String manyAuthorsAppender = " и другие";
     private final LocalDate minLocalDate;
     private final LocalDate maxLocalDate;
 
-    public BookServiceJpaImpl(BookRepository bookRepository, AuthorService authorService) {
+    public BookServiceJpaImpl(BookRepository bookRepository, AuthorService authorService, BookVoteService bookVoteService) {
         this.bookRepository = bookRepository;
         this.authorService = authorService;
+        this.bookVoteService = bookVoteService;
         dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         minLocalDate = LocalDate.of(1000, 1, 1);
         maxLocalDate = LocalDate.of(3000, 12, 31);
@@ -160,6 +163,7 @@ public class BookServiceJpaImpl implements BookService {
         dto.setTitle(bookEntity.getTitle());
         dto.setPrice(bookEntity.getPrice());
         dto.setDiscountPrice(calculateBookDiscountPrice(bookEntity.getPrice(), bookEntity.getDiscount()));
+        dto.setRating(bookVoteService.getBookRatingDto(bookEntity));
         dto.setImage(bookEntity.getImage());
         dto.setSlug(bookEntity.getSlug());
         dto.setTags(bookEntity.getTags().stream().map(TagEntity::getName).toList());
@@ -180,7 +184,7 @@ public class BookServiceJpaImpl implements BookService {
         dto.setTitle(bookEntity.getTitle());
         dto.setDiscount(bookEntity.getDiscount());
         dto.setBestseller(bookEntity.getIsBestseller());
-        dto.setRating("false"); //ToDo (ivan.fomkin) 21.12.21: Пока тут заглушка. Реализовать корректное заполнение этого поля
+        dto.setRating(bookVoteService.getBookRating(bookEntity));
         dto.setStatus("false"); //ToDo (ivan.fomkin) 21.12.21: Пока тут заглушка. Реализовать корректное заполнение этого поля
         dto.setPrice(bookEntity.getPrice());
         dto.setDiscountPrice(calculateBookDiscountPrice(bookEntity.getPrice(), bookEntity.getDiscount()));

@@ -1,0 +1,607 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+    <changeSet author="ivan.fomkin" id="1642578096126-1">
+        <insert tableName="users">
+            <column name="balance" valueNumeric="6972"/>
+            <column name="hash" value="d685c363-5d69-4238-9133-9564696fb390"/>
+            <column name="name" value="Nicki Paszak"/>
+            <column name="reg_time" valueDate="2021-04-02T20:06:19"/>
+        </insert>
+        <insert tableName="users">
+            <column name="balance" valueNumeric="5227"/>
+            <column name="hash" value="fac6bc84-10d7-4233-9ba0-d4f22c73b1e1"/>
+            <column name="name" value="Stanislas Kemwal"/>
+            <column name="reg_time" valueDate="2021-01-29T22:58:01"/>
+        </insert>
+        <insert tableName="users">
+            <column name="balance" valueNumeric="6252"/>
+            <column name="hash" value="bee6a1bf-1607-45b1-ab85-39803625ccda"/>
+            <column name="name" value="Garold Brislen"/>
+            <column name="reg_time" valueDate="2021-04-14T07:09:19"/>
+        </insert>
+        <insert tableName="users">
+            <column name="balance" valueNumeric="2086"/>
+            <column name="hash" value="79377474-e2bc-405c-bf82-9619edc51f4e"/>
+            <column name="name" value="Sheri Lowrance"/>
+            <column name="reg_time" valueDate="2021-07-07T05:36:46"/>
+        </insert>
+        <insert tableName="users">
+            <column name="balance" valueNumeric="8055"/>
+            <column name="hash" value="3d94adaf-08cc-4edc-847d-364ed4c911a8"/>
+            <column name="name" value="Milty Gallahar"/>
+            <column name="reg_time" valueDate="2021-11-27T05:45:55"/>
+        </insert>
+        <insert tableName="users">
+            <column name="balance" valueNumeric="6093"/>
+            <column name="hash" value="d3b95612-82ea-4977-a92a-25fc6fd02ca6"/>
+            <column name="name" value="Lyn Callar"/>
+            <column name="reg_time" valueDate="2021-05-03T23:26:32"/>
+        </insert>
+        <insert tableName="users">
+            <column name="balance" valueNumeric="8060"/>
+            <column name="hash" value="8464f1e2-3026-49f3-86f1-0db3c42ac20b"/>
+            <column name="name" value="Etheline Armstrong"/>
+            <column name="reg_time" valueDate="2021-09-24T13:27:58"/>
+        </insert>
+        <insert tableName="users">
+            <column name="balance" valueNumeric="6397"/>
+            <column name="hash" value="240ffa54-f706-4e3b-a596-ac1521b434f2"/>
+            <column name="name" value="Patti Birtle"/>
+            <column name="reg_time" valueDate="2021-05-03T19:10:03"/>
+        </insert>
+        <insert tableName="users">
+            <column name="balance" valueNumeric="6920"/>
+            <column name="hash" value="8c8d4b3b-812a-484a-beca-1bd78f6df987"/>
+            <column name="name" value="Trey Griffitt"/>
+            <column name="reg_time" valueDate="2021-09-04T18:49:05"/>
+        </insert>
+        <insert tableName="users">
+            <column name="balance" valueNumeric="8133"/>
+            <column name="hash" value="76d61518-b184-45fc-bdf9-78aa5a217b6c"/>
+            <column name="name" value="Reuben Henriksson"/>
+            <column name="reg_time" valueDate="2022-01-05T19:24:12"/>
+        </insert>
+        <insert tableName="users">
+            <column name="balance" valueNumeric="7351"/>
+            <column name="hash" value="e1c449a7-3ad9-4d62-834d-7130a9a46689"/>
+            <column name="name" value="Margaretta Stapley"/>
+            <column name="reg_time" valueDate="2021-12-26T13:31:19"/>
+        </insert>
+        <insert tableName="users">
+            <column name="balance" valueNumeric="4946"/>
+            <column name="hash" value="3b49f4e5-952f-45d4-8e4f-9f6434d93685"/>
+            <column name="name" value="Carroll Tomasello"/>
+            <column name="reg_time" valueDate="2021-10-14T05:44:57"/>
+        </insert>
+        <insert tableName="users">
+            <column name="balance" valueNumeric="3679"/>
+            <column name="hash" value="e1647446-035d-4ed4-bba0-67444b6b1ef6"/>
+            <column name="name" value="Nanon Pletts"/>
+            <column name="reg_time" valueDate="2021-03-06T20:44:09"/>
+        </insert>
+        <insert tableName="users">
+            <column name="balance" valueNumeric="3094"/>
+            <column name="hash" value="6dbcad48-cabe-496f-a133-6658f5f080ff"/>
+            <column name="name" value="Katey Chessum"/>
+            <column name="reg_time" valueDate="2021-11-25T21:48:55"/>
+        </insert>
+        <insert tableName="users">
+            <column name="balance" valueNumeric="2108"/>
+            <column name="hash" value="85b2313b-0885-4854-8cce-11b917a08385"/>
+            <column name="name" value="Leilah Burnard"/>
+            <column name="reg_time" valueDate="2021-02-18T12:47:31"/>
+        </insert>
+        <insert tableName="users">
+            <column name="balance" valueNumeric="7401"/>
+            <column name="hash" value="849d67ee-4c80-48b0-bc84-aa3d1ee573f0"/>
+            <column name="name" value="Gustavus Demonge"/>
+            <column name="reg_time" valueDate="2021-12-07T23:26:01"/>
+        </insert>
+        <insert tableName="users">
+            <column name="balance" valueNumeric="3997"/>
+            <column name="hash" value="be0dec78-5a29-42e6-bc17-aba1021c718d"/>
+            <column name="name" value="Frankie Maguire"/>
+            <column name="reg_time" valueDate="2021-02-13T17:05:52"/>
+        </insert>
+        <insert tableName="users">
+            <column name="balance" valueNumeric="8827"/>
+            <column name="hash" value="45088284-e658-457d-b310-5496eb73f115"/>
+            <column name="name" value="Rriocard Ritelli"/>
+            <column name="reg_time" valueDate="2021-09-24T00:44:06"/>
+        </insert>
+        <insert tableName="users">
+            <column name="balance" valueNumeric="6537"/>
+            <column name="hash" value="a7e77267-e88e-4e00-900d-2460790140e7"/>
+            <column name="name" value="Elmore Brown"/>
+            <column name="reg_time" valueDate="2022-01-15T12:36:58"/>
+        </insert>
+        <insert tableName="users">
+            <column name="balance" valueNumeric="5528"/>
+            <column name="hash" value="25f3e58c-e2d6-4843-9718-3a85477ba945"/>
+            <column name="name" value="Sheba Leftwich"/>
+            <column name="reg_time" valueDate="2021-03-11T21:11:02"/>
+        </insert>
+        <insert tableName="users">
+            <column name="balance" valueNumeric="4975"/>
+            <column name="hash" value="ef16dbc3-c58b-4d67-82f9-f576731b70ba"/>
+            <column name="name" value="Vinny Vanacci"/>
+            <column name="reg_time" valueDate="2021-06-20T05:52:28"/>
+        </insert>
+        <insert tableName="users">
+            <column name="balance" valueNumeric="2807"/>
+            <column name="hash" value="1edd31d9-2968-4595-ba9e-d04fa6a59fe6"/>
+            <column name="name" value="Tamas Grigor"/>
+            <column name="reg_time" valueDate="2021-10-07T05:47:59"/>
+        </insert>
+        <insert tableName="users">
+            <column name="balance" valueNumeric="3943"/>
+            <column name="hash" value="cb58a09f-7e8a-43b7-a4d3-fb9f13a58a27"/>
+            <column name="name" value="Ruth Vigurs"/>
+            <column name="reg_time" valueDate="2021-02-21T11:27:05"/>
+        </insert>
+        <insert tableName="users">
+            <column name="balance" valueNumeric="3253"/>
+            <column name="hash" value="d19bcad7-936b-47b3-bf9d-eb1fd3327ff1"/>
+            <column name="name" value="Mandy Moorcroft"/>
+            <column name="reg_time" valueDate="2021-03-17T15:49:32"/>
+        </insert>
+        <insert tableName="users">
+            <column name="balance" valueNumeric="6584"/>
+            <column name="hash" value="c20a1de7-5a70-45d2-be4d-cf63be0668d0"/>
+            <column name="name" value="Zarah Leicester"/>
+            <column name="reg_time" valueDate="2021-06-08T16:20:21"/>
+        </insert>
+        <insert tableName="users">
+            <column name="balance" valueNumeric="4528"/>
+            <column name="hash" value="b1c7f03a-3e9d-4eb2-8012-d48d8bac3736"/>
+            <column name="name" value="Klemens Battista"/>
+            <column name="reg_time" valueDate="2021-05-15T10:08:08"/>
+        </insert>
+        <insert tableName="users">
+            <column name="balance" valueNumeric="6136"/>
+            <column name="hash" value="e3747f6d-68a8-4b7f-b6c9-5d8115bf9404"/>
+            <column name="name" value="Micheil Conahy"/>
+            <column name="reg_time" valueDate="2021-05-18T10:52:53"/>
+        </insert>
+        <insert tableName="users">
+            <column name="balance" valueNumeric="8321"/>
+            <column name="hash" value="9ded0d88-f3c7-4f8f-b98a-9ee6f798a865"/>
+            <column name="name" value="Wallie Abriani"/>
+            <column name="reg_time" valueDate="2021-11-16T18:56:53"/>
+        </insert>
+        <insert tableName="users">
+            <column name="balance" valueNumeric="6393"/>
+            <column name="hash" value="3e61bb24-7eb6-437a-9cd1-fba83dfa6a12"/>
+            <column name="name" value="Denna Pepperell"/>
+            <column name="reg_time" valueDate="2021-10-27T14:39:05"/>
+        </insert>
+        <insert tableName="users">
+            <column name="balance" valueNumeric="5240"/>
+            <column name="hash" value="bb9baea4-6d4d-4ee7-9797-c4908102423f"/>
+            <column name="name" value="Barbee Neachell"/>
+            <column name="reg_time" valueDate="2021-01-23T18:43:47"/>
+        </insert>
+        <insert tableName="users">
+            <column name="balance" valueNumeric="1738"/>
+            <column name="hash" value="43ebf6d5-fcf6-4faf-84d0-77d660cf031a"/>
+            <column name="name" value="Jim Greenly"/>
+            <column name="reg_time" valueDate="2021-05-03T01:09:13"/>
+        </insert>
+        <insert tableName="users">
+            <column name="balance" valueNumeric="3903"/>
+            <column name="hash" value="7eb875a5-764f-453e-8209-f23c8ea2ad9e"/>
+            <column name="name" value="Misha Whybrow"/>
+            <column name="reg_time" valueDate="2021-08-23T02:33:48"/>
+        </insert>
+        <insert tableName="users">
+            <column name="balance" valueNumeric="5087"/>
+            <column name="hash" value="8968aefd-7fb1-4939-9c19-ec45a0947224"/>
+            <column name="name" value="Hodge Millmoe"/>
+            <column name="reg_time" valueDate="2021-12-23T05:54:30"/>
+        </insert>
+        <insert tableName="users">
+            <column name="balance" valueNumeric="8886"/>
+            <column name="hash" value="e719a89e-06df-4a99-8d8b-d9a92559d7c3"/>
+            <column name="name" value="Federico Willerton"/>
+            <column name="reg_time" valueDate="2022-01-10T23:20:48"/>
+        </insert>
+        <insert tableName="users">
+            <column name="balance" valueNumeric="3801"/>
+            <column name="hash" value="e69ef957-d3e4-459c-96f6-5b5de3e5b84e"/>
+            <column name="name" value="Ian McBrearty"/>
+            <column name="reg_time" valueDate="2021-03-20T03:51:55"/>
+        </insert>
+        <insert tableName="users">
+            <column name="balance" valueNumeric="586"/>
+            <column name="hash" value="ae3ef6dc-bf08-4967-bf37-1eb715c71e63"/>
+            <column name="name" value="Vincenz Parram"/>
+            <column name="reg_time" valueDate="2021-11-29T02:38:28"/>
+        </insert>
+        <insert tableName="users">
+            <column name="balance" valueNumeric="1876"/>
+            <column name="hash" value="7e069e9f-abd5-4580-ab79-63e74c98eeb4"/>
+            <column name="name" value="Freddie MacLaughlin"/>
+            <column name="reg_time" valueDate="2021-02-27T18:50:15"/>
+        </insert>
+        <insert tableName="users">
+            <column name="balance" valueNumeric="8655"/>
+            <column name="hash" value="46393f72-3a2e-457b-b807-cbfc8cc652a4"/>
+            <column name="name" value="Cletus Wedderburn"/>
+            <column name="reg_time" valueDate="2022-01-14T13:13:00"/>
+        </insert>
+        <insert tableName="users">
+            <column name="balance" valueNumeric="3115"/>
+            <column name="hash" value="a9afdd66-f239-4f78-aa58-54f21a8d8ecc"/>
+            <column name="name" value="Evangelia Broadbridge"/>
+            <column name="reg_time" valueDate="2021-02-02T06:45:39"/>
+        </insert>
+        <insert tableName="users">
+            <column name="balance" valueNumeric="1878"/>
+            <column name="hash" value="dce41dbf-2ea4-4daf-a89d-aecfee6c26ee"/>
+            <column name="name" value="Waylen Arnfield"/>
+            <column name="reg_time" valueDate="2021-04-29T22:43:47"/>
+        </insert>
+        <insert tableName="users">
+            <column name="balance" valueNumeric="9246"/>
+            <column name="hash" value="d7f1436d-83ea-4c0a-84ba-ae8829140f5e"/>
+            <column name="name" value="Janeen Brawson"/>
+            <column name="reg_time" valueDate="2021-12-23T05:43:38"/>
+        </insert>
+        <insert tableName="users">
+            <column name="balance" valueNumeric="1613"/>
+            <column name="hash" value="09873816-c418-4dd2-8446-65986eda257c"/>
+            <column name="name" value="Alicia Fairs"/>
+            <column name="reg_time" valueDate="2021-09-21T04:01:08"/>
+        </insert>
+        <insert tableName="users">
+            <column name="balance" valueNumeric="7"/>
+            <column name="hash" value="5cbef635-0113-42ba-917f-7c497fb168fa"/>
+            <column name="name" value="Jaclin Joney"/>
+            <column name="reg_time" valueDate="2021-08-09T19:11:14"/>
+        </insert>
+        <insert tableName="users">
+            <column name="balance" valueNumeric="1752"/>
+            <column name="hash" value="6caa8b44-e731-45a1-bc4e-9a076c998915"/>
+            <column name="name" value="Shem Jaggs"/>
+            <column name="reg_time" valueDate="2021-08-16T18:14:34"/>
+        </insert>
+        <insert tableName="users">
+            <column name="balance" valueNumeric="3705"/>
+            <column name="hash" value="cacca270-9fda-4742-9276-850f85d5ef4b"/>
+            <column name="name" value="Alyssa Poynzer"/>
+            <column name="reg_time" valueDate="2021-04-13T11:02:09"/>
+        </insert>
+        <insert tableName="users">
+            <column name="balance" valueNumeric="9704"/>
+            <column name="hash" value="a9227b24-6631-4d5a-b240-6c0b300f8bd2"/>
+            <column name="name" value="Spence Neate"/>
+            <column name="reg_time" valueDate="2021-07-26T04:53:07"/>
+        </insert>
+        <insert tableName="users">
+            <column name="balance" valueNumeric="437"/>
+            <column name="hash" value="e0bf89d2-9aa3-4466-b6f1-085965ffe764"/>
+            <column name="name" value="Pasquale Bohike"/>
+            <column name="reg_time" valueDate="2021-08-03T15:58:11"/>
+        </insert>
+        <insert tableName="users">
+            <column name="balance" valueNumeric="9569"/>
+            <column name="hash" value="7d8c51ff-0670-4bb1-b186-a2da81bd8cdd"/>
+            <column name="name" value="Shaw Garie"/>
+            <column name="reg_time" valueDate="2021-03-13T03:39:01"/>
+        </insert>
+        <insert tableName="users">
+            <column name="balance" valueNumeric="5741"/>
+            <column name="hash" value="8d6ed975-3978-4278-878b-62a04edc5ae8"/>
+            <column name="name" value="Nealy Uebel"/>
+            <column name="reg_time" valueDate="2021-12-07T04:10:05"/>
+        </insert>
+        <insert tableName="users">
+            <column name="balance" valueNumeric="4759"/>
+            <column name="hash" value="48dfa389-e266-4502-a68a-31e8768039fd"/>
+            <column name="name" value="Sibilla Leopard"/>
+            <column name="reg_time" valueDate="2021-08-13T03:17:29"/>
+        </insert>
+        <insert tableName="users">
+            <column name="balance" valueNumeric="2372"/>
+            <column name="hash" value="a8471771-f869-495a-afbb-c15334d3f9ec"/>
+            <column name="name" value="Verna Charlesworth"/>
+            <column name="reg_time" valueDate="2021-02-06T23:13:00"/>
+        </insert>
+        <insert tableName="users">
+            <column name="balance" valueNumeric="7414"/>
+            <column name="hash" value="92f816f7-6bc5-4743-93d0-926db814b88d"/>
+            <column name="name" value="Micaela Willans"/>
+            <column name="reg_time" valueDate="2021-08-20T00:17:34"/>
+        </insert>
+        <insert tableName="users">
+            <column name="balance" valueNumeric="9097"/>
+            <column name="hash" value="5e6ed219-e34f-4fc9-85ec-2ad2d3f94f16"/>
+            <column name="name" value="Starlin Tallent"/>
+            <column name="reg_time" valueDate="2021-07-18T15:57:57"/>
+        </insert>
+        <insert tableName="users">
+            <column name="balance" valueNumeric="8264"/>
+            <column name="hash" value="17e27109-fa22-4ef7-876f-4bcbb7f2ab80"/>
+            <column name="name" value="Dominica Redley"/>
+            <column name="reg_time" valueDate="2021-06-17T20:24:32"/>
+        </insert>
+        <insert tableName="users">
+            <column name="balance" valueNumeric="9217"/>
+            <column name="hash" value="7a85dac2-68b3-4478-81ee-4d43c66311ea"/>
+            <column name="name" value="Nyssa Hunn"/>
+            <column name="reg_time" valueDate="2021-08-20T04:53:40"/>
+        </insert>
+        <insert tableName="users">
+            <column name="balance" valueNumeric="1869"/>
+            <column name="hash" value="718e73bb-c8d5-404e-94c8-a7690cfc73c1"/>
+            <column name="name" value="Yale Lappine"/>
+            <column name="reg_time" valueDate="2021-05-22T09:04:59"/>
+        </insert>
+        <insert tableName="users">
+            <column name="balance" valueNumeric="8352"/>
+            <column name="hash" value="d55c6b95-fe16-4e3e-aa42-85102d1b0719"/>
+            <column name="name" value="Gaylor Rodd"/>
+            <column name="reg_time" valueDate="2022-01-05T12:59:39"/>
+        </insert>
+        <insert tableName="users">
+            <column name="balance" valueNumeric="5805"/>
+            <column name="hash" value="bb2b0843-4a25-40b3-95a2-298880e84a67"/>
+            <column name="name" value="Meg Nickoles"/>
+            <column name="reg_time" valueDate="2021-05-31T10:31:59"/>
+        </insert>
+        <insert tableName="users">
+            <column name="balance" valueNumeric="9104"/>
+            <column name="hash" value="dd30ce24-ed30-4dbd-9644-ab3278b2017e"/>
+            <column name="name" value="Dennis Curtin"/>
+            <column name="reg_time" valueDate="2021-05-17T23:00:21"/>
+        </insert>
+        <insert tableName="users">
+            <column name="balance" valueNumeric="6978"/>
+            <column name="hash" value="4d39a5b7-9832-42cd-93c2-1f62ffff63e0"/>
+            <column name="name" value="Tomkin Clarkson"/>
+            <column name="reg_time" valueDate="2021-12-16T16:59:45"/>
+        </insert>
+        <insert tableName="users">
+            <column name="balance" valueNumeric="5410"/>
+            <column name="hash" value="67e37eb4-4ba9-4907-be8c-ef40267adced"/>
+            <column name="name" value="Orelee Thairs"/>
+            <column name="reg_time" valueDate="2021-06-27T16:05:07"/>
+        </insert>
+        <insert tableName="users">
+            <column name="balance" valueNumeric="9696"/>
+            <column name="hash" value="4daba897-58f3-47b4-8231-45b96b9c7007"/>
+            <column name="name" value="Kamillah Kennler"/>
+            <column name="reg_time" valueDate="2021-12-03T19:17:04"/>
+        </insert>
+        <insert tableName="users">
+            <column name="balance" valueNumeric="5322"/>
+            <column name="hash" value="4abe4a4c-a105-4a2d-884f-d4afb08ee410"/>
+            <column name="name" value="Zeke Dradey"/>
+            <column name="reg_time" valueDate="2021-03-28T23:25:36"/>
+        </insert>
+        <insert tableName="users">
+            <column name="balance" valueNumeric="2593"/>
+            <column name="hash" value="b84ea0e5-66cd-48f4-837c-adf7b4851eea"/>
+            <column name="name" value="Miriam Bulfield"/>
+            <column name="reg_time" valueDate="2021-01-31T10:33:20"/>
+        </insert>
+        <insert tableName="users">
+            <column name="balance" valueNumeric="4003"/>
+            <column name="hash" value="9fc77dad-387a-4d79-8fea-1fe4cd377edf"/>
+            <column name="name" value="Carolann Lowdiane"/>
+            <column name="reg_time" valueDate="2021-05-09T15:14:53"/>
+        </insert>
+        <insert tableName="users">
+            <column name="balance" valueNumeric="8671"/>
+            <column name="hash" value="aa330d74-b73b-40cf-ad45-b18454762710"/>
+            <column name="name" value="Stanfield Addie"/>
+            <column name="reg_time" valueDate="2021-09-03T13:31:16"/>
+        </insert>
+        <insert tableName="users">
+            <column name="balance" valueNumeric="4633"/>
+            <column name="hash" value="29b9fb26-cb60-477f-b2f2-47ad99035dd7"/>
+            <column name="name" value="Hilda Turville"/>
+            <column name="reg_time" valueDate="2021-06-02T22:16:06"/>
+        </insert>
+        <insert tableName="users">
+            <column name="balance" valueNumeric="9022"/>
+            <column name="hash" value="b82f00d7-0587-4371-adc8-55a180ad3918"/>
+            <column name="name" value="Jacobo Gibbetts"/>
+            <column name="reg_time" valueDate="2021-12-27T00:55:42"/>
+        </insert>
+        <insert tableName="users">
+            <column name="balance" valueNumeric="779"/>
+            <column name="hash" value="3c829b7d-8616-4df2-92b9-a942f383171b"/>
+            <column name="name" value="Eben Chittleburgh"/>
+            <column name="reg_time" valueDate="2021-05-23T10:15:31"/>
+        </insert>
+        <insert tableName="users">
+            <column name="balance" valueNumeric="1486"/>
+            <column name="hash" value="a0ebbfee-9b51-48f9-bb2a-23943fb97bc3"/>
+            <column name="name" value="Mycah Blaxall"/>
+            <column name="reg_time" valueDate="2021-04-10T14:03:14"/>
+        </insert>
+        <insert tableName="users">
+            <column name="balance" valueNumeric="6993"/>
+            <column name="hash" value="d18a4d35-cb92-4ffb-abaf-86e309d15528"/>
+            <column name="name" value="Brittni Christian"/>
+            <column name="reg_time" valueDate="2021-12-03T13:38:08"/>
+        </insert>
+        <insert tableName="users">
+            <column name="balance" valueNumeric="534"/>
+            <column name="hash" value="6cc6ecbf-b3c4-40e5-bded-6ff6fc87cf33"/>
+            <column name="name" value="Titus Warnock"/>
+            <column name="reg_time" valueDate="2021-09-23T05:17:17"/>
+        </insert>
+        <insert tableName="users">
+            <column name="balance" valueNumeric="8891"/>
+            <column name="hash" value="31c33dbe-4235-4393-8f88-067c9e8eb6ea"/>
+            <column name="name" value="Gilbertina Kelinge"/>
+            <column name="reg_time" valueDate="2021-02-07T20:27:58"/>
+        </insert>
+        <insert tableName="users">
+            <column name="balance" valueNumeric="544"/>
+            <column name="hash" value="f6e301f3-3b8f-4bd5-b253-a2a7c3064d10"/>
+            <column name="name" value="Carina Lacelett"/>
+            <column name="reg_time" valueDate="2021-07-30T09:57:49"/>
+        </insert>
+        <insert tableName="users">
+            <column name="balance" valueNumeric="7018"/>
+            <column name="hash" value="97e4aa2d-b45a-49d9-86ff-ae0a51baa0ec"/>
+            <column name="name" value="Robinia Gilbee"/>
+            <column name="reg_time" valueDate="2021-05-05T14:54:22"/>
+        </insert>
+        <insert tableName="users">
+            <column name="balance" valueNumeric="6422"/>
+            <column name="hash" value="f1e285ce-a4b5-46c2-9628-67609443ecb3"/>
+            <column name="name" value="Allene Andras"/>
+            <column name="reg_time" valueDate="2021-03-27T08:01:53"/>
+        </insert>
+        <insert tableName="users">
+            <column name="balance" valueNumeric="6148"/>
+            <column name="hash" value="140f5775-3d3a-43bf-a966-9087c7a35e0c"/>
+            <column name="name" value="Nicolea Silcock"/>
+            <column name="reg_time" valueDate="2021-04-25T10:53:06"/>
+        </insert>
+        <insert tableName="users">
+            <column name="balance" valueNumeric="8247"/>
+            <column name="hash" value="40cc081d-2b25-4934-91ab-c9079f1e4408"/>
+            <column name="name" value="Kip Focke"/>
+            <column name="reg_time" valueDate="2021-04-02T13:02:11"/>
+        </insert>
+        <insert tableName="users">
+            <column name="balance" valueNumeric="5452"/>
+            <column name="hash" value="1afe0873-3071-4ea6-8c9a-3228a7d627b3"/>
+            <column name="name" value="Ryley Ramsell"/>
+            <column name="reg_time" valueDate="2021-11-20T22:27:08"/>
+        </insert>
+        <insert tableName="users">
+            <column name="balance" valueNumeric="4819"/>
+            <column name="hash" value="e2def9fe-3e10-41b7-b1ce-9bb999da2e4b"/>
+            <column name="name" value="Richmond Wetheril"/>
+            <column name="reg_time" valueDate="2021-11-02T13:24:11"/>
+        </insert>
+        <insert tableName="users">
+            <column name="balance" valueNumeric="4578"/>
+            <column name="hash" value="2a4aaff4-3131-4dfa-a547-ccdc0533c7b6"/>
+            <column name="name" value="Yalonda Jost"/>
+            <column name="reg_time" valueDate="2021-08-25T02:37:51"/>
+        </insert>
+        <insert tableName="users">
+            <column name="balance" valueNumeric="461"/>
+            <column name="hash" value="e73325e6-6425-451a-ac40-78e4e799a4d8"/>
+            <column name="name" value="Gaynor Shutle"/>
+            <column name="reg_time" valueDate="2021-08-01T04:34:16"/>
+        </insert>
+        <insert tableName="users">
+            <column name="balance" valueNumeric="5705"/>
+            <column name="hash" value="8e38c3fe-31f9-406a-aacc-c42db3fe1a34"/>
+            <column name="name" value="Basil Pybus"/>
+            <column name="reg_time" valueDate="2021-10-09T19:47:38"/>
+        </insert>
+        <insert tableName="users">
+            <column name="balance" valueNumeric="9304"/>
+            <column name="hash" value="ae8f0449-a5e3-43b8-884c-a196eeeb3cab"/>
+            <column name="name" value="Holly Pittock"/>
+            <column name="reg_time" valueDate="2021-12-01T23:35:13"/>
+        </insert>
+        <insert tableName="users">
+            <column name="balance" valueNumeric="3741"/>
+            <column name="hash" value="9499b16b-eac7-4e07-beb7-5b24ef0007e4"/>
+            <column name="name" value="Lucina Piffe"/>
+            <column name="reg_time" valueDate="2021-12-14T04:22:51"/>
+        </insert>
+        <insert tableName="users">
+            <column name="balance" valueNumeric="5651"/>
+            <column name="hash" value="57731dd0-79b1-4668-80ed-adf1ac6eb4a9"/>
+            <column name="name" value="Tera Olenov"/>
+            <column name="reg_time" valueDate="2021-05-19T12:46:35"/>
+        </insert>
+        <insert tableName="users">
+            <column name="balance" valueNumeric="8458"/>
+            <column name="hash" value="de941e9e-f507-4ef8-b125-3e7b9f771855"/>
+            <column name="name" value="Neda Peerless"/>
+            <column name="reg_time" valueDate="2021-03-05T03:54:16"/>
+        </insert>
+        <insert tableName="users">
+            <column name="balance" valueNumeric="3977"/>
+            <column name="hash" value="ae6cc036-894d-416a-91c0-b1634e11d256"/>
+            <column name="name" value="Tonia McMorland"/>
+            <column name="reg_time" valueDate="2021-07-28T15:32:32"/>
+        </insert>
+        <insert tableName="users">
+            <column name="balance" valueNumeric="1875"/>
+            <column name="hash" value="7e4d3027-9240-4110-b834-74f62b66c707"/>
+            <column name="name" value="Lucinda Rowlatt"/>
+            <column name="reg_time" valueDate="2021-10-07T00:33:11"/>
+        </insert>
+        <insert tableName="users">
+            <column name="balance" valueNumeric="428"/>
+            <column name="hash" value="a0e77237-fbb4-41f6-a0d2-b267eef576af"/>
+            <column name="name" value="Thoma Lewer"/>
+            <column name="reg_time" valueDate="2021-11-19T19:40:59"/>
+        </insert>
+        <insert tableName="users">
+            <column name="balance" valueNumeric="1769"/>
+            <column name="hash" value="65716b68-ce56-4da8-93a5-06df33f4211c"/>
+            <column name="name" value="Tanney Napolione"/>
+            <column name="reg_time" valueDate="2021-06-28T09:28:05"/>
+        </insert>
+        <insert tableName="users">
+            <column name="balance" valueNumeric="3839"/>
+            <column name="hash" value="65b8b7df-d8e7-40f1-ac9e-0211e5be250f"/>
+            <column name="name" value="Kanya Crole"/>
+            <column name="reg_time" valueDate="2021-02-08T19:12:03"/>
+        </insert>
+        <insert tableName="users">
+            <column name="balance" valueNumeric="767"/>
+            <column name="hash" value="982a0f21-ea41-42d2-b7dc-d939176304b3"/>
+            <column name="name" value="Liane Habercham"/>
+            <column name="reg_time" valueDate="2021-10-08T17:51:44"/>
+        </insert>
+        <insert tableName="users">
+            <column name="balance" valueNumeric="7972"/>
+            <column name="hash" value="e0974c90-db6d-4dd2-bdf7-edab6578df8c"/>
+            <column name="name" value="Maxine Borrows"/>
+            <column name="reg_time" valueDate="2021-09-27T20:50:21"/>
+        </insert>
+        <insert tableName="users">
+            <column name="balance" valueNumeric="7955"/>
+            <column name="hash" value="6590be1e-6db4-4f44-afd7-14dcb9a4dcc1"/>
+            <column name="name" value="Janeczka Outibridge"/>
+            <column name="reg_time" valueDate="2021-05-16T01:44:07"/>
+        </insert>
+        <insert tableName="users">
+            <column name="balance" valueNumeric="2234"/>
+            <column name="hash" value="56a57cf7-f911-4f6c-93f7-f97ce6b02852"/>
+            <column name="name" value="Jennie Follet"/>
+            <column name="reg_time" valueDate="2021-04-28T17:40:28"/>
+        </insert>
+        <insert tableName="users">
+            <column name="balance" valueNumeric="6529"/>
+            <column name="hash" value="c4ab17f7-62b8-4476-b721-bf8b78c2c8b6"/>
+            <column name="name" value="Pier Bilbee"/>
+            <column name="reg_time" valueDate="2021-08-21T12:38:08"/>
+        </insert>
+        <insert tableName="users">
+            <column name="balance" valueNumeric="2090"/>
+            <column name="hash" value="4b833f17-81de-400b-8fa5-76c529ba8348"/>
+            <column name="name" value="Ring Ridett"/>
+            <column name="reg_time" valueDate="2021-02-03T05:56:48"/>
+        </insert>
+        <insert tableName="users">
+            <column name="balance" valueNumeric="5568"/>
+            <column name="hash" value="00d4cd0e-8792-4885-ba49-155746af5c68"/>
+            <column name="name" value="Morie Ducarne"/>
+            <column name="reg_time" valueDate="2021-02-11T17:51:45"/>
+        </insert>
+        <insert tableName="users">
+            <column name="balance" valueNumeric="4042"/>
+            <column name="hash" value="65a77f50-cb27-40cc-b352-da77e6abedeb"/>
+            <column name="name" value="Florida Djuricic"/>
+            <column name="reg_time" valueDate="2021-10-16T07:53:22"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>

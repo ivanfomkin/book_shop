@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <changeSet author="ivan.fomkin" id="1">
+        <createTable tableName="book_votes">
+            <column autoIncrement="true" name="id" type="INTEGER">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="book2votes_pkey"/>
+            </column>
+            <column name="user_id" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="book_id" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="value" type="INT2">
+                <constraints nullable="false" checkConstraint="CHECK (value &gt;= 0 AND value &lt;= 5)"/>
+            </column>
+        </createTable>
+        <addUniqueConstraint tableName="book_votes" columnNames="book_id, user_id"/>
+    </changeSet>
+</databaseChangeLog>

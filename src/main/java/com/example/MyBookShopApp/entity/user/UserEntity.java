@@ -1,6 +1,7 @@
 package com.example.MyBookShopApp.entity.user;
 
 import com.example.MyBookShopApp.entity.book.BookEntity;
+import com.example.MyBookShopApp.entity.book.review.BookVoteEntity;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
@@ -37,4 +38,7 @@ public class UserEntity {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "book_id"))
     private List<BookEntity> userBooks;
+
+    @OneToMany(mappedBy = "user")
+    private List<BookVoteEntity> userVotes;
 }

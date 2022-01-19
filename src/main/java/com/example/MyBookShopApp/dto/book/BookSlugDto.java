@@ -14,6 +14,7 @@ public class BookSlugDto {
     private Integer discountPrice;
     private String description;
     private String slug;
+    private BookRatingInfoDto rating;
     private List<String> tags;
     private List<BookFileDto> files;
 }
