@@ -81,9 +81,13 @@ public class BooksController {
     }
 
     @GetMapping("/{slug}")
-    public String bookBySlug(Model model, @PathVariable String slug) {
+    public String bookBySlug(Model model, @PathVariable String slug, HttpSession httpSession) {
         model.addAttribute("book", bookService.getBookSlugDtoBySlug(slug));
-        return "books/slug";
+        if (userService.isAuthorized(httpSession)) {
+            return "books/slugmy";
+        } else {
+            return "books/slug";
+        }
     }
 
     @PostMapping("/{slug}/img/save")

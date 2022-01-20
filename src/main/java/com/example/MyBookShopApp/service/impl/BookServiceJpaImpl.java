@@ -12,6 +12,7 @@ import com.example.MyBookShopApp.entity.tag.TagEntity;
 import com.example.MyBookShopApp.entity.user.UserEntity;
 import com.example.MyBookShopApp.repository.BookRepository;
 import com.example.MyBookShopApp.service.AuthorService;
+import com.example.MyBookShopApp.service.BookReviewService;
 import com.example.MyBookShopApp.service.BookService;
 import com.example.MyBookShopApp.service.BookVoteService;
 import org.springframework.data.domain.Page;
@@ -32,15 +33,17 @@ public class BookServiceJpaImpl implements BookService {
     private final AuthorService authorService;
     private final DateTimeFormatter dateTimeFormatter;
     private final BookVoteService bookVoteService;
+    private final BookReviewService bookReviewService;
 
     private final String manyAuthorsAppender = " и другие";
     private final LocalDate minLocalDate;
     private final LocalDate maxLocalDate;
 
-    public BookServiceJpaImpl(BookRepository bookRepository, AuthorService authorService, BookVoteService bookVoteService) {
+    public BookServiceJpaImpl(BookRepository bookRepository, AuthorService authorService, BookVoteService bookVoteService, BookReviewService bookReviewService) {
         this.bookRepository = bookRepository;
         this.authorService = authorService;
         this.bookVoteService = bookVoteService;
+        this.bookReviewService = bookReviewService;
         dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         minLocalDate = LocalDate.of(1000, 1, 1);
         maxLocalDate = LocalDate.of(3000, 12, 31);
@@ -162,11 +165,12 @@ public class BookServiceJpaImpl implements BookService {
     }
 
     private BookSlugDto convertSingleBookEntityToBookSlugDto(BookEntity bookEntity) {
-        BookSlugDto dto = new BookSlugDto();
+        var dto = new BookSlugDto();
         dto.setAuthors(authorService.convertAuthorsToDto(bookEntity.getAuthors()));
         dto.setDescription(bookEntity.getDescription());
         dto.setTitle(bookEntity.getTitle());
         dto.setPrice(bookEntity.getPrice());
+        dto.setReviews(bookReviewService.getReviewDtoForBook(bookEntity));
         dto.setDiscountPrice(calculateBookDiscountPrice(bookEntity.getPrice(), bookEntity.getDiscount()));
         dto.setRating(bookVoteService.getBookRatingDto(bookEntity));
         dto.setImage(bookEntity.getImage());

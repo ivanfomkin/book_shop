@@ -2,6 +2,7 @@ package com.example.MyBookShopApp.entity.book;
 
 import com.example.MyBookShopApp.entity.author.AuthorEntity;
 import com.example.MyBookShopApp.entity.book.file.BookFileEntity;
+import com.example.MyBookShopApp.entity.book.review.BookReviewEntity;
 import com.example.MyBookShopApp.entity.book.review.BookVoteEntity;
 import com.example.MyBookShopApp.entity.genre.GenreEntity;
 import com.example.MyBookShopApp.entity.tag.TagEntity;
@@ -68,4 +69,7 @@ public class BookEntity {
 
     @OneToMany(mappedBy = "book")
     private List<BookVoteEntity> votes;
+
+    @OneToMany(mappedBy = "book")
+    private List<BookReviewEntity> reviews;
 }

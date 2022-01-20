@@ -6,4 +6,6 @@ import javax.servlet.http.HttpSession;
 
 public interface UserService {
     UserEntity getUserBySession(HttpSession session);
+
+    boolean isAuthorized(HttpSession httpSession);
 }

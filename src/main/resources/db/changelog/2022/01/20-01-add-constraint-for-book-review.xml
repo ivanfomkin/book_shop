@@ -1,0 +1,25 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+    <changeSet author="ivan.fomkin" id="1642578096126-1">
+        <addUniqueConstraint tableName="book_review" columnNames="book_id, user_id"/>
+        <addUniqueConstraint tableName="book_review_like" columnNames="review_id, user_id"/>
+        <addForeignKeyConstraint baseTableName="book_review" baseColumnNames="user_id"
+                                 constraintName="user_id_constraint"
+                                 referencedTableName="users"
+                                 referencedColumnNames="id"/>
+        <addForeignKeyConstraint baseTableName="book_review" baseColumnNames="book_id"
+                                 constraintName="book_id_constraint"
+                                 referencedTableName="books"
+                                 referencedColumnNames="id"/>
+        <addForeignKeyConstraint baseTableName="book_review_like" baseColumnNames="review_id"
+                                 constraintName="review_id_constraint"
+                                 referencedTableName="book_review"
+                                 referencedColumnNames="id"/>
+        <addForeignKeyConstraint baseTableName="book_review_like" baseColumnNames="user_id"
+                                 constraintName="user_id_constraint"
+                                 referencedTableName="users"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+</databaseChangeLog>

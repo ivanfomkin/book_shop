@@ -5,6 +5,7 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
     <include file="/db/changelog/2021/12/14-01-create-initial-tables-structure-changelog.xml"/>
     <include file="/db/changelog/2021/12/19-01-Insert-test-books-and-authors.xml"/>
+    <include file="/db/changelog/2021/12/21-01-insert-book-reviews.xml"/>
     <include file="/db/changelog/2021/12/21-02-insert-book2user-type.xml"/>
     <include file="/db/changelog/2021/12/22-01-insert-book2user-data.xml"/>
     <include file="/db/changelog/2021/12/22-02-add-tag-tables.xml"/>
@@ -15,4 +16,6 @@
     <include file="/db/changelog/2022/01/18-01-add-book-rating-tables.xml"/>
     <include file="/db/changelog/2022/01/19-01-add-book-rating-data.xml"/>
     <include file="/db/changelog/2022/01/19-02-add-user-data.xml"/>
+    <include file="/db/changelog/2022/01/20-01-add-constraint-for-book-review.xml"/>
+    <include file="/db/changelog/2022/01/20-02-add-book-review-like-data.xml"/>
 </databaseChangeLog>

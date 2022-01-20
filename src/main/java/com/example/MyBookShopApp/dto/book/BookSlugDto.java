@@ -1,6 +1,7 @@
 package com.example.MyBookShopApp.dto.book;
 
 import com.example.MyBookShopApp.dto.author.AuthorElementDto;
+import com.example.MyBookShopApp.dto.book.review.BookReviewDto;
 import lombok.Data;
 
 import java.util.List;
@@ -17,4 +18,5 @@ public class BookSlugDto {
     private BookRatingInfoDto rating;
     private List<String> tags;
     private List<BookFileDto> files;
+    private BookReviewDto reviews;
 }

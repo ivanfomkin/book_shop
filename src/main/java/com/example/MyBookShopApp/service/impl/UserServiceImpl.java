@@ -29,4 +29,9 @@ public class UserServiceImpl implements UserService {
         }
         return user;
     }
+
+    @Override
+    public boolean isAuthorized(HttpSession httpSession) {
+        return true; // TODO: 20.01.2022 Заглушка. Исправить позже
+    }
 }

@@ -222,7 +222,7 @@
                 <constraints nullable="false"/>
             </column>
             <column name="value" type="SMALLINT">
-                <constraints nullable="false"/>
+                <constraints nullable="false" checkConstraint="CHECK (value = 1 OR value = -1)"/>
             </column>
         </createTable>
         <createTable tableName="genre">
