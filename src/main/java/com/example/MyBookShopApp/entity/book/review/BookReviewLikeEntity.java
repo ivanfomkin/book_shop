@@ -3,10 +3,10 @@ package com.example.MyBookShopApp.entity.book.review;
 import com.example.MyBookShopApp.entity.user.UserEntity;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Getter
 @Setter
@@ -18,6 +18,7 @@ public class BookReviewLikeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @UpdateTimestamp
     @Column(columnDefinition = "TIMESTAMP NOT NULL")
     private LocalDateTime time;
 

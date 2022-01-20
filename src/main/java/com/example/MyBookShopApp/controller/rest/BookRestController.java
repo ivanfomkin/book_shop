@@ -2,6 +2,7 @@ package com.example.MyBookShopApp.controller.rest;
 
 import com.example.MyBookShopApp.dto.book.BookListDto;
 import com.example.MyBookShopApp.dto.book.rate.BookRateRequestDto;
+import com.example.MyBookShopApp.dto.book.review.BookReviewLikeRequestDto;
 import com.example.MyBookShopApp.dto.book.review.BookReviewRequestDto;
 import com.example.MyBookShopApp.service.*;
 import lombok.extern.slf4j.Slf4j;
@@ -19,14 +20,16 @@ public class BookRestController {
     private final GenreService genreService;
     private final BookVoteService bookVoteService;
     private final BookReviewService bookReviewService;
+    private final BookReviewLikeService bookReviewLikeService;
 
 
-    public BookRestController(BookService bookService, UserService userService, GenreService genreService, BookVoteService bookVoteService, BookReviewService bookReviewService) {
+    public BookRestController(BookService bookService, UserService userService, GenreService genreService, BookVoteService bookVoteService, BookReviewService bookReviewService, BookReviewLikeService bookReviewLikeService) {
         this.bookService = bookService;
         this.userService = userService;
         this.genreService = genreService;
         this.bookVoteService = bookVoteService;
         this.bookReviewService = bookReviewService;
+        this.bookReviewLikeService = bookReviewLikeService;
     }
 
     @GetMapping("/recommended")
@@ -91,5 +94,12 @@ public class BookRestController {
                                           HttpSession httpSession) {
         return bookReviewService.saveBookReview(
                 bookService.getBookEntityBySlug(dto.getBookId()), dto.getText(), userService.getUserBySession(httpSession));
+    }
+
+    @PostMapping("/rateBookReview")
+    public Map<String, Boolean> rateBookReview(BookReviewLikeRequestDto dto,
+                                               HttpSession httpSession) {
+        bookReviewLikeService.saveBookReviewLike(dto, userService.getUserBySession(httpSession));
+        return Map.of("result", true);
     }
 }

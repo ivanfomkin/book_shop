@@ -39,6 +39,11 @@ public class BookReviewServiceImpl implements BookReviewService {
     }
 
     @Override
+    public BookReviewEntity getBookReviewEntityById(int id) {
+        return bookReviewRepository.getById(id);
+    }
+
+    @Override
     public Map<String, Object> saveBookReview(BookEntity book, String text, UserEntity user) {
         Map<String, Object> resultMap = new HashMap<>();
         boolean result = true;
