@@ -5,6 +5,7 @@ import com.example.MyBookShopApp.entity.user.UserEntity;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Formula;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
@@ -21,6 +22,7 @@ public class BookReviewEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @UpdateTimestamp
     @Column(columnDefinition = "TIMESTAMP NOT NULL")
     private LocalDateTime time;
 

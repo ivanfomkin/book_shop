@@ -55,7 +55,7 @@
                                 </svg></span>
                         </th:block>
                         <th:block th:each="i : ${#numbers.sequence(1, (5 - book.reviews.stars))}"
-                                                          th:if="${book.reviews.stars ne 5}">
+                                  th:if="${book.reviews.stars ne 5}">
                             <span class="Rating-star">
                                 <svg height="18" viewBox="0 0 19 18" width="19" xmlns="http://www.w3.org/2000/svg">
                                     <g>
@@ -74,7 +74,7 @@
                 <strong class="Comments-title">Написать отзыв
                 </strong>
                 <div class="Comments-addComment">
-                    <form class="form" action="#" method="post" data-bookid="1111">
+                    <form class="form" action="#" method="post" th:attr="data-bookid = ${book.slug}" data-bookid="1111">
                         <div class="form-group">
                                 <textarea class="form-textarea Comments-review" name="review" id="review"
                                           placeholder="Текст отзыва" data-validate="require"></textarea>

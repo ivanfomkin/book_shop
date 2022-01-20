@@ -2,10 +2,8 @@ package com.example.MyBookShopApp.controller.rest;
 
 import com.example.MyBookShopApp.dto.book.BookListDto;
 import com.example.MyBookShopApp.dto.book.rate.BookRateRequestDto;
-import com.example.MyBookShopApp.service.BookService;
-import com.example.MyBookShopApp.service.BookVoteService;
-import com.example.MyBookShopApp.service.GenreService;
-import com.example.MyBookShopApp.service.UserService;
+import com.example.MyBookShopApp.dto.book.review.BookReviewRequestDto;
+import com.example.MyBookShopApp.service.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,13 +18,15 @@ public class BookRestController {
     private final UserService userService;
     private final GenreService genreService;
     private final BookVoteService bookVoteService;
+    private final BookReviewService bookReviewService;
 
 
-    public BookRestController(BookService bookService, UserService userService, GenreService genreService, BookVoteService bookVoteService) {
+    public BookRestController(BookService bookService, UserService userService, GenreService genreService, BookVoteService bookVoteService, BookReviewService bookReviewService) {
         this.bookService = bookService;
         this.userService = userService;
         this.genreService = genreService;
         this.bookVoteService = bookVoteService;
+        this.bookReviewService = bookReviewService;
     }
 
     @GetMapping("/recommended")
@@ -84,5 +84,12 @@ public class BookRestController {
             result = false;
         }
         return Map.of("result", result);
+    }
+
+    @PostMapping("/bookReview")
+    public Map<String, Object> reviewBook(BookReviewRequestDto dto,
+                                          HttpSession httpSession) {
+        return bookReviewService.saveBookReview(
+                bookService.getBookEntityBySlug(dto.getBookId()), dto.getText(), userService.getUserBySession(httpSession));
     }
 }
