@@ -1,13 +1,18 @@
 package com.example.MyBookShopApp.controller;
 
 import com.example.MyBookShopApp.dto.search.SearchDto;
+import com.example.MyBookShopApp.dto.security.ContactConfirmationRequestDto;
+import com.example.MyBookShopApp.dto.security.RegistrationFormDto;
 import com.example.MyBookShopApp.service.Book2UserService;
 import com.example.MyBookShopApp.service.UserService;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.security.Principal;
+import java.util.Map;
 
 @Controller
 public class SecurityController {
@@ -36,8 +41,45 @@ public class SecurityController {
     }
 
     @GetMapping("/signin")
-
     public String signInPage() {
         return "signin";
+    }
+
+    @GetMapping("/signup")
+    public String signUpPage(Model model) {
+        model.addAttribute("regForm", new RegistrationFormDto());
+        return "signup";
+    }
+
+    @PostMapping("/registration")
+    public String registerUser(RegistrationFormDto formDto, HttpSession httpSession, Model model) {
+        userService.registerNewUser(formDto, httpSession);
+        model.addAttribute("registrationSuccess", true);
+        return "signin";
+    }
+
+    @GetMapping("/my")
+    public String myPage() {
+        return "my";
+    }
+
+    @GetMapping("/myarchive")
+    public String myArchive() {
+        return "myarchive";
+    }
+
+    @GetMapping("/profile")
+    public String profile(Model model, Principal principal) {
+        model.addAttribute("user", userService.getCurrentUser());
+        return "profile";
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        SecurityContextHolder.clearContext();
+        if (session != null) {
+            session.invalidate();
+        }
+        return "redirect:/";
     }
 }

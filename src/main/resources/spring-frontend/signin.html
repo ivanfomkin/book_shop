@@ -5,7 +5,7 @@
     <meta name="description" content="Описание страницы">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
-    <link href="favicon.ico" rel="shortcut icon">
+    <link href="../favicon.ico" rel="shortcut icon">
     <link rel="preload" href="/assets/fonts/Montserrat/Montserrat-SemiBold.woff2" as="font" crossorigin="anonymous">
     <link rel="preload" href="/assets/fonts/Montserrat/Montserrat-Light.woff2" as="font" crossorigin="anonymous">
     <link rel="preload" href="/assets/fonts/Montserrat/Montserrat-Medium.woff2" as="font" crossorigin="anonymous">
@@ -15,6 +15,8 @@
     <link rel="stylesheet" href="/assets/css/extra.min.css?v=27449092">
     <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <script defer src="/assets/js/scripts.min.js?v=27449092"></script>
+    <meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
+    <meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
 </head>
 <body class="Site">
 <header class="Header"
@@ -33,6 +35,9 @@
                     <div class="Login-step">
                         <div class="form-group">
                             <label class="form-label Login-title">Введите e-mail или телефон
+                                <br>
+                                <span th:if="${registrationSuccess}">Регистрация прошла успешно</span>
+
                             </label>
                         </div>
                         <div class="form-group">
@@ -82,13 +87,12 @@
                     </div>
                     <div class="Login-step Login-step_hide" data-type="mail">
                         <div class="form-group">
-                            <label class="form-label Login-title">На&nbsp;Ваш e-mail отправлена ссылка для входа и&nbsp;код.
-                                Перейдите по&nbsp;ссылке или введите код ниже:
+                            <label class="form-label Login-title">Введите пароль или зарегистрируйтесь:
                             </label>
                         </div>
                         <div class="form-group form-group_key">
-                            <input class="form-input" id="mailcode" name="mailcode" type="text" placeholder="Код"
-                                   data-validate="key require" data-mask="999 999"/>
+                            <input class="form-input" id="mailcode" name="mailcode" type="password" placeholder="пароль"
+                                   data-validate="key require"/>
                         </div>
                         <div class="form-group form-group_center">
                             <button class="btn btn_primary form-btn" type="button" name="toComeInMail" id="toComeInMail"
@@ -96,7 +100,7 @@
                             </button>
                         </div>
                     </div>
-                    <div class="form-group form-group_center"><a class="Login-reg" href="/signup.html">Зарегистрироваться</a>
+                    <div class="form-group form-group_center"><a class="Login-reg" th:href="@{/signup}" href="/signup.html">Зарегистрироваться</a>
                     </div>
                 </div>
             </form>

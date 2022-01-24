@@ -17,9 +17,7 @@ public class UserContactEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(columnDefinition = "INT NOT NULL")
-    private Integer userId;
-
+    @Enumerated(EnumType.STRING)
     private ContactType type;
 
     @Column(columnDefinition = "SMALLINT NOT NULL")
@@ -37,4 +35,7 @@ public class UserContactEntity {
     @Column(columnDefinition = "VARCHAR(255) NOT NULL")
     private String contact;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private UserEntity user;
 }

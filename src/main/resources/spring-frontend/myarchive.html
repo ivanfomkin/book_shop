@@ -5,7 +5,7 @@
     <meta name="description" content="Описание страницы">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
-    <link href="favicon.ico" rel="shortcut icon">
+    <link href="../favicon.ico" rel="shortcut icon">
     <link rel="preload" href="/assets/fonts/Montserrat/Montserrat-SemiBold.woff2" as="font" crossorigin="anonymous">
     <link rel="preload" href="/assets/fonts/Montserrat/Montserrat-Light.woff2" as="font" crossorigin="anonymous">
     <link rel="preload" href="/assets/fonts/Montserrat/Montserrat-Medium.woff2" as="font" crossorigin="anonymous">
@@ -23,9 +23,9 @@
     <div class="wrap">
         <main class="Middle-main">
             <ul class="breadcrumbs">
-                <li class="breadcrumbs-item"><a href="/index.html">Главная</a>
+                <li class="breadcrumbs-item"><a th:href="@{/}" href="/index.html">Главная</a>
                 </li>
-                <li class="breadcrumbs-item"><a href="/profile.html">Мой профиль</a>
+                <li class="breadcrumbs-item"><a th:href="@{/profile}" href="/profile.html">Мой профиль</a>
                 </li>
                 <li class="breadcrumbs-item breadcrumbs-item_current"><span>Мои книги</span>
                 </li>
@@ -34,7 +34,7 @@
                 <div class="Section-header">
                     <h1 class="Section-title">Мои книги
                     </h1>
-                    <div class="Section-header-links"><a class="Section-header-link"
+                    <div class="Section-header-links"><a class="Section-header-link" th:href="@{/my}"
                                                          href="/my.html">Непрочитанные</a><span
                             class="Section-header-link Section-header-link_ACTIVE">Архив</span>
                     </div>

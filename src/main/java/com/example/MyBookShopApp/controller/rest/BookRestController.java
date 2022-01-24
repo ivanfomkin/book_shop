@@ -19,15 +19,17 @@ public class BookRestController {
     private final UserService userService;
     private final GenreService genreService;
     private final BookVoteService bookVoteService;
+    private final Book2UserService book2UserService;
     private final BookReviewService bookReviewService;
     private final BookReviewLikeService bookReviewLikeService;
 
 
-    public BookRestController(BookService bookService, UserService userService, GenreService genreService, BookVoteService bookVoteService, BookReviewService bookReviewService, BookReviewLikeService bookReviewLikeService) {
+    public BookRestController(BookService bookService, UserService userService, GenreService genreService, BookVoteService bookVoteService, Book2UserService book2UserService, BookReviewService bookReviewService, BookReviewLikeService bookReviewLikeService) {
         this.bookService = bookService;
         this.userService = userService;
         this.genreService = genreService;
         this.bookVoteService = bookVoteService;
+        this.book2UserService = book2UserService;
         this.bookReviewService = bookReviewService;
         this.bookReviewLikeService = bookReviewLikeService;
     }
@@ -77,7 +79,7 @@ public class BookRestController {
     }
 
     @PostMapping("/rateBook")
-    public Map<String, Boolean> rateBook(BookRateRequestDto bookRateRequestDto,
+    public Map<String, Boolean> rateBook(@RequestBody BookRateRequestDto bookRateRequestDto,
                                          HttpSession httpSession) {
         var result = true;
         try {
@@ -90,14 +92,14 @@ public class BookRestController {
     }
 
     @PostMapping("/bookReview")
-    public Map<String, Object> reviewBook(BookReviewRequestDto dto,
+    public Map<String, Object> reviewBook(@RequestBody BookReviewRequestDto dto,
                                           HttpSession httpSession) {
         return bookReviewService.saveBookReview(
                 bookService.getBookEntityBySlug(dto.getBookId()), dto.getText(), userService.getUserBySession(httpSession));
     }
 
     @PostMapping("/rateBookReview")
-    public Map<String, Boolean> rateBookReview(BookReviewLikeRequestDto dto,
+    public Map<String, Boolean> rateBookReview(@RequestBody BookReviewLikeRequestDto dto,
                                                HttpSession httpSession) {
         bookReviewLikeService.saveBookReviewLike(dto, userService.getUserBySession(httpSession));
         return Map.of("result", true);

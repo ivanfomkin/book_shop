@@ -5,7 +5,7 @@
     <meta name="description" content="Описание страницы">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
-    <link href="favicon.ico" rel="shortcut icon">
+    <link href="../favicon.ico" rel="shortcut icon">
     <link rel="preload" href="/assets/fonts/Montserrat/Montserrat-SemiBold.woff2" as="font" crossorigin="anonymous">
     <link rel="preload" href="/assets/fonts/Montserrat/Montserrat-Light.woff2" as="font" crossorigin="anonymous">
     <link rel="preload" href="/assets/fonts/Montserrat/Montserrat-Medium.woff2" as="font" crossorigin="anonymous">
@@ -44,7 +44,7 @@
                                         <div class="form-group">
                                             <label class="form-label" for="name">Имя
                                             </label>
-                                            <input class="form-input" id="name" name="name" type="text" value="Михаил"/>
+                                            <input class="form-input" id="name" name="name" type="text" th:value="${user.name}" value="Михаил"/>
                                         </div>
                                         <div class="form-group">
                                             <label class="form-label" for="mail">E-mail

@@ -51,14 +51,4 @@ public class CartController {
         model.addAttribute("bookCart", cartDto);
         return "cart";
     }
-
-    @PostMapping("/changeBookStatus/{slug}")
-    @ResponseBody
-    public String changeBookStatus(@PathVariable String slug,
-                                   @RequestParam(name = "status") Book2UserType status,
-                                   HttpSession session,
-                                   Model model) {
-        book2UserService.changeBookStatus(userService.getUserBySession(session), slug, status);
-        return "redirect:/books/" + slug;
-    }
 }
