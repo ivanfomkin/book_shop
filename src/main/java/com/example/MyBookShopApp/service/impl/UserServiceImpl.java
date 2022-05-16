@@ -1,6 +1,7 @@
 package com.example.MyBookShopApp.service.impl;
 
 import com.example.MyBookShopApp.dto.security.ContactConfirmationRequestDto;
+import com.example.MyBookShopApp.dto.security.ContactConfirmationResponse;
 import com.example.MyBookShopApp.dto.security.RegistrationFormDto;
 import com.example.MyBookShopApp.entity.enums.ContactType;
 import com.example.MyBookShopApp.entity.user.UserContactEntity;
@@ -8,6 +9,8 @@ import com.example.MyBookShopApp.entity.user.UserEntity;
 import com.example.MyBookShopApp.repository.UserContactRepository;
 import com.example.MyBookShopApp.repository.UserRepository;
 import com.example.MyBookShopApp.security.BookStoreUserDetails;
+import com.example.MyBookShopApp.security.BookStoreUserDetailsService;
+import com.example.MyBookShopApp.security.jwt.JWTUtil;
 import com.example.MyBookShopApp.service.UserService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -27,16 +30,20 @@ import java.util.Map;
 
 @Service
 public class UserServiceImpl implements UserService {
+    private final JWTUtil jwtUtil;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
     private final UserContactRepository userContactRepository;
+    private final BookStoreUserDetailsService userDetailsService;
 
-    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, UserContactRepository userContactRepository) {
+    public UserServiceImpl(JWTUtil jwtUtil, UserRepository userRepository, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, UserContactRepository userContactRepository, BookStoreUserDetailsService userDetailsService) {
+        this.jwtUtil = jwtUtil;
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.authenticationManager = authenticationManager;
         this.userContactRepository = userContactRepository;
+        this.userDetailsService = userDetailsService;
     }
 
     @Override
@@ -75,6 +82,14 @@ public class UserServiceImpl implements UserService {
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(dto.getContact(), dto.getCode()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
         return Map.of("result", true);
+    }
+
+    @Override
+    public ContactConfirmationResponse jwtLogin(ContactConfirmationRequestDto dto) {
+        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(dto.getContact(), dto.getCode()));
+        BookStoreUserDetails userDetails = (BookStoreUserDetails) userDetailsService.loadUserByUsername(dto.getContact());
+        String token = jwtUtil.generateToken(userDetails);
+        return new ContactConfirmationResponse(token);
     }
 
     @Override

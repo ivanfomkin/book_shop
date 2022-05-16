@@ -21,7 +21,7 @@ public class BookStoreUserDetailsService implements UserDetailsService {
         if (userFromDb != null) {
             return new BookStoreUserDetails(userFromDb);
         } else {
-            throw new UsernameNotFoundException(MessageFormatter.arrayFormat("User with name {} not found", new Object[]{username}).getMessage());
+            throw new UsernameNotFoundException(MessageFormatter.arrayFormat("User with email {} not found", new Object[]{username}).getMessage());
         }
     }
 }

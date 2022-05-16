@@ -74,12 +74,12 @@ public class SecurityController {
         return "profile";
     }
 
-    @GetMapping("/logout")
-    public String logout(HttpSession session) {
-        SecurityContextHolder.clearContext();
-        if (session != null) {
-            session.invalidate();
-        }
-        return "redirect:/";
-    }
+//    @GetMapping("/logout")
+//    public String logout(HttpSession session) {
+//        SecurityContextHolder.clearContext();
+//        if (session != null) {
+//            session.invalidate();
+//        }
+//        return "redirect:/";
+//    }
 }

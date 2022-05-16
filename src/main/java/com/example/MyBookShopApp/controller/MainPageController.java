@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 import javax.servlet.http.HttpSession;
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -40,18 +41,18 @@ public class MainPageController {
         return tagService.getTagsWithWeight();
     }
 
-    @ModelAttribute("cartAmount")
-    public int cartAmount(HttpSession httpSession) {
-        return book2UserService.getCartAmount(userService.getUserBySession(httpSession));
-    }
-
-    @ModelAttribute("keptAmount")
-    public int keptAmount(HttpSession httpSession) {
-        return book2UserService.getKeptAmount(userService.getUserBySession(httpSession));
-    }
+//    @ModelAttribute("cartAmount")
+//    public int cartAmount(HttpSession httpSession) {
+//        return book2UserService.getCartAmount(userService.getUserBySession(httpSession));
+//    }
+//
+//    @ModelAttribute("keptAmount")
+//    public int keptAmount(HttpSession httpSession) {
+//        return book2UserService.getKeptAmount(userService.getUserBySession(httpSession));
+//    }
 
     @GetMapping
-    public String mainPage(Model model, HttpSession session) {
+    public String mainPage(Model model, Principal principal) {
         model.addAttribute("recentBooks", bookService.getPageableRecentBooks(0, 20));
         model.addAttribute("popularBooks", bookService.getPageablePopularBooks(0, 20));
         model.addAttribute("recommendedBooks", bookService.getPageableRecommendedBooks(0, 20));

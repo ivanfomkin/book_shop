@@ -3,6 +3,7 @@ server:
   servlet:
     session:
       timeout: 24h
+      tracking-modes: cookie
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5433/book_shop
@@ -10,11 +11,11 @@ spring:
     password: myRandomPassword
   session:
     timeout: ${server.servlet.session.timeout}
-    store-type: jdbc
-    jdbc:
-      #      table-name: session_store
-      #      schema: public
-      initialize-schema: always
+#    store-type: jdbc
+#    jdbc:
+#            table-name: session_store
+#            schema: public
+#      initialize-schema: always
   messages:
     basename: lang.messages
   web:
@@ -29,6 +30,8 @@ spring:
     change-log: classpath:db/changelog/master-changelog.xml
     enabled: true
 bookshop:
+  auth:
+    secret: skillbox
   review:
     min-size: 30
   upload:

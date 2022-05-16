@@ -1,0 +1,12 @@
+package com.example.MyBookShopApp.dto.security;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class ContactConfirmationResponse {
+    private String result;
+}

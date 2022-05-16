@@ -1,8 +1,8 @@
 package com.example.MyBookShopApp.service;
 
 import com.example.MyBookShopApp.dto.security.ContactConfirmationRequestDto;
+import com.example.MyBookShopApp.dto.security.ContactConfirmationResponse;
 import com.example.MyBookShopApp.dto.security.RegistrationFormDto;
-import com.example.MyBookShopApp.dto.user.UserDto;
 import com.example.MyBookShopApp.entity.user.UserEntity;
 
 import javax.servlet.http.HttpSession;
@@ -16,6 +16,8 @@ public interface UserService {
     void registerNewUser(RegistrationFormDto formDto, HttpSession httpSession);
 
     Map<String, Object> login(ContactConfirmationRequestDto dto);
+
+    ContactConfirmationResponse jwtLogin(ContactConfirmationRequestDto dto);
 
     Object getCurrentUser();
 }

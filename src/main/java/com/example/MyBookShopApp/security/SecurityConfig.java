@@ -1,24 +1,29 @@
 package com.example.MyBookShopApp.security;
 
+import com.example.MyBookShopApp.security.jwt.JWTRequestFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.session.jdbc.config.annotation.web.http.EnableJdbcHttpSession;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
-@EnableJdbcHttpSession
+//@EnableJdbcHttpSession
 @RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    private final JWTRequestFilter filter;
     private final BookStoreUserDetailsService bookStoreUserDetailsService;
+    private final static String LOGIN_URL = "/signin";
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -41,10 +46,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+                .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/my", "/profile", "/myarchive").hasRole("USER")
                 .antMatchers("/**").permitAll()
                 .and().formLogin()
-                .loginPage("/signin").failureForwardUrl("/signin");
+                .loginPage(LOGIN_URL).failureForwardUrl(LOGIN_URL)
+                .and().logout().logoutUrl("/logout").logoutSuccessUrl(LOGIN_URL).deleteCookies("token");
+
+        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+
+        http.addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class);
     }
 }
