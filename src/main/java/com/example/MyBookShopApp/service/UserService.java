@@ -15,9 +15,11 @@ public interface UserService {
 
     void registerNewUser(RegistrationFormDto formDto, HttpSession httpSession);
 
+    UserEntity registerOAuthUser(Map<String, Object> attributes, String authorizedClientRegistrationId);
+
     Map<String, Object> login(ContactConfirmationRequestDto dto);
 
     ContactConfirmationResponse jwtLogin(ContactConfirmationRequestDto dto);
 
-    Object getCurrentUser();
+    UserEntity getCurrentUser();
 }

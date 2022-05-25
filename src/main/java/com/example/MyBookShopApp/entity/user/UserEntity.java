@@ -36,6 +36,9 @@ public class UserEntity implements Serializable {
 
     private String password;
 
+    @Column(name = "oauth2_id")
+    private String oauthId;
+
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private List<UserContactEntity> contacts;
 

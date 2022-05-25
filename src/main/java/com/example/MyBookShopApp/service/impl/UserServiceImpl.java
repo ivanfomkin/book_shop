@@ -12,11 +12,14 @@ import com.example.MyBookShopApp.security.BookStoreUserDetails;
 import com.example.MyBookShopApp.security.BookStoreUserDetailsService;
 import com.example.MyBookShopApp.security.jwt.JWTUtil;
 import com.example.MyBookShopApp.service.UserService;
+import org.slf4j.helpers.MessageFormatter;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
+import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,9 +27,7 @@ import javax.servlet.http.HttpSession;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -77,6 +78,50 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    @Transactional
+    @Override
+    public UserEntity registerOAuthUser(Map<String, Object> attributes, String authorizedClientRegistrationId) {
+        return switch (authorizedClientRegistrationId) {
+            case "github" -> saveGitHubUser(attributes);
+            case "google" -> saveGoogleUser(attributes);
+            default ->
+                    throw new IllegalArgumentException(MessageFormatter.format("Unsupported oauth2 provider: {}", authorizedClientRegistrationId).getMessage());
+        };
+    }
+
+    private UserEntity saveGoogleUser(Map<String, Object> attributes) {
+        var login = attributes.get("name");
+        var oAuth2Id = (String) attributes.get("sub");
+        var email = attributes.get("email");
+        UserEntity user = new UserEntity();
+        user.setName(Objects.requireNonNull((String) login));
+        user.setBalance(0);
+        user.setOauthId(oAuth2Id);
+        user.setHash(UUID.randomUUID().toString());
+        userRepository.save(user);
+        UserContactEntity contact = createEmailContact((String) email, user, "google_oauth2");
+        userContactRepository.save(contact);
+        user.setContacts(List.of(contact));
+        return user;
+    }
+
+    private UserEntity saveGitHubUser(Map<String, Object> attributes) {
+        var login = attributes.get("login");
+        var oAuth2Id = (Integer) attributes.get("id");
+        var email = (String) attributes.get("email");
+        UserEntity user = new UserEntity();
+        user.setName(Objects.requireNonNull((String) login));
+        user.setBalance(0);
+        user.setOauthId(String.valueOf(oAuth2Id));
+        user.setHash(UUID.randomUUID().toString());
+        userRepository.save(user);
+        if (email != null) {
+            UserContactEntity emailContact = createEmailContact(email, user, "github_oauth2");
+            user.setContacts(List.of(emailContact));
+        }
+        return user;
+    }
+
     @Override
     public Map<String, Object> login(ContactConfirmationRequestDto dto) {
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(dto.getContact(), dto.getCode()));
@@ -93,21 +138,56 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Object getCurrentUser() {
-        BookStoreUserDetails userDetails =
-                (BookStoreUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return userRepository.findUserEntityByContacts_contact(userDetails.getUsername());
+    public UserEntity getCurrentUser() {
+        UserEntity user = null;
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication.getPrincipal() instanceof BookStoreUserDetails userDetails) {
+            user = userRepository.findUserEntityByContacts_contact(userDetails.getUsername());
+        }
+        if (authentication instanceof OAuth2AuthenticationToken oAuth2) {
+            Map<String, Object> attributes = oAuth2.getPrincipal().getAttributes();
+            switch (oAuth2.getAuthorizedClientRegistrationId()) {
+                case "github" -> {
+                    String email = (String) attributes.get("email");
+                    Integer id = (Integer) attributes.get("id");
+                    if (email != null) {
+                        user = userRepository.findUserEntityByContacts_contact(email);
+                    } else {
+                        Objects.requireNonNull(id, "User oAuth2 id or user email must be not null");
+                        user = userRepository.findUserEntityByOauthId(String.valueOf(id));
+                    }
+                    if (user == null) {
+                        user = registerOAuthUser(attributes, oAuth2.getAuthorizedClientRegistrationId());
+                    }
+                }
+                case "google" -> {
+                    String email = (String) attributes.get("email");
+                    user = userRepository.findUserEntityByContacts_contact(email);
+                    if (user == null) {
+                        user = registerOAuthUser(attributes, oAuth2.getAuthorizedClientRegistrationId());
+                    }
+                }
+                default ->
+                        throw new OAuth2AuthenticationException(MessageFormatter.format("Unsupported oauth2 provider: {}", oAuth2.getAuthorizedClientRegistrationId()).getMessage());
+            }
+        }
+        return user;
+    }
+
+    private UserContactEntity createEmailContact(String email, UserEntity user, String code) {
+        UserContactEntity emailContact = new UserContactEntity();
+        emailContact.setApproved((short) 1);
+        emailContact.setContact(email);
+        emailContact.setType(ContactType.EMAIL);
+        emailContact.setUser(user);
+        emailContact.setCode(code);
+        return emailContact;
     }
 
     private List<UserContactEntity> saveContacts(RegistrationFormDto formDto, UserEntity user) {
         List<UserContactEntity> contactEntities = new ArrayList<>();
         if (formDto.getEmail() != null) {
-            UserContactEntity emailContact = new UserContactEntity();
-            emailContact.setApproved((short) 1);
-            emailContact.setContact(formDto.getEmail());
-            emailContact.setType(ContactType.EMAIL);
-            emailContact.setUser(user);
-            emailContact.setCode("111-111");
+            UserContactEntity emailContact = createEmailContact(formDto.getEmail(), user, "111-111");
             contactEntities.add(emailContact);
         }
         if (formDto.getPhone() != null) {

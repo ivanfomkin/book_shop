@@ -53,6 +53,7 @@ public class MainPageController {
 
     @GetMapping
     public String mainPage(Model model, Principal principal) {
+        var user = userService.getCurrentUser();
         model.addAttribute("recentBooks", bookService.getPageableRecentBooks(0, 20));
         model.addAttribute("popularBooks", bookService.getPageablePopularBooks(0, 20));
         model.addAttribute("recommendedBooks", bookService.getPageableRecommendedBooks(0, 20));

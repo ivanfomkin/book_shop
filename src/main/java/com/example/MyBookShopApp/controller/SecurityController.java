@@ -1,19 +1,20 @@
 package com.example.MyBookShopApp.controller;
 
 import com.example.MyBookShopApp.dto.search.SearchDto;
-import com.example.MyBookShopApp.dto.security.ContactConfirmationRequestDto;
 import com.example.MyBookShopApp.dto.security.RegistrationFormDto;
 import com.example.MyBookShopApp.service.Book2UserService;
 import com.example.MyBookShopApp.service.UserService;
-import org.springframework.security.core.context.SecurityContextHolder;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpSession;
 import java.security.Principal;
-import java.util.Map;
 
+@Slf4j
 @Controller
 public class SecurityController {
 
@@ -59,7 +60,7 @@ public class SecurityController {
     }
 
     @GetMapping("/my")
-    public String myPage() {
+    public String myPage(Principal principal) {
         return "my";
     }
 
