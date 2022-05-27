@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class JasyptConfig {
+public class EncryptionConfig {
     private final String password = String.copyValueOf(new char[]{105, 102, 111, 109, 107, 105, 110});
 
 

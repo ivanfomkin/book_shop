@@ -21,4 +21,6 @@
     <include file="/db/changelog/2022/01/22-01-add-password-field-to-user-table.xml"/>
     <include file="/db/changelog/2022/05/24-01-add-oauth2id-field-to-user.xml"/>
     <include file="/db/changelog/2022/05/25-01-change-oauth2-id-field-type.xml"/>
+    <include file="/db/changelog/2022/05/27-01-add-jwt-blacklist-table.xml"/>
+    <include file="/db/changelog/2022/05/27-02-add-jwt-blacklist-expiration-date-field.xml"/>
 </databaseChangeLog>

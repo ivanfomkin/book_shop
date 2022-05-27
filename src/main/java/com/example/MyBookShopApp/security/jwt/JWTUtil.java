@@ -3,11 +3,12 @@ package com.example.MyBookShopApp.security.jwt;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import liquibase.pro.packaged.S;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -24,7 +25,7 @@ public class JWTUtil {
                 .setClaims(claims)
                 .setSubject(username)
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() * 1000 * 60 * 60 * 10))
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10))
                 .signWith(SignatureAlgorithm.HS256, secret)
                 .compact();
     }
@@ -51,12 +52,12 @@ public class JWTUtil {
         return extractClaims(token, Claims::getSubject);
     }
 
-    public Date extractExpiration(String token) {
-        return extractClaims(token, Claims::getExpiration);
+    public LocalDateTime extractExpiration(String token) {
+        return extractClaims(token, claims -> LocalDateTime.ofInstant(claims.getExpiration().toInstant(), ZoneId.systemDefault()));
     }
 
     public Boolean isTokenExpired(String token) {
-        return extractExpiration(token).before(new Date());
+        return extractExpiration(token).isBefore(LocalDateTime.now());
     }
 
     public Boolean validateToken(String token, UserDetails userDetails) {

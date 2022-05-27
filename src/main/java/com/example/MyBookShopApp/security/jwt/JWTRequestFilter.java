@@ -1,6 +1,7 @@
 package com.example.MyBookShopApp.security.jwt;
 
 import com.example.MyBookShopApp.security.BookStoreUserDetailsService;
+import com.example.MyBookShopApp.service.JwtBlacklistService;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,10 +18,12 @@ import java.io.IOException;
 
 @Service
 public class JWTRequestFilter extends OncePerRequestFilter {
+    private final JwtBlacklistService jwtBlacklistService;
     private final BookStoreUserDetailsService userDetailsService;
     private final JWTUtil jwtUtil;
 
-    public JWTRequestFilter(BookStoreUserDetailsService userDetailsService, JWTUtil jwtUtil) {
+    public JWTRequestFilter(JwtBlacklistService jwtBlacklistService, BookStoreUserDetailsService userDetailsService, JWTUtil jwtUtil) {
+        this.jwtBlacklistService = jwtBlacklistService;
         this.userDetailsService = userDetailsService;
         this.jwtUtil = jwtUtil;
     }
@@ -30,7 +33,6 @@ public class JWTRequestFilter extends OncePerRequestFilter {
         String token = null;
         String username = null;
         Cookie[] cookies = request.getCookies();
-        ;
 
         if (cookies != null) {
             for (Cookie cookie : cookies) {
@@ -41,10 +43,12 @@ public class JWTRequestFilter extends OncePerRequestFilter {
                 if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
                     UserDetails userDetails = userDetailsService.loadUserByUsername(username);
                     if (jwtUtil.validateToken(token, userDetails)) {
-                        UsernamePasswordAuthenticationToken passwordAuthenticationToken = new UsernamePasswordAuthenticationToken(
-                                userDetails, null, userDetails.getAuthorities());
-                        passwordAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                        SecurityContextHolder.getContext().setAuthentication(passwordAuthenticationToken);
+                        if (!jwtBlacklistService.existInBlacklist(token)) {
+                            UsernamePasswordAuthenticationToken passwordAuthenticationToken = new UsernamePasswordAuthenticationToken(
+                                    userDetails, null, userDetails.getAuthorities());
+                            passwordAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                            SecurityContextHolder.getContext().setAuthentication(passwordAuthenticationToken);
+                        }
                     }
                 }
             }
