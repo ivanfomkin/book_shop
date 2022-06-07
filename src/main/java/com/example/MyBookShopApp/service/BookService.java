@@ -29,7 +29,7 @@ public interface BookService {
 
     BookListDto getPageableBooksByAuthorSlug(int offset, int limit, String authorSlug);
 
-    BookSlugDto getBookSlugDtoBySlug(String slug);
+    BookSlugDto getBookSlugDtoBySlug(UserEntity userDto, String slug, String cartCookie, String keptCookie);
 
     BookEntity getBookEntityBySlug(String slug);
 

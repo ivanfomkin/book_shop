@@ -8,7 +8,7 @@
                     data-btntype="check" data-btnradio="buyblock" data-check="false"
                     data-alttext="Отложена"><span class="btn-icon"><img
                     src="/assets/img/icons/heart.svg" alt="heart.svg"/></span><span
-                    class="btn-content">Отложить</span>
+                    class="btn-content" th:text="${book.status eq null || book.status ne 'KEPT' ? 'Отложить' : 'Отложена'}">Отложить</span>
             </button>
         </div>
         <div class="ProductCard-cartElement">
@@ -18,7 +18,7 @@
                     data-btntype="check" data-btnradio="buyblock" data-check="false"
                     data-alttext="В корзине"><span class="btn-icon"><img
                     src="/assets/img/icons/shopping-basket.svg"
-                    alt="shopping-basket.svg"/></span><span class="btn-content">Купить</span>
+                    alt="shopping-basket.svg"/></span><span class="btn-content" th:text="${book.status eq null || book.status ne 'CART' ? 'Купить' : 'В корзине'}">Купить</span>
             </button>
         </div>
     </div>

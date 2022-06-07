@@ -21,4 +21,7 @@ public interface Book2UserRepository extends JpaRepository<Book2UserEntity, Inte
 
     @Query("SELECT b2u from Book2UserEntity b2u JOIN UserEntity u ON u.id = b2u.userId JOIN BookEntity b ON b.id = b2u.bookId where u = :user AND b.slug = :slug")
     Book2UserEntity findBookStatusByUserAndSlug(UserEntity user, String slug);
+
+    @Query("SELECT b2ut.name FROM Book2UserTypeEntity b2ut JOIN Book2UserEntity b2u ON b2u.typeId = b2ut.id JOIN UserEntity u ON u.id = b2u.userId JOIN BookEntity b ON b.id = b2u.bookId where u = :user AND b.slug = :slug")
+    Book2UserType findBook2UserTypeByUserAndSlug(UserEntity user, String slug);
 }

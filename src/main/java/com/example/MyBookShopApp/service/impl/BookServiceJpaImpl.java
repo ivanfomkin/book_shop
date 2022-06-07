@@ -10,6 +10,7 @@ import com.example.MyBookShopApp.entity.enums.Book2UserType;
 import com.example.MyBookShopApp.entity.genre.GenreEntity;
 import com.example.MyBookShopApp.entity.tag.TagEntity;
 import com.example.MyBookShopApp.entity.user.UserEntity;
+import com.example.MyBookShopApp.repository.Book2UserRepository;
 import com.example.MyBookShopApp.repository.BookRepository;
 import com.example.MyBookShopApp.service.AuthorService;
 import com.example.MyBookShopApp.service.BookReviewService;
@@ -34,16 +35,18 @@ public class BookServiceJpaImpl implements BookService {
     private final DateTimeFormatter dateTimeFormatter;
     private final BookVoteService bookVoteService;
     private final BookReviewService bookReviewService;
+    private final Book2UserRepository book2UserRepository;
 
     private final String manyAuthorsAppender = " и другие";
     private final LocalDate minLocalDate;
     private final LocalDate maxLocalDate;
 
-    public BookServiceJpaImpl(BookRepository bookRepository, AuthorService authorService, BookVoteService bookVoteService, BookReviewService bookReviewService) {
+    public BookServiceJpaImpl(BookRepository bookRepository, AuthorService authorService, BookVoteService bookVoteService, BookReviewService bookReviewService, Book2UserRepository book2UserRepository) {
         this.bookRepository = bookRepository;
         this.authorService = authorService;
         this.bookVoteService = bookVoteService;
         this.bookReviewService = bookReviewService;
+        this.book2UserRepository = book2UserRepository;
         dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         minLocalDate = LocalDate.of(1000, 1, 1);
         maxLocalDate = LocalDate.of(3000, 12, 31);
@@ -116,8 +119,19 @@ public class BookServiceJpaImpl implements BookService {
     }
 
     @Override
-    public BookSlugDto getBookSlugDtoBySlug(String slug) {
-        return convertSingleBookEntityToBookSlugDto(bookRepository.findBookEntityBySlug(slug));
+    public BookSlugDto getBookSlugDtoBySlug(UserEntity currentUser, String slug, String cartCookie, String keptCookie) {
+        BookSlugDto bookSlugDto = convertSingleBookEntityToBookSlugDto(bookRepository.findBookEntityBySlug(slug));
+        if (currentUser != null) {
+            bookSlugDto.setStatus(book2UserRepository.findBook2UserTypeByUserAndSlug(currentUser, slug).toString());
+        } else {
+            if (cartCookie != null && cartCookie.contains(slug)) {
+                bookSlugDto.setStatus(Book2UserType.CART.toString());
+            }
+            if (keptCookie != null && keptCookie.contains(slug)) {
+                bookSlugDto.setStatus(Book2UserType.KEPT.toString());
+            }
+        }
+        return bookSlugDto;
     }
 
     @Transactional

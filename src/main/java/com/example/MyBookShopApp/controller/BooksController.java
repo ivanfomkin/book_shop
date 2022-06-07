@@ -1,6 +1,7 @@
 package com.example.MyBookShopApp.controller;
 
 import com.example.MyBookShopApp.data.ResourceStorage;
+import com.example.MyBookShopApp.entity.user.UserEntity;
 import com.example.MyBookShopApp.service.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.ByteArrayResource;
@@ -60,9 +61,13 @@ public class BooksController extends ModelAttributeController {
     }
 
     @GetMapping("/{slug}")
-    public String bookBySlug(Model model, @PathVariable String slug) {
-        model.addAttribute("book", bookService.getBookSlugDtoBySlug(slug));
-        if (userService.getCurrentUser() != null) {
+    public String bookBySlug(Model model,
+                             @PathVariable String slug,
+                             @CookieValue(value = "cartContent", required = false) String cartCookie,
+                             @CookieValue(value = "keptContent", required = false) String keptCookie) {
+        UserEntity currentUser = userService.getCurrentUser();
+        model.addAttribute("book", bookService.getBookSlugDtoBySlug(currentUser, slug, cartCookie, keptCookie));
+        if (currentUser != null) {
             return "books/slugmy";
         } else {
             return "books/slug";

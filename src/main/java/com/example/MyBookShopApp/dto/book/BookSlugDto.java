@@ -2,6 +2,7 @@ package com.example.MyBookShopApp.dto.book;
 
 import com.example.MyBookShopApp.dto.author.AuthorElementDto;
 import com.example.MyBookShopApp.dto.book.review.BookReviewDto;
+import com.example.MyBookShopApp.entity.enums.Book2UserType;
 import lombok.Data;
 
 import java.util.List;
@@ -19,4 +20,5 @@ public class BookSlugDto {
     private List<String> tags;
     private List<BookFileDto> files;
     private BookReviewDto reviews;
+    private String status;
 }
