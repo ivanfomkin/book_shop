@@ -5,11 +5,10 @@ import com.example.MyBookShopApp.dto.cart.CartDto;
 import com.example.MyBookShopApp.entity.book.BookEntity;
 import com.example.MyBookShopApp.entity.enums.Book2UserType;
 import com.example.MyBookShopApp.entity.user.UserEntity;
-import com.example.MyBookShopApp.repository.Book2UserRepository;
-import com.example.MyBookShopApp.repository.Book2UserTypeRepository;
 import com.example.MyBookShopApp.service.AuthorService;
 import com.example.MyBookShopApp.service.BookService;
 import com.example.MyBookShopApp.service.CartService;
+import com.example.MyBookShopApp.service.CookieService;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -19,14 +18,12 @@ import java.util.List;
 public class CartServiceImpl implements CartService {
     private final BookService bookService;
     private final AuthorService authorService;
-    private final Book2UserRepository book2UserRepository;
-    private final Book2UserTypeRepository book2UserTypeRepository;
+    private final CookieService cookieService;
 
-    public CartServiceImpl(BookService bookService, AuthorService authorService, Book2UserRepository book2UserRepository, Book2UserTypeRepository book2UserTypeRepository) {
+    public CartServiceImpl(BookService bookService, AuthorService authorService, CookieService cookieService) {
         this.bookService = bookService;
         this.authorService = authorService;
-        this.book2UserRepository = book2UserRepository;
-        this.book2UserTypeRepository = book2UserTypeRepository;
+        this.cookieService = cookieService;
     }
 
     @Override
@@ -39,12 +36,35 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public List<CartBookElementDto> getPostponedBooks(UserEntity user) {
+    public CartDto getCartDtoFromCookie(String cookieValue) {
+        if (cookieValue == null || cookieValue.isEmpty()) {
+            return new CartDto(List.of(), 0, 0);
+        } else {
+            var bookSlugList = cookieService.getBookSlugListFromCookie(cookieValue);
+            var bookEntityListBySlug = bookService.getBooksBySlugIn(bookSlugList);
+            return getCartDtoFromBookList(bookEntityListBySlug);
+        }
+    }
+
+
+    @Override
+    public List<CartBookElementDto> getPostponedBooksByUser(UserEntity user) {
         if (user == null) {
             return List.of();
         }
         var books = bookService.getBooksByUserAndType(user, Book2UserType.KEPT);
         return convertBooksToDto(books);
+    }
+
+    @Override
+    public List<CartBookElementDto> getPostponedBooksFromCookie(String cookieValue) {
+        if (cookieValue == null || cookieValue.isEmpty()) {
+            return List.of();
+        } else {
+            var bookSlugList = cookieService.getBookSlugListFromCookie(cookieValue);
+            var bookEntityList = bookService.getBooksBySlugIn(bookSlugList);
+            return convertBooksToDto(bookEntityList);
+        }
     }
 
     private CartDto getCartDtoFromBookList(List<BookEntity> bookEntities) {

@@ -8,7 +8,6 @@ import com.example.MyBookShopApp.service.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
 import java.util.Map;
 
 @Slf4j
@@ -19,7 +18,6 @@ public class BookRestController {
     private final UserService userService;
     private final GenreService genreService;
     private final BookVoteService bookVoteService;
-    private final Book2UserService book2UserService;
     private final BookReviewService bookReviewService;
     private final BookReviewLikeService bookReviewLikeService;
 
@@ -29,7 +27,6 @@ public class BookRestController {
         this.userService = userService;
         this.genreService = genreService;
         this.bookVoteService = bookVoteService;
-        this.book2UserService = book2UserService;
         this.bookReviewService = bookReviewService;
         this.bookReviewLikeService = bookReviewLikeService;
     }
@@ -79,11 +76,10 @@ public class BookRestController {
     }
 
     @PostMapping("/rateBook")
-    public Map<String, Boolean> rateBook(@RequestBody BookRateRequestDto bookRateRequestDto,
-                                         HttpSession httpSession) {
+    public Map<String, Boolean> rateBook(@RequestBody BookRateRequestDto bookRateRequestDto) {
         var result = true;
         try {
-            bookVoteService.rateBook(userService.getUserBySession(httpSession), bookService.getBookEntityBySlug(bookRateRequestDto.getBookId()), bookRateRequestDto.getValue());
+            bookVoteService.rateBook(userService.getCurrentUser(), bookService.getBookEntityBySlug(bookRateRequestDto.getBookId()), bookRateRequestDto.getValue());
         } catch (Exception e) {
             log.error("Book vote error: {}", e.getMessage());
             result = false;
@@ -92,16 +88,14 @@ public class BookRestController {
     }
 
     @PostMapping("/bookReview")
-    public Map<String, Object> reviewBook(@RequestBody BookReviewRequestDto dto,
-                                          HttpSession httpSession) {
+    public Map<String, Object> reviewBook(@RequestBody BookReviewRequestDto dto) {
         return bookReviewService.saveBookReview(
-                bookService.getBookEntityBySlug(dto.getBookId()), dto.getText(), userService.getUserBySession(httpSession));
+                bookService.getBookEntityBySlug(dto.getBookId()), dto.getText(), userService.getCurrentUser());
     }
 
     @PostMapping("/rateBookReview")
-    public Map<String, Boolean> rateBookReview(@RequestBody BookReviewLikeRequestDto dto,
-                                               HttpSession httpSession) {
-        bookReviewLikeService.saveBookReviewLike(dto, userService.getUserBySession(httpSession));
+    public Map<String, Boolean> rateBookReview(@RequestBody BookReviewLikeRequestDto dto) {
+        bookReviewLikeService.saveBookReviewLike(dto, userService.getCurrentUser());
         return Map.of("result", true);
     }
 }

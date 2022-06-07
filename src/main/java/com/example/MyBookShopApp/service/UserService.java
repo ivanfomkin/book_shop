@@ -3,17 +3,14 @@ package com.example.MyBookShopApp.service;
 import com.example.MyBookShopApp.dto.security.ContactConfirmationRequestDto;
 import com.example.MyBookShopApp.dto.security.ContactConfirmationResponse;
 import com.example.MyBookShopApp.dto.security.RegistrationFormDto;
+import com.example.MyBookShopApp.dto.user.UserDto;
 import com.example.MyBookShopApp.entity.user.UserEntity;
 
-import javax.servlet.http.HttpSession;
 import java.util.Map;
 
 public interface UserService {
-    UserEntity getUserBySession(HttpSession session);
 
-    boolean isAuthorized(HttpSession httpSession);
-
-    void registerNewUser(RegistrationFormDto formDto, HttpSession httpSession);
+    void registerNewUser(RegistrationFormDto formDto);
 
     UserEntity registerOAuthUser(Map<String, Object> attributes, String authorizedClientRegistrationId);
 
@@ -22,4 +19,6 @@ public interface UserService {
     ContactConfirmationResponse jwtLogin(ContactConfirmationRequestDto dto);
 
     UserEntity getCurrentUser();
+
+    UserDto getCurrentUserInfo();
 }

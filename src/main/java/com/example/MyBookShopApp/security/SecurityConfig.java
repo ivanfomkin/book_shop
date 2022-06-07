@@ -20,7 +20,6 @@ import java.util.Optional;
 
 @Configuration
 @EnableWebSecurity
-//@EnableJdbcHttpSession
 @RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 

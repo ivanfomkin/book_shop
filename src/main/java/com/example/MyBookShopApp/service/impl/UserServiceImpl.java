@@ -3,6 +3,7 @@ package com.example.MyBookShopApp.service.impl;
 import com.example.MyBookShopApp.dto.security.ContactConfirmationRequestDto;
 import com.example.MyBookShopApp.dto.security.ContactConfirmationResponse;
 import com.example.MyBookShopApp.dto.security.RegistrationFormDto;
+import com.example.MyBookShopApp.dto.user.UserDto;
 import com.example.MyBookShopApp.entity.enums.ContactType;
 import com.example.MyBookShopApp.entity.user.UserContactEntity;
 import com.example.MyBookShopApp.entity.user.UserEntity;
@@ -23,10 +24,6 @@ import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.servlet.http.HttpSession;
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.*;
 
 @Service
@@ -38,6 +35,8 @@ public class UserServiceImpl implements UserService {
     private final UserContactRepository userContactRepository;
     private final BookStoreUserDetailsService userDetailsService;
 
+    private final String LOGIN_ERROR = "Неверное имя пользователя или пароль";
+
     public UserServiceImpl(JWTUtil jwtUtil, UserRepository userRepository, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, UserContactRepository userContactRepository, BookStoreUserDetailsService userDetailsService) {
         this.jwtUtil = jwtUtil;
         this.userRepository = userRepository;
@@ -47,31 +46,13 @@ public class UserServiceImpl implements UserService {
         this.userDetailsService = userDetailsService;
     }
 
-    @Override
-    public UserEntity getUserBySession(HttpSession session) {
-        var user = userRepository.findUserEntityByHash(session.getId());
-        if (user == null) {
-            user = new UserEntity();
-            user.setName("Empty User");
-            user.setRegTime(Instant.ofEpochMilli(session.getCreationTime()).atZone(ZoneId.systemDefault()).toLocalDateTime());
-            user.setHash(session.getId());
-            userRepository.save(user);
-        }
-        return user;
-    }
-
-    @Override
-    public boolean isAuthorized(HttpSession httpSession) {
-        return true; // TODO: 20.01.2022 Заглушка. Исправить позже
-    }
-
     @Transactional
     @Override
-    public void registerNewUser(RegistrationFormDto formDto, HttpSession httpSession) {
+    public void registerNewUser(RegistrationFormDto formDto) {
         if (!userContactRepository.existsAllByContactIn(List.of(formDto.getEmail(), formDto.getPhone()))) {
-            UserEntity user = userRepository.findUserEntityByHash(httpSession.getId());
+            UserEntity user = new UserEntity();
+            user.setHash(UUID.randomUUID().toString());
             user.setName(formDto.getName());
-            user.setRegTime(LocalDateTime.now());
             user.setPassword(passwordEncoder.encode(formDto.getPassword()));
             userRepository.save(user);
             user.setContacts(saveContacts(formDto, user));
@@ -131,10 +112,18 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public ContactConfirmationResponse jwtLogin(ContactConfirmationRequestDto dto) {
-        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(dto.getContact(), dto.getCode()));
-        BookStoreUserDetails userDetails = (BookStoreUserDetails) userDetailsService.loadUserByUsername(dto.getContact());
-        String token = jwtUtil.generateToken(userDetails);
-        return new ContactConfirmationResponse(token);
+        try {
+            BookStoreUserDetails userDetails = (BookStoreUserDetails) userDetailsService.loadUserByUsername(dto.getContact());
+            if (passwordEncoder.matches(dto.getCode(), userDetails.getPassword())) {
+                String token = jwtUtil.generateToken(userDetails);
+                authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(dto.getContact(), dto.getCode()));
+                return new ContactConfirmationResponse(true, token, null);
+            } else {
+                return new ContactConfirmationResponse(false, null, LOGIN_ERROR);
+            }
+        } catch (Exception exception) {
+            return new ContactConfirmationResponse(false, null, exception.getMessage());
+        }
     }
 
     @Override
@@ -200,5 +189,17 @@ public class UserServiceImpl implements UserService {
             contactEntities.add(phoneContact);
         }
         return userContactRepository.saveAll(contactEntities);
+    }
+
+    @Override
+    public UserDto getCurrentUserInfo() {
+        var currentUser = this.getCurrentUser();
+        if (currentUser == null) {
+            return new UserDto();
+        }
+        UserDto userDto = new UserDto();
+        userDto.setName(currentUser.getName());
+        userDto.setBalance(currentUser.getBalance());
+        return userDto;
     }
 }

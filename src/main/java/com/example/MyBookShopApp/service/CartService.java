@@ -9,5 +9,9 @@ import java.util.List;
 public interface CartService {
     CartDto getCartDtoByUser(UserEntity user);
 
-    List<CartBookElementDto> getPostponedBooks(UserEntity user);
+    CartDto getCartDtoFromCookie(String cookieValue);
+
+    List<CartBookElementDto> getPostponedBooksByUser(UserEntity user);
+
+    List<CartBookElementDto> getPostponedBooksFromCookie(String cookieValue);
 }

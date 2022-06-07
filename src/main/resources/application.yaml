@@ -11,11 +11,6 @@ spring:
     password: ENC(2JlOwOCRGKWHlZ4NqARaq10BXCd/jHUeqDNyNXz/B0o=)
   session:
     timeout: ${server.servlet.session.timeout}
-  #    store-type: jdbc
-  #    jdbc:
-  #            table-name: session_store
-  #            schema: public
-  #      initialize-schema: always
   messages:
     basename: lang.messages
   web:
@@ -39,6 +34,8 @@ spring:
           google:
             client-id: ENC(eAlnv9JuWdJ7nJVnuRoxbRvxDnh0kr81y6zCzH3/YJEHwY5QtHPSDDynxAAutvIBYouJSw7WH9h/aSkj+EzptwMTH2zT8KlKgWRWUm/ZvtE=)
             client-secret: ENC(KbYqwaR0cxF+v8Zx4kcz3zM3e9FKVfJoRr136j28qDgvPRLwuLxNgK4NkCreSbfF)
+  main:
+    allow-circular-references: true
 bookshop:
   auth:
     secret: ENC(XerjY39wf1l2nTKh5yXZ0nvBOLqpEIIk)

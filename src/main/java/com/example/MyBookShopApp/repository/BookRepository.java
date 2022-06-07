@@ -66,4 +66,6 @@ public interface BookRepository extends JpaRepository<BookEntity, Integer> {
 
     @Query("SELECT id FROM BookEntity where slug = :slug")
     Integer findBookIdBySlug(String slug);
+
+    List<BookEntity> findBookEntitiesBySlugIn(List<String> slugList);
 }

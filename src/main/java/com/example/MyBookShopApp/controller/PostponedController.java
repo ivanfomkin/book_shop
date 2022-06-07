@@ -1,50 +1,45 @@
 package com.example.MyBookShopApp.controller;
 
-import com.example.MyBookShopApp.dto.search.SearchDto;
+import com.example.MyBookShopApp.dto.cart.CartBookElementDto;
 import com.example.MyBookShopApp.entity.user.UserEntity;
 import com.example.MyBookShopApp.service.Book2UserService;
 import com.example.MyBookShopApp.service.CartService;
+import com.example.MyBookShopApp.service.CookieService;
 import com.example.MyBookShopApp.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Controller
 @RequestMapping("/postponed")
-public class PostponedController {
+public class PostponedController extends ModelAttributeController {
 
     private final UserService userService;
     private final CartService cartService;
-    private final Book2UserService book2UserService;
 
-    public PostponedController(UserService userService, CartService cartService, Book2UserService book2UserService) {
+    public PostponedController(UserService userService, CookieService cookieService, Book2UserService book2UserService, CartService cartService) {
+        super(userService, cookieService, book2UserService);
         this.userService = userService;
         this.cartService = cartService;
-        this.book2UserService = book2UserService;
-    }
-
-    @ModelAttribute("cartAmount")
-    public int cartAmount(HttpSession httpSession) {
-        return book2UserService.getCartAmount(userService.getUserBySession(httpSession));
-    }
-
-    @ModelAttribute("searchDto")
-    public SearchDto searchWord() {
-        return new SearchDto();
     }
 
     @GetMapping
-    public String postponedPage(Model model, HttpSession httpSession) {
-        UserEntity user = userService.getUserBySession(httpSession);
-        int keptAmount = book2UserService.getKeptAmount(user);
-
+    public String postponedPage(Model model, @ModelAttribute("keptAmount") Integer keptAmount, @CookieValue(value = "keptContent", required = false) String keptCookie) {
+        UserEntity user = userService.getCurrentUser();
+        List<CartBookElementDto> postponedBooks;
+        if (user != null) {
+            postponedBooks = cartService.getPostponedBooksByUser(user);
+        } else {
+            postponedBooks = cartService.getPostponedBooksFromCookie(keptCookie);
+        }
         model.addAttribute("keptAmount", keptAmount);
-        model.addAttribute("isPostponedEmpty", keptAmount == 0);
-        model.addAttribute("books", cartService.getPostponedBooks(user));
+        model.addAttribute("isPostponedEmpty", keptAmount == null || keptAmount == 0);
+        model.addAttribute("books", postponedBooks);
         return "postponed";
     }
 }

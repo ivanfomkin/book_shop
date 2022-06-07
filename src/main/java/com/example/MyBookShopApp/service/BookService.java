@@ -40,4 +40,6 @@ public interface BookService {
     List<BookEntity> getBooksByUserAndType(UserEntity user, Book2UserType cart);
 
     Integer getBookIdBuSlug(String slug);
+
+    List<BookEntity> getBooksBySlugIn(List<String> slugs);
 }

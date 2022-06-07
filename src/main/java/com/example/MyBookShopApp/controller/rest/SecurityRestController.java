@@ -30,11 +30,12 @@ public class SecurityRestController {
     }
 
     @PostMapping("/login")
-    public Map<String, Object> login(@RequestBody ContactConfirmationRequestDto dto, HttpServletResponse response) {
+    public ContactConfirmationResponse login(@RequestBody ContactConfirmationRequestDto dto, HttpServletResponse response) {
         ContactConfirmationResponse contactConfirmationResponse = userService.jwtLogin(dto);
-        Cookie cookie = new Cookie("token", contactConfirmationResponse.getResult());
-        response.addCookie(cookie);
-//        return userService.login(dto);
-        return Map.of("result", true);
+        if (contactConfirmationResponse.getResult()) {
+            Cookie cookie = new Cookie("token", contactConfirmationResponse.getToken());
+            response.addCookie(cookie);
+        }
+        return contactConfirmationResponse;
     }
 }

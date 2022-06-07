@@ -208,4 +208,9 @@ public class BookServiceJpaImpl implements BookService {
         var discountAmount = price * percentDiscount / 100;
         return price - discountAmount;
     }
+
+    @Override
+    public List<BookEntity> getBooksBySlugIn(List<String> slugs) {
+        return bookRepository.findBookEntitiesBySlugIn(slugs);
+    }
 }
