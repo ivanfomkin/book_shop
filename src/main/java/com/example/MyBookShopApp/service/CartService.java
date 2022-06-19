@@ -14,4 +14,8 @@ public interface CartService {
     List<CartBookElementDto> getPostponedBooksByUser(UserEntity user);
 
     List<CartBookElementDto> getPostponedBooksFromCookie(String cookieValue);
+
+    void mergeCartWithUser(String cartCookie, UserEntity user);
+
+    void mergeKeptWithUser(String keptCookie, UserEntity user);
 }

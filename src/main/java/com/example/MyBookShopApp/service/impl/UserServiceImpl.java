@@ -116,7 +116,8 @@ public class UserServiceImpl implements UserService {
             BookStoreUserDetails userDetails = (BookStoreUserDetails) userDetailsService.loadUserByUsername(dto.getContact());
             if (passwordEncoder.matches(dto.getCode(), userDetails.getPassword())) {
                 String token = jwtUtil.generateToken(userDetails);
-                authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(dto.getContact(), dto.getCode()));
+                Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(dto.getContact(), dto.getCode()));
+                SecurityContextHolder.getContext().setAuthentication(authentication);
                 return new ContactConfirmationResponse(true, token, null);
             } else {
                 return new ContactConfirmationResponse(false, null, LOGIN_ERROR);
@@ -132,6 +133,7 @@ public class UserServiceImpl implements UserService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication.getPrincipal() instanceof BookStoreUserDetails userDetails) {
             user = userRepository.findUserEntityByContacts_contact(userDetails.getUsername());
+            return user;
         }
         if (authentication instanceof OAuth2AuthenticationToken oAuth2) {
             Map<String, Object> attributes = oAuth2.getPrincipal().getAttributes();

@@ -1,16 +1,10 @@
 server:
   port: 8085
-  servlet:
-    session:
-      timeout: 24h
-      tracking-modes: cookie
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5433/book_shop
     username: ENC(OpuZGf7wYLn03ZMaMVdeoL1Ah7UJPVCY)
     password: ENC(2JlOwOCRGKWHlZ4NqARaq10BXCd/jHUeqDNyNXz/B0o=)
-  session:
-    timeout: ${server.servlet.session.timeout}
   messages:
     basename: lang.messages
   web:

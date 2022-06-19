@@ -5,10 +5,7 @@ import com.example.MyBookShopApp.dto.cart.CartDto;
 import com.example.MyBookShopApp.entity.book.BookEntity;
 import com.example.MyBookShopApp.entity.enums.Book2UserType;
 import com.example.MyBookShopApp.entity.user.UserEntity;
-import com.example.MyBookShopApp.service.AuthorService;
-import com.example.MyBookShopApp.service.BookService;
-import com.example.MyBookShopApp.service.CartService;
-import com.example.MyBookShopApp.service.CookieService;
+import com.example.MyBookShopApp.service.*;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -19,11 +16,13 @@ public class CartServiceImpl implements CartService {
     private final BookService bookService;
     private final AuthorService authorService;
     private final CookieService cookieService;
+    private final Book2UserService book2UserService;
 
-    public CartServiceImpl(BookService bookService, AuthorService authorService, CookieService cookieService) {
+    public CartServiceImpl(BookService bookService, AuthorService authorService, CookieService cookieService, Book2UserService book2UserService) {
         this.bookService = bookService;
         this.authorService = authorService;
         this.cookieService = cookieService;
+        this.book2UserService = book2UserService;
     }
 
     @Override
@@ -64,6 +63,26 @@ public class CartServiceImpl implements CartService {
             var bookSlugList = cookieService.getBookSlugListFromCookie(cookieValue);
             var bookEntityList = bookService.getBooksBySlugIn(bookSlugList);
             return convertBooksToDto(bookEntityList);
+        }
+    }
+
+    @Override
+    public void mergeCartWithUser(String cartCookie, UserEntity user) {
+        mergeBookCookieWithDatabase(cartCookie, user, Book2UserType.CART);
+    }
+
+    @Override
+    public void mergeKeptWithUser(String keptCookie, UserEntity user) {
+        mergeBookCookieWithDatabase(keptCookie, user, Book2UserType.KEPT);
+    }
+
+    private void mergeBookCookieWithDatabase(String cookie, UserEntity user, Book2UserType status) {
+        if (cookie == null || cookie.isEmpty()) {
+            return;
+        }
+        var bookEntityList = bookService.getBooksBySlugIn(cookieService.getBookSlugListFromCookie(cookie));
+        for (BookEntity book : bookEntityList) {
+            book2UserService.changeBookStatus(user, book, status);
         }
     }
 

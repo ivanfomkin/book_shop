@@ -95,7 +95,7 @@ public class BookRestController {
 
     @PostMapping("/rateBookReview")
     public Map<String, Boolean> rateBookReview(@RequestBody BookReviewLikeRequestDto dto) {
-        bookReviewLikeService.saveBookReviewLike(dto, userService.getCurrentUser());
-        return Map.of("result", true);
+        var result = bookReviewLikeService.saveBookReviewLike(dto, userService.getCurrentUser());
+        return Map.of("result", result);
     }
 }

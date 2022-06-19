@@ -1,5 +1,6 @@
 package com.example.MyBookShopApp.service.impl;
 
+import com.example.MyBookShopApp.entity.book.BookEntity;
 import com.example.MyBookShopApp.entity.book.links.Book2UserEntity;
 import com.example.MyBookShopApp.entity.enums.Book2UserType;
 import com.example.MyBookShopApp.entity.user.UserEntity;
@@ -34,8 +35,36 @@ public class Book2UserServiceImpl implements Book2UserService {
             bookStatus.setBookId(bookService.getBookIdBuSlug(slug));
             bookStatus.setTypeId(book2UserTypeRepository.findBook2UserTypeEntityByName(status).getId());
             book2UserRepository.save(bookStatus);
+        } else {
+            changeBookStatus(bookStatus, status);
         }
-        bookStatus.setTypeId(book2UserTypeRepository.findBook2UserTypeEntityByName(status).getId());
+    }
+
+    @Override
+    public void changeBookStatus(UserEntity user, BookEntity bookEntity, Book2UserType status) {
+        if (status == Book2UserType.UNLINK) {
+            book2UserRepository.deleteBookStatusByBookAndUser(user, bookEntity);
+            return;
+        }
+        var bookStatus = book2UserRepository.findBookStatusByUserAndBook(user, bookEntity);
+        if (bookStatus == null) {
+            bookStatus = new Book2UserEntity();
+            bookStatus.setUserId(user.getId());
+            bookStatus.setBookId(bookEntity.getId());
+            bookStatus.setTypeId(book2UserTypeRepository.findBook2UserTypeEntityByName(status).getId());
+            book2UserRepository.save(bookStatus);
+        } else {
+            changeBookStatus(bookStatus, status);
+        }
+    }
+
+    private void changeBookStatus(Book2UserEntity bookStatus, Book2UserType requestedStatus) {
+        var currentStatus = book2UserTypeRepository.findById(bookStatus.getTypeId()).orElseThrow();
+        var newBookStatus = book2UserTypeRepository.findBook2UserTypeEntityByName(requestedStatus);
+        if (currentStatus.getName() != newBookStatus.getName()) {
+            bookStatus.setTypeId(newBookStatus.getId());
+            book2UserRepository.save(bookStatus);
+        }
     }
 
     @Override
