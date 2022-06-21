@@ -1,5 +1,6 @@
 package com.example.MyBookShopApp.controller.rest;
 
+import com.example.MyBookShopApp.dto.CommonResultDto;
 import com.example.MyBookShopApp.dto.security.ContactConfirmationRequestDto;
 import com.example.MyBookShopApp.dto.security.ContactConfirmationResponse;
 import com.example.MyBookShopApp.entity.user.UserEntity;
@@ -25,13 +26,13 @@ public class SecurityRestController {
     }
 
     @PostMapping("/approveContact")
-    public Map<String, Object> approveContact(@RequestBody ContactConfirmationRequestDto dto) {
-        return Map.of("result", true);
+    public CommonResultDto approveContact(@RequestBody ContactConfirmationRequestDto dto) {
+        return new CommonResultDto(true);
     }
 
     @PostMapping("/requestContactConfirmation")
-    public Map<String, Object> contactConfirmation(@RequestBody ContactConfirmationRequestDto dto) {
-        return Map.of("result", true);
+    public CommonResultDto contactConfirmation(@RequestBody ContactConfirmationRequestDto dto) {
+        return new CommonResultDto(true);
     }
 
     @PostMapping("/login")

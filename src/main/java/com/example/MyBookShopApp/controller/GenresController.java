@@ -1,7 +1,6 @@
 package com.example.MyBookShopApp.controller;
 
 import com.example.MyBookShopApp.service.*;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/genres")
-public class GenresController  extends ModelAttributeController{
+public class GenresController extends ModelAttributeController {
 
     private final BookService bookService;
     private final GenreService genreService;

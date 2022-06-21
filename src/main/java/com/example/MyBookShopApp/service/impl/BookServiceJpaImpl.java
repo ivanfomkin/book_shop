@@ -37,7 +37,7 @@ public class BookServiceJpaImpl implements BookService {
     private final BookReviewService bookReviewService;
     private final Book2UserRepository book2UserRepository;
 
-    private final String manyAuthorsAppender = " и другие";
+    private static final String manyAuthorsAppender = " и другие";
     private final LocalDate minLocalDate;
     private final LocalDate maxLocalDate;
 

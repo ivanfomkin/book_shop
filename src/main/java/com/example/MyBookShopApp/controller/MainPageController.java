@@ -2,7 +2,6 @@ package com.example.MyBookShopApp.controller;
 
 import com.example.MyBookShopApp.entity.tag.TagWithWeightObject;
 import com.example.MyBookShopApp.service.*;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,7 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import java.util.List;
 
 @Controller
-public class MainPageController extends ModelAttributeController{
+public class MainPageController extends ModelAttributeController {
     private final TagService tagService;
     private final BookService bookService;
 

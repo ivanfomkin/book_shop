@@ -4,7 +4,6 @@ import com.example.MyBookShopApp.dto.cart.ChangeBookStatusRequestDto;
 import com.example.MyBookShopApp.service.CookieService;
 import org.apache.commons.lang3.NotImplementedException;
 import org.slf4j.helpers.MessageFormatter;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.Cookie;
@@ -16,8 +15,8 @@ import java.util.StringJoiner;
 
 @Service
 public class CookieServiceImpl implements CookieService {
-    private final String CART_COOKIE_NAME = "cartContent";
-    private final String KEPT_COOKIE_NAME = "keptContent";
+    private static final String CART_COOKIE_NAME = "cartContent";
+    private static final String KEPT_COOKIE_NAME = "keptContent";
 
     @Override
     public int getCookieSize(String cookieValue) {
@@ -45,7 +44,8 @@ public class CookieServiceImpl implements CookieService {
                 removeBookFromCookie(dto.getSlug(), cartCookie);
                 removeBookFromCookie(dto.getSlug(), keptCookie);
             }
-            default -> throw new NotImplementedException(MessageFormatter.format("Status change for {} not implemented", dto.getStatus()).getMessage());
+            default ->
+                    throw new NotImplementedException(MessageFormatter.format("Status change for {} not implemented", dto.getStatus()).getMessage());
         }
         response.addCookie(cartCookie);
         response.addCookie(keptCookie);

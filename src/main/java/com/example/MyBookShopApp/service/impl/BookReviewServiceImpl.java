@@ -1,5 +1,6 @@
 package com.example.MyBookShopApp.service.impl;
 
+import com.example.MyBookShopApp.dto.CommonResultDto;
 import com.example.MyBookShopApp.dto.book.review.BookReviewDto;
 import com.example.MyBookShopApp.dto.book.review.BookReviewListElementDto;
 import com.example.MyBookShopApp.entity.book.BookEntity;
@@ -10,16 +11,14 @@ import com.example.MyBookShopApp.service.BookReviewService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class BookReviewServiceImpl implements BookReviewService {
     private final BookReviewRepository bookReviewRepository;
 
-    private final String INVALID_REVIEW_TEXT_LENGTH_MESSAGE = "Количество символов в отзыве должно быть не менее ";
-    private final String REVIEW_ALREADY_EXIST_MESSAGE = "Вы уже оставляли отзыв";
+    private static final String INVALID_REVIEW_TEXT_LENGTH_MESSAGE = "Количество символов в отзыве должно быть не менее ";
+    private static final String REVIEW_ALREADY_EXIST_MESSAGE = "Вы уже оставляли отзыв";
 
     @Value("${bookshop.review.min-size}")
     private Integer minimalReviewTextLength;
@@ -44,8 +43,7 @@ public class BookReviewServiceImpl implements BookReviewService {
     }
 
     @Override
-    public Map<String, Object> saveBookReview(BookEntity book, String text, UserEntity user) {
-        Map<String, Object> resultMap = new HashMap<>();
+    public CommonResultDto saveBookReview(BookEntity book, String text, UserEntity user) {
         boolean result = true;
         String errorMessage = null;
         if (bookReviewRepository.existsBookReviewEntityByBookAndUser(book, user)) {
@@ -61,11 +59,11 @@ public class BookReviewServiceImpl implements BookReviewService {
             bookReview.setText(text);
             bookReviewRepository.save(bookReview);
         }
-        resultMap.put("result", result);
+        var resultDto = new CommonResultDto(result);
         if (!result) {
-            resultMap.put("error", errorMessage);
+            resultDto.setError(errorMessage);
         }
-        return resultMap;
+        return resultDto;
     }
 
     private List<BookReviewListElementDto> convertBookReviewsEntityToDto(List<BookReviewEntity> bookReviewEntities) {

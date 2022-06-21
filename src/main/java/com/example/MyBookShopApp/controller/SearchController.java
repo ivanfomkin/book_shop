@@ -7,7 +7,6 @@ import com.example.MyBookShopApp.service.Book2UserService;
 import com.example.MyBookShopApp.service.BookService;
 import com.example.MyBookShopApp.service.CookieService;
 import com.example.MyBookShopApp.service.UserService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-public class SearchController extends ModelAttributeController{
+public class SearchController extends ModelAttributeController {
     private final BookService bookService;
 
     public SearchController(UserService userService, Book2UserService book2UserService, BookService bookService, CookieService cookieService) {

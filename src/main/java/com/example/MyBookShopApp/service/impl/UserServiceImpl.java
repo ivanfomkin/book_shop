@@ -35,7 +35,7 @@ public class UserServiceImpl implements UserService {
     private final UserContactRepository userContactRepository;
     private final BookStoreUserDetailsService userDetailsService;
 
-    private final String LOGIN_ERROR = "Неверное имя пользователя или пароль";
+    private static final String LOGIN_ERROR = "Неверное имя пользователя или пароль";
 
     public UserServiceImpl(JWTUtil jwtUtil, UserRepository userRepository, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, UserContactRepository userContactRepository, BookStoreUserDetailsService userDetailsService) {
         this.jwtUtil = jwtUtil;
@@ -101,13 +101,6 @@ public class UserServiceImpl implements UserService {
             user.setContacts(List.of(emailContact));
         }
         return user;
-    }
-
-    @Override
-    public Map<String, Object> login(ContactConfirmationRequestDto dto) {
-        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(dto.getContact(), dto.getCode()));
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        return Map.of("result", true);
     }
 
     @Override

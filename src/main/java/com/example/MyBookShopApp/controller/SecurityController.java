@@ -4,7 +4,6 @@ import com.example.MyBookShopApp.dto.security.RegistrationFormDto;
 import com.example.MyBookShopApp.service.Book2UserService;
 import com.example.MyBookShopApp.service.CookieService;
 import com.example.MyBookShopApp.service.UserService;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,12 +12,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 @Slf4j
 @Controller
-public class SecurityController extends ModelAttributeController{
+public class SecurityController extends ModelAttributeController {
 
     private final UserService userService;
 
     public SecurityController(UserService userService, CookieService cookieService, Book2UserService book2UserService, UserService userService1) {
-        super(userService,cookieService, book2UserService);
+        super(userService, cookieService, book2UserService);
         this.userService = userService1;
     }
 

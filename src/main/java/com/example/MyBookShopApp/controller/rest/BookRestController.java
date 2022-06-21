@@ -1,5 +1,6 @@
 package com.example.MyBookShopApp.controller.rest;
 
+import com.example.MyBookShopApp.dto.CommonResultDto;
 import com.example.MyBookShopApp.dto.book.BookListDto;
 import com.example.MyBookShopApp.dto.book.rate.BookRateRequestDto;
 import com.example.MyBookShopApp.dto.book.review.BookReviewLikeRequestDto;
@@ -76,26 +77,26 @@ public class BookRestController {
     }
 
     @PostMapping("/rateBook")
-    public Map<String, Boolean> rateBook(@RequestBody BookRateRequestDto bookRateRequestDto) {
+    public CommonResultDto rateBook(@RequestBody BookRateRequestDto bookRateRequestDto) {
         var result = true;
         try {
             bookVoteService.rateBook(userService.getCurrentUser(), bookService.getBookEntityBySlug(bookRateRequestDto.getBookId()), bookRateRequestDto.getValue());
         } catch (Exception e) {
-            log.error("Book vote error: {}", e.getMessage());
+            log.warn("Book vote error: {}", e.getMessage());
             result = false;
         }
-        return Map.of("result", result);
+        return new CommonResultDto(result);
     }
 
     @PostMapping("/bookReview")
-    public Map<String, Object> reviewBook(@RequestBody BookReviewRequestDto dto) {
+    public CommonResultDto reviewBook(@RequestBody BookReviewRequestDto dto) {
         return bookReviewService.saveBookReview(
                 bookService.getBookEntityBySlug(dto.getBookId()), dto.getText(), userService.getCurrentUser());
     }
 
     @PostMapping("/rateBookReview")
-    public Map<String, Boolean> rateBookReview(@RequestBody BookReviewLikeRequestDto dto) {
+    public CommonResultDto rateBookReview(@RequestBody BookReviewLikeRequestDto dto) {
         var result = bookReviewLikeService.saveBookReviewLike(dto, userService.getCurrentUser());
-        return Map.of("result", result);
+        return new CommonResultDto(result);
     }
 }

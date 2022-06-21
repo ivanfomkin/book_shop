@@ -14,8 +14,6 @@ public interface UserService {
 
     UserEntity registerOAuthUser(Map<String, Object> attributes, String authorizedClientRegistrationId);
 
-    Map<String, Object> login(ContactConfirmationRequestDto dto);
-
     ContactConfirmationResponse jwtLogin(ContactConfirmationRequestDto dto);
 
     UserEntity getCurrentUser();

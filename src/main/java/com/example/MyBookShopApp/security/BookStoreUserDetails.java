@@ -6,12 +6,11 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.beans.Transient;
 import java.util.Collection;
 import java.util.List;
 
 public class BookStoreUserDetails implements UserDetails {
-    private final List<? extends  GrantedAuthority> authorities;
+    private final List<? extends GrantedAuthority> authorities;
     private final String password;
     private final String username;
 
