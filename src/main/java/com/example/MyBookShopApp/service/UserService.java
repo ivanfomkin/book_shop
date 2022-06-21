@@ -10,7 +10,7 @@ import java.util.Map;
 
 public interface UserService {
 
-    void registerNewUser(RegistrationFormDto formDto);
+    UserEntity registerNewUser(RegistrationFormDto formDto);
 
     UserEntity registerOAuthUser(Map<String, Object> attributes, String authorizedClientRegistrationId);
 

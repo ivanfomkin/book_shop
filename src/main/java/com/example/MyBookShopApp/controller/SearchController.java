@@ -7,6 +7,8 @@ import com.example.MyBookShopApp.service.Book2UserService;
 import com.example.MyBookShopApp.service.BookService;
 import com.example.MyBookShopApp.service.CookieService;
 import com.example.MyBookShopApp.service.UserService;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,10 +19,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class SearchController extends ModelAttributeController {
     private final BookService bookService;
+    private final MessageSource messageSource;
 
-    public SearchController(UserService userService, Book2UserService book2UserService, BookService bookService, CookieService cookieService) {
+    public SearchController(UserService userService, Book2UserService book2UserService, BookService bookService, CookieService cookieService, MessageSource messageSource) {
         super(userService, cookieService, book2UserService);
         this.bookService = bookService;
+        this.messageSource = messageSource;
     }
 
     @ModelAttribute("searchResults")
@@ -38,7 +42,8 @@ public class SearchController extends ModelAttributeController {
             model.addAttribute("bookList", bookService.getPageableBooksByTitle(offset, limit, searchDto.searchQuery()));
             return "search/index";
         } else {
-            throw new EmptySearchQueryException("Строка поиска не может быть пустой"); // TODO: 10.01.2022 Передавать сюда локализованное сообщение
+            String errorMessage = messageSource.getMessage("search.error", new Object[]{}, LocaleContextHolder.getLocale());
+            throw new EmptySearchQueryException(errorMessage);
         }
     }
 }

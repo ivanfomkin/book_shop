@@ -1,0 +1,43 @@
+server:
+  port: 8085
+spring:
+  messages:
+    basename: lang.messages
+  web:
+    resources:
+      static-locations: classpath:/spring-frontend/
+  thymeleaf:
+    prefix: classpath:/spring-frontend/
+  jpa:
+    hibernate:
+      ddl-auto: validate
+  liquibase:
+    change-log: classpath:db/changelog/master-changelog.xml
+    enabled: true
+  security:
+    oauth2:
+      client:
+        registration:
+          github:
+            client-id: ENC(IpnHRekKmEcn3Lb5G/uW0z9OktvtUEv5nCtmKlr6xFQ=)
+            client-secret: ENC(7NhI7bsN7oRz7ht0v/R7jOdBzHb1DhYRynk2ufiETSU0dtta5NRrgsxFRFFNHvA6I3+4iGVvW18=)
+          google:
+            client-id: ENC(eAlnv9JuWdJ7nJVnuRoxbRvxDnh0kr81y6zCzH3/YJEHwY5QtHPSDDynxAAutvIBYouJSw7WH9h/aSkj+EzptwMTH2zT8KlKgWRWUm/ZvtE=)
+            client-secret: ENC(KbYqwaR0cxF+v8Zx4kcz3zM3e9FKVfJoRr136j28qDgvPRLwuLxNgK4NkCreSbfF)
+  main:
+    allow-circular-references: true
+bookshop:
+  auth:
+    secret: ENC(XerjY39wf1l2nTKh5yXZ0nvBOLqpEIIk)
+    blacklist:
+      delete:
+        crone: '0 0 */3 * * *'
+  review:
+    min-size: 30
+  upload:
+    path: F:\dev\spring-learn\MyBookShopApp_m3_6\uploads
+  download:
+    path: F:\dev\spring-learn\MyBookShopApp_m3_6\books
+jasypt:
+  encryptor:
+    bean: encryptorBean

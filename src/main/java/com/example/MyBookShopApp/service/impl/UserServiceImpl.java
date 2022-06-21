@@ -48,7 +48,7 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public void registerNewUser(RegistrationFormDto formDto) {
+    public UserEntity registerNewUser(RegistrationFormDto formDto) {
         if (!userContactRepository.existsAllByContactIn(List.of(formDto.getEmail(), formDto.getPhone()))) {
             UserEntity user = new UserEntity();
             user.setHash(UUID.randomUUID().toString());
@@ -56,6 +56,9 @@ public class UserServiceImpl implements UserService {
             user.setPassword(passwordEncoder.encode(formDto.getPassword()));
             userRepository.save(user);
             user.setContacts(saveContacts(formDto, user));
+            return user;
+        } else {
+            return null;
         }
     }
 
@@ -178,12 +181,13 @@ public class UserServiceImpl implements UserService {
             UserContactEntity phoneContact = new UserContactEntity();
             phoneContact.setApproved((short) 1);
             phoneContact.setContact(formDto.getPhone());
-            phoneContact.setType(ContactType.EMAIL);
+            phoneContact.setType(ContactType.PHONE);
             phoneContact.setUser(user);
             phoneContact.setCode("111-111");
             contactEntities.add(phoneContact);
         }
-        return userContactRepository.saveAll(contactEntities);
+        userContactRepository.saveAll(contactEntities);
+        return contactEntities;
     }
 
     @Override

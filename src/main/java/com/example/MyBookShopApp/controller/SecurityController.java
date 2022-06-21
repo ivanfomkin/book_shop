@@ -34,8 +34,8 @@ public class SecurityController extends ModelAttributeController {
 
     @PostMapping("/registration")
     public String registerUser(RegistrationFormDto formDto, Model model) {
-        userService.registerNewUser(formDto);
-        model.addAttribute("registrationSuccess", true);
+        var newUser = userService.registerNewUser(formDto);
+        model.addAttribute("registrationSuccess", newUser != null);
         return "signin";
     }
 

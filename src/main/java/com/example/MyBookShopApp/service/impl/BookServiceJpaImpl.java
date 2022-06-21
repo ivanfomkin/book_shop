@@ -93,7 +93,7 @@ public class BookServiceJpaImpl implements BookService {
     @Override
     public BookListDto getPageableBooksByTitle(int offset, int limit, String title) {
         Pageable pageable = PageRequest.of(offset / limit, limit);
-        Page<BookEntity> bookEntityPage = bookRepository.findBookEntityByTitleContainingOrderByTitle(title, pageable);
+        Page<BookEntity> bookEntityPage = bookRepository.findBookEntityByTitleContainingIgnoreCaseOrderByTitle(title, pageable);
         return createBookListDtoFromPage(bookEntityPage);
     }
 
