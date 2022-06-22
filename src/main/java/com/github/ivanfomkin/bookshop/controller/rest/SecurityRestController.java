@@ -40,7 +40,7 @@ public class SecurityRestController {
                                              @CookieValue(value = "keptContent", required = false) String keptCookie,
                                              HttpServletResponse response) {
         ContactConfirmationResponse contactConfirmationResponse = userService.jwtLogin(dto);
-        if (contactConfirmationResponse.getResult()) {
+        if (contactConfirmationResponse.isResult()) {
             Cookie cookie = new Cookie("token", contactConfirmationResponse.getToken());
             response.addCookie(cookie);
             UserEntity user = userService.getCurrentUser();

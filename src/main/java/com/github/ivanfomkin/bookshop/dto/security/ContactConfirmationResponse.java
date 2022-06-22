@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ContactConfirmationResponse {
-    private Boolean result;
+    private boolean result;
     private String token;
     private String error;
 }
