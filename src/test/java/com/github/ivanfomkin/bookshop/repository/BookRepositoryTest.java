@@ -2,11 +2,13 @@ package com.github.ivanfomkin.bookshop.repository;
 
 import com.github.ivanfomkin.bookshop.AbstractTest;
 import com.github.ivanfomkin.bookshop.entity.book.BookEntity;
+import com.github.ivanfomkin.bookshop.entity.enums.Book2UserType;
 import com.github.ivanfomkin.bookshop.entity.tag.TagEntity;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.time.LocalDate;
 
@@ -15,10 +17,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class BookRepositoryTest extends AbstractTest {
 
+    private final JdbcTemplate jdbcTemplate;
     private final BookRepository bookRepository;
 
     @Autowired
-    BookRepositoryTest(BookRepository bookRepository) {
+    BookRepositoryTest(JdbcTemplate jdbcTemplate, BookRepository bookRepository) {
+        this.jdbcTemplate = jdbcTemplate;
         this.bookRepository = bookRepository;
     }
 
@@ -83,5 +87,41 @@ class BookRepositoryTest extends AbstractTest {
             assertTrue(recentBook.getPublishDate().isBefore(lastBookDate) || recentBook.getPublishDate().isEqual(lastBookDate));
             lastBookDate = recentBook.getPublishDate();
         }
+    }
+
+    @Test
+    void findPopularBooks_find10popularBooks_resultIsNotNullAndNotEmptyAndContain10Books() {
+        var pageSize = 10;
+        var popularBooks = bookRepository.findPopularBooks(Pageable.ofSize(pageSize));
+        assertNotNull(popularBooks);
+        assertFalse(popularBooks.isEmpty());
+        assertThat(popularBooks.getSize()).isEqualTo(pageSize);
+    }
+
+    @Test
+    void findPopularBooks_find10popularBooks_booksOrderByPopularRating() {
+        var pageSize = 10;
+        var popularBooks = bookRepository.findPopularBooks(Pageable.ofSize(pageSize));
+        var lastBookRating = calculateBookRating(popularBooks.stream().findFirst().get());
+        for (BookEntity popularBook : popularBooks) {
+            assertThat(calculateBookRating(popularBook)).isLessThanOrEqualTo(lastBookRating);
+            lastBookRating = calculateBookRating(popularBook);
+        }
+    }
+
+    private double calculateBookRating(BookEntity bookEntity) {
+        var usersCountWhereByThisBook = getBookStatusCount(bookEntity, Book2UserType.PAID);
+        var usersCountWhereAddThisBookToCart = getBookStatusCount(bookEntity, Book2UserType.CART);
+        var usersCountWhereAddThisBookToPostponed = getBookStatusCount(bookEntity, Book2UserType.KEPT);
+        return usersCountWhereByThisBook + 0.7 * usersCountWhereAddThisBookToCart + 0.4 * usersCountWhereAddThisBookToPostponed;
+    }
+
+    private Integer getBookStatusCount(BookEntity bookEntity, Book2UserType book2UserType) {
+        return jdbcTemplate.queryForObject("""
+                SELECT count(*)
+                FROM book2user b2u
+                         join book2user_type b2ut on b2u.type_id = b2ut.id AND b2ut.code = ?
+                WHERE book_id = ?
+                """, Integer.TYPE, book2UserType.toString(), bookEntity.getId());
     }
 }
