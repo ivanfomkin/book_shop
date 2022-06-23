@@ -2,15 +2,19 @@ package com.github.ivanfomkin.bookshop.repository;
 
 import com.github.ivanfomkin.bookshop.AbstractTest;
 import com.github.ivanfomkin.bookshop.entity.book.BookEntity;
+import com.github.ivanfomkin.bookshop.entity.book.review.BookVoteEntity;
 import com.github.ivanfomkin.bookshop.entity.enums.Book2UserType;
 import com.github.ivanfomkin.bookshop.entity.tag.TagEntity;
 import org.apache.commons.lang3.StringUtils;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
@@ -20,10 +24,17 @@ class BookRepositoryTest extends AbstractTest {
     private final JdbcTemplate jdbcTemplate;
     private final BookRepository bookRepository;
 
+    private static String emptyCookieValue;
+
     @Autowired
     BookRepositoryTest(JdbcTemplate jdbcTemplate, BookRepository bookRepository) {
         this.jdbcTemplate = jdbcTemplate;
         this.bookRepository = bookRepository;
+    }
+
+    @BeforeAll
+    static void setUp() {
+        emptyCookieValue = "";
     }
 
     @Test
@@ -67,9 +78,9 @@ class BookRepositoryTest extends AbstractTest {
     }
 
     @Test
-    void finRecommendedBooks_searchAllRecommendedBooks_resultIsNotNullAndNotEmptyAndBookPageSizeIs10() {
+    void finRecommendedBooks_search10RecommendedBooks_resultIsNotNullAndNotEmptyAndBookPageSizeIs10() {
         var pageSize = 10;
-        var recommendedBooks = bookRepository.finRecommendedBooks(Pageable.ofSize(pageSize));
+        var recommendedBooks = bookRepository.findRecommendedBooksWhereSlugsNotIn(Pageable.ofSize(pageSize), List.of(emptyCookieValue));
         assertNotNull(recommendedBooks);
         assertFalse(recommendedBooks.isEmpty());
         assertThat(recommendedBooks.getSize()).isEqualTo(pageSize);
@@ -102,14 +113,14 @@ class BookRepositoryTest extends AbstractTest {
     void findPopularBooks_find10popularBooks_booksOrderByPopularRating() {
         var pageSize = 10;
         var popularBooks = bookRepository.findPopularBooks(Pageable.ofSize(pageSize));
-        var lastBookRating = calculateBookRating(popularBooks.stream().findFirst().get());
+        var lastBookRating = calculateBookPopularRating(popularBooks.stream().findFirst().get());
         for (BookEntity popularBook : popularBooks) {
-            assertThat(calculateBookRating(popularBook)).isLessThanOrEqualTo(lastBookRating);
-            lastBookRating = calculateBookRating(popularBook);
+            assertThat(calculateBookPopularRating(popularBook)).isLessThanOrEqualTo(lastBookRating);
+            lastBookRating = calculateBookPopularRating(popularBook);
         }
     }
 
-    private double calculateBookRating(BookEntity bookEntity) {
+    private double calculateBookPopularRating(BookEntity bookEntity) {
         var usersCountWhereByThisBook = getBookStatusCount(bookEntity, Book2UserType.PAID);
         var usersCountWhereAddThisBookToCart = getBookStatusCount(bookEntity, Book2UserType.CART);
         var usersCountWhereAddThisBookToPostponed = getBookStatusCount(bookEntity, Book2UserType.KEPT);
@@ -123,5 +134,34 @@ class BookRepositoryTest extends AbstractTest {
                          join book2user_type b2ut on b2u.type_id = b2ut.id AND b2ut.code = ?
                 WHERE book_id = ?
                 """, Integer.TYPE, book2UserType.toString(), bookEntity.getId());
+    }
+
+    @Test
+    void finRecommendedBooks_find400RecommendedBooksWithoutUserAndCookie_booksOrderByRating() {
+        var pageSize = 400;
+        var recommendedBooks = bookRepository.findRecommendedBooksWhereSlugsNotIn(Pageable.ofSize(pageSize), List.of(emptyCookieValue));
+        assertNotNull(recommendedBooks);
+        assertThat(recommendedBooks.getSize()).isEqualTo(pageSize);
+        var lastBookRating = calculateBookRating(recommendedBooks.stream().findFirst().get());
+        for (BookEntity book : recommendedBooks) {
+            var currentBookRating = calculateBookRating(book);
+            assertThat(currentBookRating).isLessThanOrEqualTo(lastBookRating);
+            lastBookRating = currentBookRating;
+        }
+    }
+
+    @Test
+    void finRecommendedBooks_find400RecommendedBooksWithoutUserAndWithCookie_RecommendedBooksDoesNotContainsSlug() {
+        var pageSize = Integer.MAX_VALUE;
+        List<String> bookSlugFromCookie = List.of("book-013-ise", "book-514-ogz", "book-099-qaz");
+        var recommendedBooks = bookRepository.findRecommendedBooksWhereSlugsNotIn(Pageable.ofSize(pageSize), bookSlugFromCookie);
+        var recommendedBookSlugs = recommendedBooks.stream().map(BookEntity::getSlug).toList();
+        for (String slug : bookSlugFromCookie) {
+            assertFalse(recommendedBookSlugs.contains(slug));
+        }
+    }
+
+    private double calculateBookRating(BookEntity bookEntity) {
+        return bookEntity.getVotes().stream().mapToInt(BookVoteEntity::getValue).average().orElse(0);
     }
 }

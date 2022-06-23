@@ -3,6 +3,7 @@ package com.github.ivanfomkin.bookshop.service.impl;
 import com.github.ivanfomkin.bookshop.dto.cart.CartBookElementDto;
 import com.github.ivanfomkin.bookshop.dto.cart.CartDto;
 import com.github.ivanfomkin.bookshop.entity.book.BookEntity;
+import com.github.ivanfomkin.bookshop.entity.book.review.BookVoteEntity;
 import com.github.ivanfomkin.bookshop.entity.enums.Book2UserType;
 import com.github.ivanfomkin.bookshop.entity.user.UserEntity;
 import com.github.ivanfomkin.bookshop.service.*;
@@ -102,6 +103,12 @@ public class CartServiceImpl implements CartService {
     }
 
     private CartBookElementDto convertOneBookToDto(BookEntity bookEntity) {
+        Object bookRating;
+        if (bookEntity.getVotes() == null || bookEntity.getVotes().isEmpty()) {
+            bookRating = false;
+        } else {
+            bookRating = Math.round(bookEntity.getVotes().stream().mapToInt(BookVoteEntity::getValue).average().orElse(0));
+        }
         return new CartBookElementDto(
                 bookEntity.getTitle(),
                 bookEntity.getSlug(),
@@ -110,7 +117,7 @@ public class CartServiceImpl implements CartService {
                 authorService.convertAuthorsToDto(bookEntity.getAuthors()),
                 bookEntity.getDiscount(),
                 bookEntity.getIsBestseller(),
-                "false", // TODO: 10.01.2022 тут заглушка. Исправить
+                bookRating,
                 bookService.calculateBookDiscountPrice(bookEntity.getPrice(), bookEntity.getDiscount())
         );
     }

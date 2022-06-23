@@ -11,7 +11,7 @@ import com.github.ivanfomkin.bookshop.entity.user.UserEntity;
 import java.util.List;
 
 public interface BookService {
-    BookListDto getPageableRecommendedBooks(int offset, int limit);
+    BookListDto getPageableRecommendedBooks(int offset, int limit, String cartCookie, String keptCookie);
 
     BookListDto getPageableRecentBooks(int offset, int limit);
 

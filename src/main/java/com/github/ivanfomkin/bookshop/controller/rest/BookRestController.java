@@ -32,8 +32,10 @@ public class BookRestController {
 
     @GetMapping("/recommended")
     public BookListDto recommendedBooks(@RequestParam(value = "offset", required = false, defaultValue = "0") Integer offset,
-                                        @RequestParam(value = "limit", required = false, defaultValue = "20") Integer limit) {
-        return bookService.getPageableRecommendedBooks(offset, limit);
+                                        @RequestParam(value = "limit", required = false, defaultValue = "20") Integer limit,
+                                        @CookieValue(value = "cartContent", required = false, defaultValue = "") String cartCookie,
+                                        @CookieValue(value = "keptContent", required = false, defaultValue = "") String keptCookie) {
+        return bookService.getPageableRecommendedBooks(offset, limit, cartCookie, keptCookie);
     }
 
     @GetMapping("/recent")

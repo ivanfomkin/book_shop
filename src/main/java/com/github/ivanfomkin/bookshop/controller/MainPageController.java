@@ -4,6 +4,7 @@ import com.github.ivanfomkin.bookshop.entity.tag.TagWithWeightObject;
 import com.github.ivanfomkin.bookshop.service.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
@@ -27,10 +28,12 @@ public class MainPageController extends ModelAttributeController {
 
 
     @GetMapping
-    public String mainPage(Model model) {
+    public String mainPage(Model model,
+                           @CookieValue(value = "cartContent", required = false, defaultValue = "") String cartCookie,
+                           @CookieValue(value = "keptContent", required = false, defaultValue = "") String keptCookie) {
         model.addAttribute("recentBooks", bookService.getPageableRecentBooks(0, 20));
         model.addAttribute("popularBooks", bookService.getPageablePopularBooks(0, 20));
-        model.addAttribute("recommendedBooks", bookService.getPageableRecommendedBooks(0, 20));
+        model.addAttribute("recommendedBooks", bookService.getPageableRecommendedBooks(0, 20, cartCookie, keptCookie));
         return "index";
     }
 }

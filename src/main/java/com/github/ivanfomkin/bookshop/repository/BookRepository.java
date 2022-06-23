@@ -20,10 +20,10 @@ import java.util.List;
 @Repository
 public interface BookRepository extends JpaRepository<BookEntity, Integer> {
     @Query("""
-            SELECT b FROM BookEntity b LEFT OUTER JOIN b.reviews br LEFT OUTER JOIN br.reviewLikes bl
-            GROUP BY b.id ORDER BY -AVG(bl.value), b.publishDate DESC
+            SELECT b FROM BookEntity b LEFT OUTER JOIN b.votes v WHERE b.slug NOT IN :slugs
+            GROUP BY b.id ORDER BY AVG(v.value) DESC, count(v) DESC, b.publishDate DESC
             """)
-    Page<BookEntity> finRecommendedBooks(Pageable pageable);
+    Page<BookEntity> findRecommendedBooksWhereSlugsNotIn(Pageable pageable, List<String> slugs);
 
     @Query("SELECT b FROM BookEntity b WHERE b.publishDate <= CURRENT_DATE ORDER BY b.publishDate DESC")
     Page<BookEntity> findRecentBooks(Pageable pageable);
@@ -68,4 +68,11 @@ public interface BookRepository extends JpaRepository<BookEntity, Integer> {
     Integer findBookIdBySlug(String slug);
 
     List<BookEntity> findBookEntitiesBySlugIn(List<String> slugList);
+
+    @Query("""
+            SELECT b FROM BookEntity b LEFT OUTER JOIN b.votes v
+            WHERE b.id NOT IN (SELECT b2u.bookId FROM Book2UserEntity b2u JOIN UserEntity u ON u.id = b2u.userId WHERE u = :currentUser)
+            GROUP BY b.id ORDER BY AVG(v.value) DESC, count(v) DESC, b.publishDate DESC
+            """)
+    Page<BookEntity> findRecommendedBooksForUser(Pageable pageable, UserEntity currentUser);
 }

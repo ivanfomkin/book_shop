@@ -12,10 +12,7 @@ import com.github.ivanfomkin.bookshop.entity.tag.TagEntity;
 import com.github.ivanfomkin.bookshop.entity.user.UserEntity;
 import com.github.ivanfomkin.bookshop.repository.Book2UserRepository;
 import com.github.ivanfomkin.bookshop.repository.BookRepository;
-import com.github.ivanfomkin.bookshop.service.AuthorService;
-import com.github.ivanfomkin.bookshop.service.BookReviewService;
-import com.github.ivanfomkin.bookshop.service.BookService;
-import com.github.ivanfomkin.bookshop.service.BookVoteService;
+import com.github.ivanfomkin.bookshop.service.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -30,6 +27,8 @@ import java.util.List;
 
 @Service
 public class BookServiceJpaImpl implements BookService {
+    private final UserService userService;
+    private final CookieService cookieService;
     private final BookRepository bookRepository;
     private final AuthorService authorService;
     private final DateTimeFormatter dateTimeFormatter;
@@ -37,11 +36,13 @@ public class BookServiceJpaImpl implements BookService {
     private final BookReviewService bookReviewService;
     private final Book2UserRepository book2UserRepository;
 
-    private static final String MANY_AUTHORS_APPENDER = " и другие";
+    private static final String MANY_AUTHORS_APPENDER = " и другие"; // TODO: 23.06.2022 Использовать локализованное сообщение
     private final LocalDate minLocalDate;
     private final LocalDate maxLocalDate;
 
-    public BookServiceJpaImpl(BookRepository bookRepository, AuthorService authorService, BookVoteService bookVoteService, BookReviewService bookReviewService, Book2UserRepository book2UserRepository) {
+    public BookServiceJpaImpl(UserService userService, CookieService cookieService, BookRepository bookRepository, AuthorService authorService, BookVoteService bookVoteService, BookReviewService bookReviewService, Book2UserRepository book2UserRepository) {
+        this.userService = userService;
+        this.cookieService = cookieService;
         this.bookRepository = bookRepository;
         this.authorService = authorService;
         this.bookVoteService = bookVoteService;
@@ -53,9 +54,17 @@ public class BookServiceJpaImpl implements BookService {
     }
 
     @Override
-    public BookListDto getPageableRecommendedBooks(int offset, int limit) {
+    public BookListDto getPageableRecommendedBooks(int offset, int limit, String cartCookie, String keptCookie) {
+        Page<BookEntity> bookEntityPage;
         Pageable pageable = PageRequest.of(offset, limit);
-        Page<BookEntity> bookEntityPage = bookRepository.finRecommendedBooks(pageable);
+        var currentUser = userService.getCurrentUser();
+        if (currentUser == null) {
+            var userCartAndKeptBookSlugs = cookieService.getBookSlugListFromCookie(cartCookie);
+            userCartAndKeptBookSlugs.add(keptCookie);
+            bookEntityPage = bookRepository.findRecommendedBooksWhereSlugsNotIn(pageable, userCartAndKeptBookSlugs);
+        } else {
+            bookEntityPage = bookRepository.findRecommendedBooksForUser(pageable, currentUser);
+        }
         return createBookListDtoFromPage(bookEntityPage);
     }
 
