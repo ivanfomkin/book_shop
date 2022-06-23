@@ -122,7 +122,10 @@ public class BookServiceJpaImpl implements BookService {
     public BookSlugDto getBookSlugDtoBySlug(UserEntity currentUser, String slug, String cartCookie, String keptCookie) {
         BookSlugDto bookSlugDto = convertSingleBookEntityToBookSlugDto(bookRepository.findBookEntityBySlug(slug));
         if (currentUser != null) {
-            bookSlugDto.setStatus(book2UserRepository.findBook2UserTypeByUserAndSlug(currentUser, slug).toString());
+            Book2UserType book2userType = book2UserRepository.findBook2UserTypeByUserAndSlug(currentUser, slug);
+            if (book2userType != null) {
+                bookSlugDto.setStatus(book2userType.toString());
+            }
         } else {
             if (cartCookie != null && cartCookie.contains(slug)) {
                 bookSlugDto.setStatus(Book2UserType.CART.toString());
