@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface UserContactRepository extends JpaRepository<UserContactEntity, Integer> {
-    boolean existsAllByContactIn(List<String> contacts);
+    boolean existsByContactIn(List<String> contacts);
 }

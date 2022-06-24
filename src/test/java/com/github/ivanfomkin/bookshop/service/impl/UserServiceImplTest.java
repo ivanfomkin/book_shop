@@ -78,7 +78,7 @@ class UserServiceImplTest extends AbstractTest {
 
     @Test
     void registerNewUser_userAlreadyExistsByContact_userEqualsNull() {
-        doReturn(true).when(userContactRepositoryMock).existsAllByContactIn(any());
+        doReturn(true).when(userContactRepositoryMock).existsByContactIn(any());
         var registeredUser = userService.registerNewUser(registrationFormDto);
         assertNull(registeredUser);
         verify(userRepositoryMock, never()).save(any());

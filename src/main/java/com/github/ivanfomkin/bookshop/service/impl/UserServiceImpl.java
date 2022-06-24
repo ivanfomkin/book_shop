@@ -49,7 +49,14 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public UserEntity registerNewUser(RegistrationFormDto formDto) {
-        if (!userContactRepository.existsAllByContactIn(List.of(formDto.getEmail(), formDto.getPhone()))) {
+        List<String> contactList = new ArrayList<>();
+        if (formDto.getEmail() != null) {
+            contactList.add(formDto.getEmail());
+        }
+        if (formDto.getPhone() != null) {
+            contactList.add(formDto.getPhone());
+        }
+        if (!userContactRepository.existsByContactIn(contactList)) {
             UserEntity user = new UserEntity();
             user.setHash(UUID.randomUUID().toString());
             user.setName(formDto.getName());
