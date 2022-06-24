@@ -1,23 +1,14 @@
 package com.github.ivanfomkin.bookshop.selenium;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.MessageSource;
 
-import java.time.Duration;
-import java.time.temporal.ChronoUnit;
 import java.util.Locale;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@SpringBootTest
-class MainPageSeleniumTest {
-    private static ChromeDriver driver;
+class MainPageSeleniumTest extends AbstractSeleniumTest {
     private final MessageSource messageSource;
 
     @Autowired
@@ -25,21 +16,9 @@ class MainPageSeleniumTest {
         this.messageSource = messageSource;
     }
 
-    @BeforeAll
-    private static void setUp() {
-        WebDriverManager.chromedriver().setup();
-        driver = new ChromeDriver();
-        driver.manage().timeouts().pageLoadTimeout(Duration.of(5, ChronoUnit.SECONDS));
-    }
-
-    @AfterAll
-    private static void tearDown() {
-        driver.quit();
-    }
-
     @Test
     void testMainPageAccess() throws InterruptedException {
-        var page = new BookShopPage(driver, "http://localhost:8085");
+        var page = new BookShopMainPage(driver, "http://localhost:8085");
         page
                 .callPage();
         assertTrue(driver.getPageSource().contains("BOOKSHOP"));
@@ -49,7 +28,7 @@ class MainPageSeleniumTest {
     void testSearchQueryForExistingBook() throws InterruptedException {
         var searchQuery = "Doom";
         var expectedBookTitle = "Sword of Doom, The (Dai-bosatsu tôge)";
-        var page = new BookShopPage(driver, "http://localhost:8085");
+        var page = new BookShopMainPage(driver, "http://localhost:8085");
         page
                 .callPage()
                 .setUpSearchQuery(searchQuery)
@@ -61,7 +40,7 @@ class MainPageSeleniumTest {
     @Test
     void testSearchQueryErrorIfQueryIsEmpty() throws InterruptedException {
         var expectedErrorMessage = messageSource.getMessage("search.error", new Object[]{}, Locale.ENGLISH);
-        var page = new BookShopPage(driver, "http://localhost:8085");
+        var page = new BookShopMainPage(driver, "http://localhost:8085");
         page
                 .callPage()
                 .submitSearchQuery();
