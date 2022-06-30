@@ -1,5 +1,6 @@
 package com.github.ivanfomkin.bookshop.service.impl;
 
+import com.github.ivanfomkin.bookshop.aop.annotation.ExecutionTimeLog;
 import com.github.ivanfomkin.bookshop.dto.book.BookFileDto;
 import com.github.ivanfomkin.bookshop.dto.book.BookListDto;
 import com.github.ivanfomkin.bookshop.dto.book.BookListElement;
@@ -68,6 +69,7 @@ public class BookServiceJpaImpl implements BookService {
         return createBookListDtoFromPage(bookEntityPage);
     }
 
+    @ExecutionTimeLog(withUserInfo = true)
     @Override
     public BookListDto getPageableRecentBooks(int offset, int limit) {
         Pageable pageable = PageRequest.of(offset, limit);

@@ -1,5 +1,6 @@
 package com.github.ivanfomkin.bookshop.controller.rest;
 
+import com.github.ivanfomkin.bookshop.aop.annotation.ExecutionTimeLog;
 import com.github.ivanfomkin.bookshop.dto.CommonResultDto;
 import com.github.ivanfomkin.bookshop.dto.book.BookListDto;
 import com.github.ivanfomkin.bookshop.dto.book.rate.BookRateRequestDto;
@@ -76,8 +77,10 @@ public class BookRestController {
         return bookService.getPageableBooksByGenre(offset, limit, genre);
     }
 
+    @ExecutionTimeLog
     @PostMapping("/rateBook")
     public CommonResultDto rateBook(@RequestBody BookRateRequestDto bookRateRequestDto) {
+
         var result = true;
         try {
             bookVoteService.rateBook(userService.getCurrentUser(), bookService.getBookEntityBySlug(bookRateRequestDto.getBookId()), bookRateRequestDto.getValue());

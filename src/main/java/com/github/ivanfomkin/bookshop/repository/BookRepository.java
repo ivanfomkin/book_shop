@@ -1,5 +1,6 @@
 package com.github.ivanfomkin.bookshop.repository;
 
+import com.github.ivanfomkin.bookshop.aop.annotation.ExecutionTimeLog;
 import com.github.ivanfomkin.bookshop.entity.author.AuthorEntity;
 import com.github.ivanfomkin.bookshop.entity.book.BookEntity;
 import com.github.ivanfomkin.bookshop.entity.enums.Book2UserType;
@@ -30,6 +31,7 @@ public interface BookRepository extends JpaRepository<BookEntity, Integer> {
 
     Page<BookEntity> findBookEntitiesByPublishDateBetweenOrderByPublishDateDesc(LocalDate fromDate, LocalDate toDate, Pageable pageable);
 
+    @ExecutionTimeLog
     @Query("""
             SELECT b FROM BookEntity b LEFT OUTER JOIN Book2UserEntity b2u ON b2u.bookId = b.id
             LEFT OUTER JOIN Book2UserTypeEntity b2ut ON b2ut.id = b2u.typeId

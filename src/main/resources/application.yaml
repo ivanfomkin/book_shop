@@ -45,3 +45,6 @@ bookshop:
 jasypt:
   encryptor:
     bean: encryptorBean
+logging:
+  level:
+    com.github.ivanfomkin.bookshop: debug

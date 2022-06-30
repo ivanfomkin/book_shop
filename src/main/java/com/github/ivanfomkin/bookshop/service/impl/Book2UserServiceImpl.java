@@ -1,5 +1,6 @@
 package com.github.ivanfomkin.bookshop.service.impl;
 
+import com.github.ivanfomkin.bookshop.aop.annotation.ExecutionTimeLog;
 import com.github.ivanfomkin.bookshop.entity.book.BookEntity;
 import com.github.ivanfomkin.bookshop.entity.book.links.Book2UserEntity;
 import com.github.ivanfomkin.bookshop.entity.enums.Book2UserType;
@@ -23,6 +24,7 @@ public class Book2UserServiceImpl implements Book2UserService {
     }
 
     @Override
+    @ExecutionTimeLog(withUserInfo = true)
     public void changeBookStatus(UserEntity user, String slug, Book2UserType status) {
         if (status == Book2UserType.UNLINK) {
             book2UserRepository.deleteBookStatusBySlugAndUser(user, slug);
