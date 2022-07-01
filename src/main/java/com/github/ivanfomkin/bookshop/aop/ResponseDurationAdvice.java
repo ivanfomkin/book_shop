@@ -18,16 +18,21 @@ public class ResponseDurationAdvice {
     }
 
     @Around("allControllers()")
-    public Object controllerDurationTracking(ProceedingJoinPoint joinPoint) {
+    public Object controllerDurationTracking(ProceedingJoinPoint joinPoint) throws Throwable {
+        Throwable throwable = null;
         var startTime = System.currentTimeMillis();
         Object returnedValue = null;
         try {
             returnedValue = joinPoint.proceed();
         } catch (Throwable e) {
-            e.printStackTrace();
+            throwable = e;
         }
         var stopTime = System.currentTimeMillis();
         log.debug("Method {} execution time is {} ms", joinPoint.getSignature().getName(), stopTime - startTime);
+
+        if (throwable != null) {
+            throw throwable;
+        }
         return returnedValue;
     }
 

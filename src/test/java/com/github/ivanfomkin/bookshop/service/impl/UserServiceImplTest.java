@@ -76,7 +76,7 @@ class UserServiceImplTest extends AbstractTest {
 
     @Test
     void registerNewUser_userAlreadyExistsByContact_userEqualsNull() {
-        doReturn(true).when(userRepositoryMock).existsByContacts_contactIn(any());
+        doReturn(1).when(userRepositoryMock).countAllByContacts_contactIn(any());
         var registeredUser = userService.registerNewUser(registrationFormDto);
         assertNull(registeredUser);
         verify(userRepositoryMock, never()).save(any());
@@ -89,7 +89,7 @@ class UserServiceImplTest extends AbstractTest {
         dto.setCode("qwerty");
         dto.setContact(testUserEmail);
         doReturn(new BookStoreUserDetails(generateTestUser())).when(userDetailsService).loadUserByUsername(testUserEmail);
-        var contactConfirmationResponse = userService.jwtEmailLogin(dto);
+        var contactConfirmationResponse = userService.jwtLogin(dto);
         assertTrue(contactConfirmationResponse.isResult());
         assertNotNull(contactConfirmationResponse.getToken());
         assertFalse(contactConfirmationResponse.getToken().isEmpty());
@@ -102,7 +102,7 @@ class UserServiceImplTest extends AbstractTest {
         dto.setCode("gbsdyhbsajkdfnsajknkj");
         dto.setContact(testUserEmail);
         doReturn(new BookStoreUserDetails(generateTestUser())).when(userDetailsService).loadUserByUsername(testUserEmail);
-        var contactConfirmationResponse = userService.jwtEmailLogin(dto);
+        var contactConfirmationResponse = userService.jwtLogin(dto);
         assertFalse(contactConfirmationResponse.isResult());
         assertNull(contactConfirmationResponse.getToken());
         assertNotNull(contactConfirmationResponse.getError());
@@ -116,7 +116,7 @@ class UserServiceImplTest extends AbstractTest {
         String email = "asajd@maddaada.c";
         dto.setContact(email);
         doThrow(new UsernameNotFoundException("Can't load user " + email)).when(userDetailsService).loadUserByUsername(email);
-        var contactConfirmationResponse = userService.jwtEmailLogin(dto);
+        var contactConfirmationResponse = userService.jwtLogin(dto);
         assertFalse(contactConfirmationResponse.isResult());
         assertNull(contactConfirmationResponse.getToken());
         assertNotNull(contactConfirmationResponse.getError());

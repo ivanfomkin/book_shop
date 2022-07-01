@@ -125,7 +125,7 @@ class SecurityControllerTest extends AbstractTest {
                 .andExpect(status().isOk())
                 .andExpect(xpath("/html/body/div/div[2]/main/form/div/div[1]/div[1]/label/span").string(successRegisterMessage));
 
-        assertTrue(userRepository.existsByContacts_contactIn(List.of(CommonUtils.formatPhoneNumber(newUserPhone))));
+        assertTrue(userRepository.existsByContacts_contactIn(List.of(CommonUtils.formatPhoneNumber(CommonUtils.formatPhoneNumber(newUserPhone)))));
     }
 
     @Test
@@ -138,8 +138,8 @@ class SecurityControllerTest extends AbstractTest {
                                 .param("password", newUserPassword)
                 )
                 .andExpect(status().isOk())
-                .andDo(print())
                 .andExpect(xpath("/html/body/div/div[2]/main/form/div/div[1]/div[1]/label/span").string(successRegisterMessage));
+        var all = userRepository.findAll();
         assertTrue(userRepository.existsByContacts_contactIn(List.of(CommonUtils.formatPhoneNumber(newUserPhone))));
         assertTrue(userRepository.existsByContacts_contactIn(List.of(newUserEmail)));
     }

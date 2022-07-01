@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 @ControllerAdvice
 public class AdviceController {
 
-    private static final String REDIRECT_SIGNIN_URL = "redirect:/signin";
+    private static final String REDIRECT_SIGNING_URL = "redirect:/signin";
 
     @ExceptionHandler(EmptySearchQueryException.class)
     public String handleEmptySearchQueryException(EmptySearchQueryException exception, RedirectAttributes redirectAttributes) {
@@ -33,28 +33,28 @@ public class AdviceController {
         log.debug("JWT token expired: {}", exception.getMessage());
         clearContextAndCookie(response);
         response.setStatus(HttpStatus.BAD_REQUEST.value());
-        return REDIRECT_SIGNIN_URL;
+        return REDIRECT_SIGNING_URL;
     }
 
     @ExceptionHandler(JwtException.class)
     public String handleJwtException(JwtException exception, HttpServletResponse response) {
         log.debug("JWT token exception: {}", exception.getMessage());
         clearContextAndCookie(response);
-        return REDIRECT_SIGNIN_URL;
+        return REDIRECT_SIGNING_URL;
     }
 
     @ExceptionHandler(JwtInBlackListException.class)
     public String handleJwtInBlackListException(JwtInBlackListException exception, HttpServletResponse response) {
         log.warn("JWT token in blacklist: {}", exception.getMessage());
         clearContextAndCookie(response);
-        return REDIRECT_SIGNIN_URL;
+        return REDIRECT_SIGNING_URL;
     }
 
     @ExceptionHandler(SignatureException.class)
     public String handleSignatureException(SignatureException exception, HttpServletResponse response) {
         log.warn("Bad JWT signature:: {}", exception.getMessage());
         clearContextAndCookie(response);
-        return REDIRECT_SIGNIN_URL;
+        return REDIRECT_SIGNING_URL;
     }
 
     private void clearContextAndCookie(HttpServletResponse response) {

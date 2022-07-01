@@ -33,7 +33,7 @@ public class UserContactEntity implements Serializable {
     @Column(columnDefinition = "TIMESTAMP")
     private LocalDateTime codeTime;
 
-    @Column(columnDefinition = "VARCHAR(255) NOT NULL")
+    @Column(columnDefinition = "VARCHAR(255)")
     private String contact;
 
     @ManyToOne

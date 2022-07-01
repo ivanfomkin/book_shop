@@ -13,4 +13,6 @@ public interface UserRepository extends JpaRepository<UserEntity, Integer> {
     UserEntity findUserEntityByOauthId(String oAuth2Id);
 
     boolean existsByContacts_contactIn(List<String> contacts);
+
+    int countAllByContacts_contactIn(List<String> contact);
 }

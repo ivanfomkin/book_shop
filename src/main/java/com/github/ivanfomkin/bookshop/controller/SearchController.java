@@ -37,7 +37,7 @@ public class SearchController extends ModelAttributeController {
                              @RequestParam(name = "offset", required = false, defaultValue = "0") Integer offset,
                              @RequestParam(name = "limit", required = false, defaultValue = "20") Integer limit,
                              @PathVariable(name = "searchWord", required = false) SearchDto searchDto) {
-        if (searchDto != null && !searchDto.searchQuery().isEmpty()) {
+        if (searchDto != null && !searchDto.searchQuery().isBlank()) {
             model.addAttribute("searchDto", searchDto);
             model.addAttribute("bookList", bookService.getPageableBooksByTitle(offset, limit, searchDto.searchQuery()));
             return "search/index";

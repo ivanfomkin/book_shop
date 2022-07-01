@@ -56,9 +56,9 @@ public class UserServiceImpl implements UserService {
             contactList.add(formDto.getEmail());
         }
         if (formDto.getPhone() != null) {
-            contactList.add(formDto.getPhone());
+            contactList.add(CommonUtils.formatPhoneNumber(formDto.getPhone()));
         }
-        if (!userRepository.existsByContacts_contactIn(contactList)) {
+        if (userRepository.countAllByContacts_contactIn(contactList) < 1) {
             UserEntity user = new UserEntity();
             user.setHash(UUID.randomUUID().toString());
             user.setName(formDto.getName());
@@ -217,6 +217,7 @@ public class UserServiceImpl implements UserService {
             UserContactEntity phoneContact = userContactRepository.findByContact(CommonUtils.formatPhoneNumber(formDto.getPhone()));
             if (phoneContact == null) {
                 phoneContact = new UserContactEntity();
+                phoneContact.setContact(CommonUtils.formatPhoneNumber(formDto.getPhone()));
             }
             phoneContact.setApproved((short) 1);
             phoneContact.setUser(user);
