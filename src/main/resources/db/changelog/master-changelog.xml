@@ -23,4 +23,7 @@
     <include file="/db/changelog/2022/05/25-01-change-oauth2-id-field-type.xml"/>
     <include file="/db/changelog/2022/05/27-01-add-jwt-blacklist-table.xml"/>
     <include file="/db/changelog/2022/05/27-02-add-jwt-blacklist-expiration-date-field.xml"/>
+    <include file="db/changelog/2022/07/01-01-change-user-contact-code-trials-field-name.xml"/>
+    <include file="db/changelog/2022/07/01-02-make-user-id-in-table-user_contact-may-be-null.xml"/>
+    <include file="db/changelog/2022/07/01-03-make-code-in-table-user_contact-may-be-null.xml"/>
 </databaseChangeLog>

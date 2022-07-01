@@ -28,7 +28,7 @@ public class UserContactEntity implements Serializable {
     private String code;
 
     @Column(columnDefinition = "INT")
-    private Integer codeTrails;
+    private Integer codeTrials;
 
     @Column(columnDefinition = "TIMESTAMP")
     private LocalDateTime codeTime;

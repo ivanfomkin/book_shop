@@ -31,6 +31,10 @@ spring:
   main:
     allow-circular-references: true
 bookshop:
+  call:
+    expiration: 5
+    sms.ru:
+      token: ENC(4+wPptP0hbJe1tawDOVtjlE/Nr6Ejo6MqPTNTzf+eQM6LxwShrKTAlFVk9hz+5+l)
   auth:
     secret: ENC(XerjY39wf1l2nTKh5yXZ0nvBOLqpEIIk)
     blacklist:

@@ -2,7 +2,6 @@ package com.github.ivanfomkin.bookshop.service.impl;
 
 import com.github.ivanfomkin.bookshop.AbstractTest;
 import com.github.ivanfomkin.bookshop.dto.security.ContactConfirmationRequestDto;
-import com.github.ivanfomkin.bookshop.dto.security.ContactConfirmationResponse;
 import com.github.ivanfomkin.bookshop.dto.security.RegistrationFormDto;
 import com.github.ivanfomkin.bookshop.entity.enums.ContactType;
 import com.github.ivanfomkin.bookshop.entity.user.UserContactEntity;
@@ -16,7 +15,6 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -78,7 +76,7 @@ class UserServiceImplTest extends AbstractTest {
 
     @Test
     void registerNewUser_userAlreadyExistsByContact_userEqualsNull() {
-        doReturn(true).when(userContactRepositoryMock).existsByContactIn(any());
+        doReturn(true).when(userRepositoryMock).existsByContacts_contactIn(any());
         var registeredUser = userService.registerNewUser(registrationFormDto);
         assertNull(registeredUser);
         verify(userRepositoryMock, never()).save(any());
@@ -91,7 +89,7 @@ class UserServiceImplTest extends AbstractTest {
         dto.setCode("qwerty");
         dto.setContact(testUserEmail);
         doReturn(new BookStoreUserDetails(generateTestUser())).when(userDetailsService).loadUserByUsername(testUserEmail);
-        var contactConfirmationResponse = userService.jwtLogin(dto);
+        var contactConfirmationResponse = userService.jwtEmailLogin(dto);
         assertTrue(contactConfirmationResponse.isResult());
         assertNotNull(contactConfirmationResponse.getToken());
         assertFalse(contactConfirmationResponse.getToken().isEmpty());
@@ -104,7 +102,7 @@ class UserServiceImplTest extends AbstractTest {
         dto.setCode("gbsdyhbsajkdfnsajknkj");
         dto.setContact(testUserEmail);
         doReturn(new BookStoreUserDetails(generateTestUser())).when(userDetailsService).loadUserByUsername(testUserEmail);
-        var contactConfirmationResponse = userService.jwtLogin(dto);
+        var contactConfirmationResponse = userService.jwtEmailLogin(dto);
         assertFalse(contactConfirmationResponse.isResult());
         assertNull(contactConfirmationResponse.getToken());
         assertNotNull(contactConfirmationResponse.getError());
@@ -118,7 +116,7 @@ class UserServiceImplTest extends AbstractTest {
         String email = "asajd@maddaada.c";
         dto.setContact(email);
         doThrow(new UsernameNotFoundException("Can't load user " + email)).when(userDetailsService).loadUserByUsername(email);
-        var contactConfirmationResponse = userService.jwtLogin(dto);
+        var contactConfirmationResponse = userService.jwtEmailLogin(dto);
         assertFalse(contactConfirmationResponse.isResult());
         assertNull(contactConfirmationResponse.getToken());
         assertNotNull(contactConfirmationResponse.getError());

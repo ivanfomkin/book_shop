@@ -9,10 +9,12 @@ import com.github.ivanfomkin.bookshop.entity.user.UserContactEntity;
 import com.github.ivanfomkin.bookshop.entity.user.UserEntity;
 import com.github.ivanfomkin.bookshop.repository.UserContactRepository;
 import com.github.ivanfomkin.bookshop.repository.UserRepository;
+import com.github.ivanfomkin.bookshop.security.BookStorePhoneUserDetails;
 import com.github.ivanfomkin.bookshop.security.BookStoreUserDetails;
 import com.github.ivanfomkin.bookshop.security.BookStoreUserDetailsService;
 import com.github.ivanfomkin.bookshop.security.jwt.JWTUtil;
 import com.github.ivanfomkin.bookshop.service.UserService;
+import com.github.ivanfomkin.bookshop.util.CommonUtils;
 import org.slf4j.helpers.MessageFormatter;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -56,7 +58,7 @@ public class UserServiceImpl implements UserService {
         if (formDto.getPhone() != null) {
             contactList.add(formDto.getPhone());
         }
-        if (!userContactRepository.existsByContactIn(contactList)) {
+        if (!userRepository.existsByContacts_contactIn(contactList)) {
             UserEntity user = new UserEntity();
             user.setHash(UUID.randomUUID().toString());
             user.setName(formDto.getName());
@@ -114,8 +116,27 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public ContactConfirmationResponse jwtLogin(ContactConfirmationRequestDto dto) {
+        return CommonUtils.isPhoneNumber(dto.getContact()) ? jwtPhoneLogin(dto) : jwtEmailLogin(dto);
+    }
+
+    public ContactConfirmationResponse jwtPhoneLogin(ContactConfirmationRequestDto dto) {
+        var phone = CommonUtils.formatPhoneNumber(dto.getContact());
         try {
-            BookStoreUserDetails userDetails = (BookStoreUserDetails) userDetailsService.loadUserByUsername(dto.getContact());
+            var userDetails = (BookStorePhoneUserDetails) userDetailsService.loadUserByUsername(phone);
+            if (userDetails.getPhoneConfirmationCode().equals(dto.getCode().replaceAll("\\D", ""))) {
+                String token = jwtUtil.generateToken(userDetails);
+                return new ContactConfirmationResponse(true, token, null);
+            } else {
+                return new ContactConfirmationResponse(false, null, LOGIN_ERROR);
+            }
+        } catch (Exception exception) {
+            return new ContactConfirmationResponse(false, null, exception.getMessage());
+        }
+    }
+
+    public ContactConfirmationResponse jwtEmailLogin(ContactConfirmationRequestDto dto) {
+        try {
+            var userDetails = (BookStoreUserDetails) userDetailsService.loadUserByUsername(dto.getContact());
             if (passwordEncoder.matches(dto.getCode(), userDetails.getPassword())) {
                 String token = jwtUtil.generateToken(userDetails);
                 Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(dto.getContact(), dto.getCode()));
@@ -181,16 +202,27 @@ public class UserServiceImpl implements UserService {
     private List<UserContactEntity> saveContacts(RegistrationFormDto formDto, UserEntity user) {
         List<UserContactEntity> contactEntities = new ArrayList<>();
         if (formDto.getEmail() != null) {
-            UserContactEntity emailContact = createEmailContact(formDto.getEmail(), user, "111-111");
+            UserContactEntity emailContact = userContactRepository.findByContact(formDto.getEmail());
+            if (emailContact == null) {
+                emailContact = createEmailContact(formDto.getEmail(), user, null);
+            } else {
+                emailContact.setApproved((short) 1);
+                emailContact.setUser(user);
+            }
+            emailContact.setCodeTrials(0);
+            emailContact.setCodeTime(null);
             contactEntities.add(emailContact);
         }
         if (formDto.getPhone() != null) {
-            UserContactEntity phoneContact = new UserContactEntity();
+            UserContactEntity phoneContact = userContactRepository.findByContact(CommonUtils.formatPhoneNumber(formDto.getPhone()));
+            if (phoneContact == null) {
+                phoneContact = new UserContactEntity();
+            }
             phoneContact.setApproved((short) 1);
-            phoneContact.setContact(formDto.getPhone());
-            phoneContact.setType(ContactType.PHONE);
             phoneContact.setUser(user);
-            phoneContact.setCode("111-111");
+            phoneContact.setCode(null);
+            phoneContact.setCodeTrials(0);
+            phoneContact.setCodeTime(null);
             contactEntities.add(phoneContact);
         }
         userContactRepository.saveAll(contactEntities);

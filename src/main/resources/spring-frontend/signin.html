@@ -38,31 +38,34 @@
                                 <br/>
                                 <span th:if="${registrationSuccess}" th:text="#{registration.success}">Регистрация прошла успешно</span>
                                 <br/>
-                                <span th:if="${registrationSuccess != null}" th:unnest="${registrationSuccess}" th:text="#{registration.failed}">Пользователь с указанными данными уже существует</span>
+                                <th:block th:if="${registrationSuccess != null}">
+                                    <span th:if="${!registrationSuccess}"
+                                          th:text="#{registration.failed}">Пользователь с указанными данными уже существует</span>
+                                </th:block>
                             </label>
                         </div>
                         <div class="form-group">
                             <div class="row">
                                 <div class="row-block">
                                     <label class="toggle Login-type">
-                                        <input type="radio" name="typeauth" value="phonetype" checked="checked"/><span
-                                            class="toggle-box"></span><span class="toggle-text">Телефон</span>
+                                        <input type="radio" name="typeauth" value="mailtype"  checked="checked"/><span
+                                            class="toggle-box"></span><span class="toggle-text">E-mail</span>
                                     </label>
                                 </div>
                                 <div class="row-block">
                                     <label class="toggle Login-type">
-                                        <input type="radio" name="typeauth" value="mailtype"/><span
-                                            class="toggle-box"></span><span class="toggle-text">E-mail</span>
+                                        <input type="radio" name="typeauth" value="phonetype"/><span
+                                            class="toggle-box"></span><span class="toggle-text">Телефон</span>
                                     </label>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
+                            <input class="form-input form-input_mail" id="mail" name="mail" type="text"
+                                   placeholder="Введите e-mail" data-validate="mail require" autofocus/>
                             <input class="form-input form-input_phone" id="phone" name="phone" type="text"
                                    placeholder="Введите телефон" data-mask="+7 (999) 999-99-99"
                                    data-validate="require"/>
-                            <input class="form-input form-input_mail" id="mail" name="mail" type="text"
-                                   placeholder="Введите e-mail" data-validate="mail require"/>
                         </div>
                         <div class="form-group form-group_center">
                             <button class="btn btn_primary form-btn" type="button" name="sendauth" id="sendauth"
@@ -72,13 +75,12 @@
                     </div>
                     <div class="Login-step Login-step_hide" data-type="phone">
                         <div class="form-group">
-                            <label class="form-label Login-title">На ваш телефон отправлено сообщение с кодом
-                                для входа. Введите его:
+                            <label class="form-label Login-title">На ваш телефон поступит звонок. Введите последние 4 цифры звонящего номера:
                             </label>
                         </div>
                         <div class="form-group form-group_key">
                             <input class="form-input" id="phonecode" name="phonecode" type="text" placeholder="Код"
-                                   data-validate="key require" data-mask="999 999"/>
+                                   data-validate="key require" data-mask="99 99"/>
                         </div>
                         <div class="form-group form-group_center">
                             <button class="btn btn_primary form-btn" type="button" name="toComeInPhone"

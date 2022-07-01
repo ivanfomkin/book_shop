@@ -1,7 +1,8 @@
 package com.github.ivanfomkin.bookshop.controller;
 
 import com.github.ivanfomkin.bookshop.AbstractTest;
-import com.github.ivanfomkin.bookshop.repository.UserContactRepository;
+import com.github.ivanfomkin.bookshop.repository.UserRepository;
+import com.github.ivanfomkin.bookshop.util.CommonUtils;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 class SecurityControllerTest extends AbstractTest {
 
-    private final UserContactRepository userContactRepository;
+    private final UserRepository userRepository;
 
     private final String errorRegisterMessage;
     private final String successRegisterMessage;
@@ -34,8 +35,8 @@ class SecurityControllerTest extends AbstractTest {
     private static String alreadyExistsUserEmail;
 
     @Autowired
-    SecurityControllerTest(MessageSource messageSource, UserContactRepository userContactRepository) {
-        this.userContactRepository = userContactRepository;
+    SecurityControllerTest(UserRepository userRepository, MessageSource messageSource) {
+        this.userRepository = userRepository;
         errorRegisterMessage = messageSource.getMessage("registration.failed", new Object[]{}, Locale.ENGLISH);
         successRegisterMessage = messageSource.getMessage("registration.success", new Object[]{}, Locale.ENGLISH);
     }
@@ -110,7 +111,7 @@ class SecurityControllerTest extends AbstractTest {
                 .andExpect(status().isOk())
                 .andExpect(xpath("/html/body/div/div[2]/main/form/div/div[1]/div[1]/label/span").string(successRegisterMessage));
 
-        assertTrue(userContactRepository.existsByContactIn(List.of(newUserEmail)));
+        assertTrue(userRepository.existsByContacts_contactIn(List.of(newUserEmail)));
     }
 
     @Test
@@ -124,7 +125,7 @@ class SecurityControllerTest extends AbstractTest {
                 .andExpect(status().isOk())
                 .andExpect(xpath("/html/body/div/div[2]/main/form/div/div[1]/div[1]/label/span").string(successRegisterMessage));
 
-        assertTrue(userContactRepository.existsByContactIn(List.of(newUserPhone)));
+        assertTrue(userRepository.existsByContacts_contactIn(List.of(CommonUtils.formatPhoneNumber(newUserPhone))));
     }
 
     @Test
@@ -139,8 +140,8 @@ class SecurityControllerTest extends AbstractTest {
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(xpath("/html/body/div/div[2]/main/form/div/div[1]/div[1]/label/span").string(successRegisterMessage));
-        assertTrue(userContactRepository.existsByContactIn(List.of(newUserPhone)));
-        assertTrue(userContactRepository.existsByContactIn(List.of(newUserEmail)));
+        assertTrue(userRepository.existsByContacts_contactIn(List.of(CommonUtils.formatPhoneNumber(newUserPhone))));
+        assertTrue(userRepository.existsByContacts_contactIn(List.of(newUserEmail)));
     }
 
     @Test
