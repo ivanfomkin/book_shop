@@ -6,6 +6,7 @@ import com.github.ivanfomkin.bookshop.entity.enums.ContactType;
 import com.github.ivanfomkin.bookshop.entity.user.UserContactEntity;
 import com.github.ivanfomkin.bookshop.repository.UserContactRepository;
 import com.github.ivanfomkin.bookshop.service.CallService;
+import com.github.ivanfomkin.bookshop.service.EmailMessageService;
 import com.github.ivanfomkin.bookshop.service.UserContactService;
 import com.github.ivanfomkin.bookshop.util.CommonUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -20,10 +21,12 @@ public class UserContactServiceImpl implements UserContactService {
     @Value("${bookshop.call.expiration}")
     private Integer codeExpirationTime;
     private final CallService callService;
+    private final EmailMessageService emailMessageService;
     private final UserContactRepository userContactRepository;
 
-    public UserContactServiceImpl(CallService callService, UserContactRepository userContactRepository) {
+    public UserContactServiceImpl(CallService callService, EmailMessageService emailMessageService, UserContactRepository userContactRepository) {
         this.callService = callService;
+        this.emailMessageService = emailMessageService;
         this.userContactRepository = userContactRepository;
     }
 
@@ -45,6 +48,7 @@ public class UserContactServiceImpl implements UserContactService {
             var email = dto.getContact();
             contactEntity = userContactRepository.findByContact(email);
             code = CommonUtils.generateRandomCode();
+            emailMessageService.sendMessage(email, code);
             if (contactEntity == null) {
                 contactEntity = new UserContactEntity();
                 contactEntity.setContact(email);
@@ -62,9 +66,6 @@ public class UserContactServiceImpl implements UserContactService {
     @Override
     public CommonResultDto approveContact(ContactConfirmationRequestDto dto) {
         CommonResultDto resultDto;
-        if (!CommonUtils.isPhoneNumber(dto.getContact())) {
-            return new CommonResultDto(true); //Заглушка пока нет отправки кода на email
-        }
         var contactValue = !CommonUtils.isPhoneNumber(dto.getContact()) ? dto.getContact() : CommonUtils.formatPhoneNumber(dto.getContact());
         var userContactEntity = userContactRepository.findByContact(contactValue);
         var code = dto.getCode().replaceAll("\\D", "");

@@ -30,6 +30,24 @@ spring:
             client-secret: ENC(KbYqwaR0cxF+v8Zx4kcz3zM3e9FKVfJoRr136j28qDgvPRLwuLxNgK4NkCreSbfF)
   main:
     allow-circular-references: true
+  mail:
+    host: smtp.mail.ru
+    password: ENC(67kP748goyonCSjrbO/EHeZeSk5xfXS2ArYYpHZ3xCM=)
+    port: 465
+    protocol: smtp
+    username: ENC(wqGgEEBlVBboHYlkd1GN+hIMGvvHp+Endchg4Hc6wdE=)
+    test-connection: true
+    properties:
+      mail:
+        debug: false
+        transport:
+          protocol: smtps
+        smtp:
+          ssl:
+            enable: true
+          starttls:
+            enable: true
+          auth: true
 bookshop:
   call:
     expiration: 5
