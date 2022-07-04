@@ -48,6 +48,12 @@ spring:
           starttls:
             enable: true
           auth: true
+  boot:
+    admin:
+      client:
+        url: http://0.0.0.0:8099
+  application:
+    name: bookshop
 bookshop:
   call:
     expiration: 5
@@ -70,3 +76,11 @@ jasypt:
 logging:
   level:
     com.github.ivanfomkin.bookshop: debug
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: '*'

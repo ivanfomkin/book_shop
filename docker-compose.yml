@@ -47,7 +47,11 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
-
+  spring-admin:
+    image: ifomkin/bookshopadmin
+    restart: always
+    ports:
+      - "8099:8080"
 networks:
   tools:
     driver: bridge
