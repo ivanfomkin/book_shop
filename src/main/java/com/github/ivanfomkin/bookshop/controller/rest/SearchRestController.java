@@ -17,7 +17,9 @@ public class SearchRestController {
     @GetMapping(value = {"/", "/{searchWord}"})
     public BookListDto searchResults(@RequestParam(name = "offset", required = false, defaultValue = "0") Integer offset,
                                      @RequestParam(name = "limit", required = false, defaultValue = "20") Integer limit,
+                                     @CookieValue(value = "cartContent", required = false, defaultValue = "") String cartCookie,
+                                     @CookieValue(value = "keptContent", required = false, defaultValue = "") String keptCookie,
                                      @PathVariable(name = "searchWord", required = false) SearchDto searchDto) {
-        return bookService.getPageableBooksByTitle(offset, limit, searchDto.searchQuery());
+        return bookService.getPageableBooksByTitle(offset, limit, searchDto.searchQuery(), cartCookie, keptCookie);
     }
 }

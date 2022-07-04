@@ -75,7 +75,7 @@ jasypt:
     bean: encryptorBean
 logging:
   level:
-    com.github.ivanfomkin.bookshop: debug
+    com.github.ivanfomkin.bookshop: info
 management:
   endpoint:
     health:

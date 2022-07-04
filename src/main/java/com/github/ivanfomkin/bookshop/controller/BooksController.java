@@ -37,16 +37,20 @@ public class BooksController extends ModelAttributeController {
                               @RequestParam(name = "offset", required = false, defaultValue = "0") Integer offset,
                               @RequestParam(name = "limit", required = false, defaultValue = "20") Integer limit,
                               @RequestParam(name = "from", required = false, defaultValue = "0") String fromDate,
-                              @RequestParam(name = "to", required = false, defaultValue = "0") String toDate) {
-        model.addAttribute("bookList", bookService.getPageableRecentBooks(offset, limit));
+                              @RequestParam(name = "to", required = false, defaultValue = "0") String toDate,
+                              @CookieValue(value = "cartContent", required = false, defaultValue = "") String cartCookie,
+                              @CookieValue(value = "keptContent", required = false, defaultValue = "") String keptCookie) {
+        model.addAttribute("bookList", bookService.getPageableRecentBooks(offset, limit, fromDate, toDate, cartCookie, keptCookie));
         return "books/recent";
     }
 
     @GetMapping("/popular")
     public String popularBooks(Model model,
                                @RequestParam(name = "offset", required = false, defaultValue = "0") Integer offset,
-                               @RequestParam(name = "limit", required = false, defaultValue = "20") Integer limit) {
-        model.addAttribute("bookList", bookService.getPageablePopularBooks(offset, limit));
+                               @RequestParam(name = "limit", required = false, defaultValue = "20") Integer limit,
+                               @CookieValue(value = "cartContent", required = false, defaultValue = "") String cartCookie,
+                               @CookieValue(value = "keptContent", required = false, defaultValue = "") String keptCookie) {
+        model.addAttribute("bookList", bookService.getPageablePopularBooks(offset, limit, cartCookie, keptCookie));
         return "books/popular";
     }
 
@@ -54,9 +58,11 @@ public class BooksController extends ModelAttributeController {
     public String booksByAuthor(Model model,
                                 @PathVariable(name = "slug") String slug,
                                 @RequestParam(value = "offset", required = false, defaultValue = "0") Integer offset,
-                                @RequestParam(value = "limit", required = false, defaultValue = "20") Integer limit) {
+                                @RequestParam(value = "limit", required = false, defaultValue = "20") Integer limit,
+                                @CookieValue(value = "cartContent", required = false, defaultValue = "") String cartCookie,
+                                @CookieValue(value = "keptContent", required = false, defaultValue = "") String keptCookie) {
         model.addAttribute("author", authorService.getAuthorBySlug(slug));
-        model.addAttribute("bookList", bookService.getPageableBooksByAuthorSlug(offset, limit, slug));
+        model.addAttribute("bookList", bookService.getPageableBooksByAuthorSlug(offset, limit, slug, cartCookie, keptCookie));
         return "books/author";
     }
 

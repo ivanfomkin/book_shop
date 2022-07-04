@@ -11,10 +11,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class SearchController extends ModelAttributeController {
@@ -36,10 +33,12 @@ public class SearchController extends ModelAttributeController {
     public String searchPage(Model model,
                              @RequestParam(name = "offset", required = false, defaultValue = "0") Integer offset,
                              @RequestParam(name = "limit", required = false, defaultValue = "20") Integer limit,
+                             @CookieValue(value = "cartContent", required = false, defaultValue = "") String cartCookie,
+                             @CookieValue(value = "keptContent", required = false, defaultValue = "") String keptCookie,
                              @PathVariable(name = "searchWord", required = false) SearchDto searchDto) {
         if (searchDto != null && !searchDto.searchQuery().isBlank()) {
             model.addAttribute("searchDto", searchDto);
-            model.addAttribute("bookList", bookService.getPageableBooksByTitle(offset, limit, searchDto.searchQuery()));
+            model.addAttribute("bookList", bookService.getPageableBooksByTitle(offset, limit, searchDto.searchQuery(), cartCookie, keptCookie));
             return "search/index";
         } else {
             String errorMessage = messageSource.getMessage("search.error", new Object[]{}, LocaleContextHolder.getLocale());

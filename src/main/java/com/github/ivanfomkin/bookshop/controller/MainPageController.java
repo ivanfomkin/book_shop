@@ -31,8 +31,8 @@ public class MainPageController extends ModelAttributeController {
     public String mainPage(Model model,
                            @CookieValue(value = "cartContent", required = false, defaultValue = "") String cartCookie,
                            @CookieValue(value = "keptContent", required = false, defaultValue = "") String keptCookie) {
-        model.addAttribute("recentBooks", bookService.getPageableRecentBooks(0, 20));
-        model.addAttribute("popularBooks", bookService.getPageablePopularBooks(0, 20));
+        model.addAttribute("recentBooks", bookService.getPageableRecentBooks(cartCookie, keptCookie, 0, 20));
+        model.addAttribute("popularBooks", bookService.getPageablePopularBooks(0, 20, cartCookie, keptCookie));
         model.addAttribute("recommendedBooks", bookService.getPageableRecommendedBooks(0, 20, cartCookie, keptCookie));
         return "index";
     }

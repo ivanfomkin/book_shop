@@ -87,6 +87,10 @@
             <artifactId>spring-boot-admin-starter-client</artifactId>
             <version>${parent.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+        </dependency>
 
 
         <!--        Tests-->

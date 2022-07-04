@@ -66,67 +66,100 @@ public class BookServiceJpaImpl implements BookService {
         } else {
             bookEntityPage = bookRepository.findRecommendedBooksForUser(pageable, currentUser);
         }
-        return createBookListDtoFromPage(bookEntityPage);
+        var bookListDto = createBookListDtoFromPage(bookEntityPage);
+        return applyStatusesToBookListDto(bookListDto, cartCookie, keptCookie, currentUser);
+    }
+
+    private BookListDto applyStatusesToBookListDto(BookListDto bookListDto, String cartCookie, String keptCookie, UserEntity currentUser) {
+        if (currentUser == null) {
+            return addStatusesToAllBooks(bookListDto, cartCookie, keptCookie);
+        } else {
+            return addStatusesToAllBooks(bookListDto, currentUser);
+        }
+    }
+
+    private BookListDto addStatusesToAllBooks(BookListDto dto, UserEntity user) {
+        var books = dto.getBooks();
+        for (BookListElement book : books) {
+            var status = book2UserRepository.findBook2UserTypeByUserAndSlug(user, book.getSlug());
+            if (status != null) {
+                book.setStatus(status.toString());
+            }
+        }
+        return dto;
+    }
+
+    private BookListDto addStatusesToAllBooks(BookListDto dto, String cartCookie, String keptCookie) {
+        var books = dto.getBooks();
+        var booksInCart = cookieService.getBookSlugListFromCookie(cartCookie);
+        var postponedBooks = cookieService.getBookSlugListFromCookie(keptCookie);
+        for (BookListElement book : books) {
+            if (booksInCart.contains(book.getSlug())) {
+                book.setStatus(Book2UserType.CART.toString());
+            } else if (postponedBooks.contains(book.getSlug())) {
+                book.setStatus(Book2UserType.KEPT.toString());
+            }
+        }
+        return dto;
     }
 
     @ExecutionTimeLog(withUserInfo = true)
     @Override
-    public BookListDto getPageableRecentBooks(int offset, int limit) {
+    public BookListDto getPageableRecentBooks(String cartCookie, String keptCookie, int offset, int limit) {
         Pageable pageable = PageRequest.of(offset, limit);
         Page<BookEntity> bookEntityPage = bookRepository.findRecentBooks(pageable);
-        return createBookListDtoFromPage(bookEntityPage);
+        return applyStatusesToBookListDto(createBookListDtoFromPage(bookEntityPage), cartCookie, keptCookie, userService.getCurrentUser());
     }
 
     @Override
-    public BookListDto getPageablePopularBooks(int offset, int limit) {
+    public BookListDto getPageablePopularBooks(int offset, int limit, String cartCookie, String keptCookie) {
         Pageable pageable = PageRequest.of(offset / limit, limit);
         Page<BookEntity> bookEntityPage = bookRepository.findPopularBooks(pageable);
-        return createBookListDtoFromPage(bookEntityPage);
+        return applyStatusesToBookListDto(createBookListDtoFromPage(bookEntityPage), cartCookie, keptCookie, userService.getCurrentUser());
     }
 
     @Override
-    public BookListDto getPageableRecentBooks(int offset, int limit, String fromDate, String toDate) {
+    public BookListDto getPageableRecentBooks(int offset, int limit, String fromDate, String toDate, String cartCookie, String keptCookie) {
         Pageable pageable = PageRequest.of(offset, limit);
         LocalDate from = parseFromDate(fromDate);
         LocalDate to = from.equals(LocalDate.MIN) ? parseToDate(toDate) : LocalDate.now();
-        Page<BookEntity> bookEntityPage =
-                bookRepository.findBookEntitiesByPublishDateBetweenOrderByPublishDateDesc(from, to, pageable);
-        return createBookListDtoFromPage(bookEntityPage);
+        Page<BookEntity> bookEntityPage = bookRepository.findBookEntitiesByPublishDateBetweenOrderByPublishDateDesc(from, to, pageable);
+        return applyStatusesToBookListDto(createBookListDtoFromPage(bookEntityPage), cartCookie, keptCookie, userService.getCurrentUser());
     }
 
     @Override
-    public BookListDto getPageableBooksByTag(int offset, int limit, String tag) {
+    public BookListDto getPageableBooksByTag(int offset, int limit, String tag, String cartCookie, String keptCookie) {
         Pageable pageable = PageRequest.of(offset / limit, limit);
         Page<BookEntity> bookEntityPage = bookRepository.findBookEntityByTagName(tag, pageable);
-        return createBookListDtoFromPage(bookEntityPage);
+        return applyStatusesToBookListDto(createBookListDtoFromPage(bookEntityPage), cartCookie, keptCookie, userService.getCurrentUser());
     }
 
     @Override
-    public BookListDto getPageableBooksByTitle(int offset, int limit, String title) {
+    public BookListDto getPageableBooksByTitle(int offset, int limit, String title, String cartCookie, String keptCookie) {
         Pageable pageable = PageRequest.of(offset / limit, limit);
         Page<BookEntity> bookEntityPage = bookRepository.findBookEntityByTitleContainingIgnoreCaseOrderByTitle(title, pageable);
-        return createBookListDtoFromPage(bookEntityPage);
+        return applyStatusesToBookListDto(createBookListDtoFromPage(bookEntityPage), cartCookie, keptCookie, userService.getCurrentUser());
     }
 
     @Override
-    public BookListDto getPageableBooksByGenre(int offset, int limit, GenreEntity genre) {
+    public BookListDto getPageableBooksByGenre(int offset, int limit, GenreEntity genre, String cartCookie, String keptCookie) {
         Pageable pageable = PageRequest.of(offset / limit, limit);
         Page<BookEntity> bookEntityPage = bookRepository.findBookEntityByGenresContaining(genre, pageable);
-        return createBookListDtoFromPage(bookEntityPage);
+        return applyStatusesToBookListDto(createBookListDtoFromPage(bookEntityPage), cartCookie, keptCookie, userService.getCurrentUser());
     }
 
     @Override
-    public BookListDto getPageableBooksByAuthor(int offset, int limit, AuthorEntity author) {
+    public BookListDto getPageableBooksByAuthor(int offset, int limit, AuthorEntity author, String cartCookie, String keptCookie) {
         Pageable pageable = PageRequest.of(offset, limit, Sort.Direction.DESC, "isBestseller", "discount");
         Page<BookEntity> bookEntityPage = bookRepository.findBookEntityByAuthorsContaining(author, pageable);
-        return createBookListDtoFromPage(bookEntityPage);
+        return applyStatusesToBookListDto(createBookListDtoFromPage(bookEntityPage), cartCookie, keptCookie, userService.getCurrentUser());
     }
 
     @Override
-    public BookListDto getPageableBooksByAuthorSlug(int offset, int limit, String authorSlug) {
+    public BookListDto getPageableBooksByAuthorSlug(int offset, int limit, String authorSlug, String cartCookie, String keptCookie) {
         Pageable pageable = PageRequest.of(offset, limit, Sort.Direction.DESC, "isBestseller", "discount");
         Page<BookEntity> bookEntityPage = bookRepository.findBookEntityByAuthorsSlug(authorSlug, pageable);
-        return createBookListDtoFromPage(bookEntityPage);
+        return applyStatusesToBookListDto(createBookListDtoFromPage(bookEntityPage), cartCookie, keptCookie, userService.getCurrentUser());
     }
 
     @Override
@@ -222,7 +255,7 @@ public class BookServiceJpaImpl implements BookService {
         dto.setDiscount(bookEntity.getDiscount());
         dto.setBestseller(bookEntity.getIsBestseller());
         dto.setRating(bookVoteService.getBookRating(bookEntity));
-        dto.setStatus("false"); //ToDo (ivan.fomkin) 21.12.21: Пока тут заглушка. Реализовать корректное заполнение этого поля
+        dto.setStatus("false");
         dto.setPrice(bookEntity.getPrice());
         dto.setDiscountPrice(calculateBookDiscountPrice(bookEntity.getPrice(), bookEntity.getDiscount()));
         return dto;

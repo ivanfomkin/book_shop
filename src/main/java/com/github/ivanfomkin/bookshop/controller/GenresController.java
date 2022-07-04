@@ -3,10 +3,7 @@ package com.github.ivanfomkin.bookshop.controller;
 import com.github.ivanfomkin.bookshop.service.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/genres")
@@ -31,11 +28,13 @@ public class GenresController extends ModelAttributeController {
     public String booksByGenre(Model model,
                                @RequestParam(value = "offset", required = false, defaultValue = "0") Integer offset,
                                @RequestParam(value = "limit", required = false, defaultValue = "20") Integer limit,
+                               @CookieValue(value = "cartContent", required = false, defaultValue = "") String cartCookie,
+                               @CookieValue(value = "keptContent", required = false, defaultValue = "") String keptCookie,
                                @PathVariable String slug) {
         var genre = genreService.getGenreBySlug(slug);
         model.addAttribute("genreName", genre.getName());
         model.addAttribute("refreshId", slug);
-        model.addAttribute("bookList", bookService.getPageableBooksByGenre(offset, limit, genre));
+        model.addAttribute("bookList", bookService.getPageableBooksByGenre(offset, limit, genre, cartCookie, keptCookie));
         return "genres/slug";
     }
 }

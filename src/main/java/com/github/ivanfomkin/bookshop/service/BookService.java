@@ -13,21 +13,19 @@ import java.util.List;
 public interface BookService {
     BookListDto getPageableRecommendedBooks(int offset, int limit, String cartCookie, String keptCookie);
 
-    BookListDto getPageableRecentBooks(int offset, int limit);
+    BookListDto getPageablePopularBooks(int offset, int limit, String cartCookie, String keptCookie);
 
-    BookListDto getPageablePopularBooks(int offset, int limit);
+    BookListDto getPageableRecentBooks(int offset, int limit, String fromDate, String toDate, String cartCookie, String keptCookie);
 
-    BookListDto getPageableRecentBooks(int offset, int limit, String fromDate, String toDate);
+    BookListDto getPageableBooksByTag(int offset, int limit, String tag, String cartCookie, String keptCookie);
 
-    BookListDto getPageableBooksByTag(int offset, int limit, String tag);
+    BookListDto getPageableBooksByTitle(int offset, int limit, String title, String cartCookie, String keptCookie);
 
-    BookListDto getPageableBooksByTitle(int offset, int limit, String title);
+    BookListDto getPageableBooksByGenre(int offset, int limit, GenreEntity genre, String cartCookie, String keptCookie);
 
-    BookListDto getPageableBooksByGenre(int offset, int limit, GenreEntity genre);
+    BookListDto getPageableBooksByAuthor(int offset, int limit, AuthorEntity author, String cartCookie, String keptCookie);
 
-    BookListDto getPageableBooksByAuthor(int offset, int limit, AuthorEntity author);
-
-    BookListDto getPageableBooksByAuthorSlug(int offset, int limit, String authorSlug);
+    BookListDto getPageableBooksByAuthorSlug(int offset, int limit, String authorSlug, String cartCookie, String keptCookie);
 
     BookSlugDto getBookSlugDtoBySlug(UserEntity userDto, String slug, String cartCookie, String keptCookie);
 
@@ -42,4 +40,6 @@ public interface BookService {
     Integer getBookIdBuSlug(String slug);
 
     List<BookEntity> getBooksBySlugIn(List<String> slugs);
+
+    BookListDto getPageableRecentBooks(String cartCookie, String keptCookie, int offset, int limit);
 }

@@ -43,38 +43,48 @@ public class BookRestController {
     public BookListDto recentBooks(@RequestParam(name = "offset", required = false, defaultValue = "0") Integer offset,
                                    @RequestParam(name = "limit", required = false, defaultValue = "20") Integer limit,
                                    @RequestParam(name = "from", required = false, defaultValue = "0") String fromDate,
+                                   @CookieValue(value = "cartContent", required = false, defaultValue = "") String cartCookie,
+                                   @CookieValue(value = "keptContent", required = false, defaultValue = "") String keptCookie,
                                    @RequestParam(name = "to", required = false, defaultValue = "0") String toDate) {
-        return bookService.getPageableRecentBooks(offset, limit, fromDate, toDate);
+        return bookService.getPageableRecentBooks(offset, limit, fromDate, toDate, cartCookie, keptCookie);
     }
 
     @GetMapping("/popular")
     public BookListDto popularBooks(@RequestParam(value = "offset", required = false, defaultValue = "0") Integer offset,
-                                    @RequestParam(value = "limit", required = false, defaultValue = "20") Integer limit) {
-        return bookService.getPageablePopularBooks(offset, limit);
+                                    @RequestParam(value = "limit", required = false, defaultValue = "20") Integer limit,
+                                    @CookieValue(value = "cartContent", required = false, defaultValue = "") String cartCookie,
+                                    @CookieValue(value = "keptContent", required = false, defaultValue = "") String keptCookie) {
+        return bookService.getPageablePopularBooks(offset, limit, cartCookie, keptCookie);
     }
 
     @GetMapping("/author/{slug}")
     public BookListDto booksByAuthor(
             @PathVariable(name = "slug") String slug,
             @RequestParam(value = "offset", required = false, defaultValue = "0") Integer offset,
-            @RequestParam(value = "limit", required = false, defaultValue = "20") Integer limit) {
-        return bookService.getPageableBooksByAuthorSlug(offset, limit, slug);
+            @RequestParam(value = "limit", required = false, defaultValue = "20") Integer limit,
+            @CookieValue(value = "cartContent", required = false, defaultValue = "") String cartCookie,
+            @CookieValue(value = "keptContent", required = false, defaultValue = "") String keptCookie) {
+        return bookService.getPageableBooksByAuthorSlug(offset, limit, slug, cartCookie, keptCookie);
     }
 
     @GetMapping("/tag/{name}")
     public BookListDto booksByTag(
             @PathVariable(name = "name") String tag,
             @RequestParam(value = "offset", required = false, defaultValue = "0") Integer offset,
-            @RequestParam(value = "limit", required = false, defaultValue = "20") Integer limit) {
-        return bookService.getPageableBooksByTag(offset, limit, tag);
+            @RequestParam(value = "limit", required = false, defaultValue = "20") Integer limit,
+            @CookieValue(value = "cartContent", required = false, defaultValue = "") String cartCookie,
+            @CookieValue(value = "keptContent", required = false, defaultValue = "") String keptCookie) {
+        return bookService.getPageableBooksByTag(offset, limit, tag, cartCookie, keptCookie);
     }
 
     @GetMapping("/genre/{slug}")
     public BookListDto booksByGenre(@RequestParam(value = "offset", required = false, defaultValue = "0") Integer offset,
                                     @RequestParam(value = "limit", required = false, defaultValue = "20") Integer limit,
+                                    @CookieValue(value = "cartContent", required = false, defaultValue = "") String cartCookie,
+                                    @CookieValue(value = "keptContent", required = false, defaultValue = "") String keptCookie,
                                     @PathVariable String slug) {
         var genre = genreService.getGenreBySlug(slug);
-        return bookService.getPageableBooksByGenre(offset, limit, genre);
+        return bookService.getPageableBooksByGenre(offset, limit, genre, cartCookie, keptCookie);
     }
 
     @ExecutionTimeLog
