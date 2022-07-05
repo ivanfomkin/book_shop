@@ -1,0 +1,12 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+    <changeSet author="ivan.fomkin" id="16425780931">
+        <sql>
+            UPDATE books
+            set image = 'http://dummyimage.com/600x450.png/5fa2dd/ffffff'
+            WHERE substring(image from 27 for 3)::int &lt; 300 OR substring(image from 27 for 3)::int &gt; 550
+        </sql>
+    </changeSet>
+</databaseChangeLog>

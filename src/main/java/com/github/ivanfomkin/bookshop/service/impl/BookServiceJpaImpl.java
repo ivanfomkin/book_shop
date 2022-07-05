@@ -14,6 +14,8 @@ import com.github.ivanfomkin.bookshop.entity.user.UserEntity;
 import com.github.ivanfomkin.bookshop.repository.Book2UserRepository;
 import com.github.ivanfomkin.bookshop.repository.BookRepository;
 import com.github.ivanfomkin.bookshop.service.*;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -37,15 +39,17 @@ public class BookServiceJpaImpl implements BookService {
     private final BookReviewService bookReviewService;
     private final Book2UserRepository book2UserRepository;
 
-    private static final String MANY_AUTHORS_APPENDER = " и другие"; // TODO: 23.06.2022 Использовать локализованное сообщение
     private final LocalDate minLocalDate;
     private final LocalDate maxLocalDate;
 
-    public BookServiceJpaImpl(UserService userService, CookieService cookieService, BookRepository bookRepository, AuthorService authorService, BookVoteService bookVoteService, BookReviewService bookReviewService, Book2UserRepository book2UserRepository) {
+    private final MessageSource messageSource;
+
+    public BookServiceJpaImpl(UserService userService, CookieService cookieService, BookRepository bookRepository, AuthorService authorService, BookVoteService bookVoteService, BookReviewService bookReviewService, Book2UserRepository book2UserRepository, MessageSource messageSource) {
         this.userService = userService;
+        this.authorService = authorService;
+        this.messageSource = messageSource;
         this.cookieService = cookieService;
         this.bookRepository = bookRepository;
-        this.authorService = authorService;
         this.bookVoteService = bookVoteService;
         this.bookReviewService = bookReviewService;
         this.book2UserRepository = book2UserRepository;
@@ -109,6 +113,26 @@ public class BookServiceJpaImpl implements BookService {
         Pageable pageable = PageRequest.of(offset, limit);
         Page<BookEntity> bookEntityPage = bookRepository.findRecentBooks(pageable);
         return applyStatusesToBookListDto(createBookListDtoFromPage(bookEntityPage), cartCookie, keptCookie, userService.getCurrentUser());
+    }
+
+    @Override
+    public BookListDto getPaidBooksByCurrentUser() {
+        return createBookListDtoForCurrentUserByStatus(Book2UserType.PAID);
+    }
+
+    @Override
+    public BookListDto getArchivedBooksByCurrentUser() {
+        return createBookListDtoForCurrentUserByStatus(Book2UserType.ARCHIVED);
+    }
+
+    private BookListDto createBookListDtoForCurrentUserByStatus(Book2UserType type) {
+        var currentUser = userService.getCurrentUser();
+        var userBooks = bookRepository.findBookEntitiesByUserAndType(currentUser, type);
+        var dtoList = userBooks.stream().map(this::convertSingleBookEntityToBookListElementDto).toList();
+        BookListDto dto = new BookListDto();
+        dto.setCount(dtoList.size());
+        dto.setBooks(dtoList);
+        return addStatusesToAllBooks(dto, currentUser);
     }
 
     @Override
@@ -247,7 +271,7 @@ public class BookServiceJpaImpl implements BookService {
         dto.setSlug(bookEntity.getSlug());
         dto.setImage(bookEntity.getImage());
         if (bookEntity.getAuthors().size() > 1) {
-            dto.setAuthors(bookEntity.getAuthors().get(0).getName() + MANY_AUTHORS_APPENDER);
+            dto.setAuthors(bookEntity.getAuthors().get(0).getName() + " " + messageSource.getMessage("book.authors.many", new Object[]{}, LocaleContextHolder.getLocale()));
         } else {
             dto.setAuthors(bookEntity.getAuthors().get(0).getName());
         }

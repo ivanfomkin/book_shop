@@ -2,6 +2,7 @@ package com.github.ivanfomkin.bookshop.controller;
 
 import com.github.ivanfomkin.bookshop.dto.security.RegistrationFormDto;
 import com.github.ivanfomkin.bookshop.service.Book2UserService;
+import com.github.ivanfomkin.bookshop.service.BookService;
 import com.github.ivanfomkin.bookshop.service.CookieService;
 import com.github.ivanfomkin.bookshop.service.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -15,10 +16,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class SecurityController extends ModelAttributeController {
 
     private final UserService userService;
+    private final BookService bookService;
 
-    public SecurityController(UserService userService, CookieService cookieService, Book2UserService book2UserService, UserService userService1) {
+    public SecurityController(UserService userService, CookieService cookieService, Book2UserService book2UserService, UserService userService1, BookService bookService) {
         super(userService, cookieService, book2UserService);
         this.userService = userService1;
+        this.bookService = bookService;
     }
 
     @GetMapping("/signin")
@@ -40,12 +43,14 @@ public class SecurityController extends ModelAttributeController {
     }
 
     @GetMapping("/my")
-    public String myPage() {
+    public String myPage(Model model) {
+        model.addAttribute("bookList", bookService.getPaidBooksByCurrentUser());
         return "my";
     }
 
     @GetMapping("/myarchive")
-    public String myArchive() {
+    public String myArchive(Model model) {
+        model.addAttribute("bookList", bookService.getArchivedBooksByCurrentUser());
         return "myarchive";
     }
 

@@ -42,4 +42,8 @@ public interface BookService {
     List<BookEntity> getBooksBySlugIn(List<String> slugs);
 
     BookListDto getPageableRecentBooks(String cartCookie, String keptCookie, int offset, int limit);
+
+    BookListDto getPaidBooksByCurrentUser();
+
+    BookListDto getArchivedBooksByCurrentUser();
 }
