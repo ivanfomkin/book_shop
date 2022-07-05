@@ -3,10 +3,14 @@ package com.github.ivanfomkin.bookshop.service.impl;
 import com.github.ivanfomkin.bookshop.dto.security.ContactConfirmationRequestDto;
 import com.github.ivanfomkin.bookshop.dto.security.ContactConfirmationResponse;
 import com.github.ivanfomkin.bookshop.dto.security.RegistrationFormDto;
+import com.github.ivanfomkin.bookshop.dto.user.UpdateProfileDto;
 import com.github.ivanfomkin.bookshop.dto.user.UserDto;
+import com.github.ivanfomkin.bookshop.dto.user.UserPageDto;
 import com.github.ivanfomkin.bookshop.entity.enums.ContactType;
 import com.github.ivanfomkin.bookshop.entity.user.UserContactEntity;
 import com.github.ivanfomkin.bookshop.entity.user.UserEntity;
+import com.github.ivanfomkin.bookshop.exception.PasswordsDidNotMatchException;
+import com.github.ivanfomkin.bookshop.exception.SimplePasswordException;
 import com.github.ivanfomkin.bookshop.repository.UserContactRepository;
 import com.github.ivanfomkin.bookshop.repository.UserRepository;
 import com.github.ivanfomkin.bookshop.security.BookStorePhoneUserDetails;
@@ -16,6 +20,8 @@ import com.github.ivanfomkin.bookshop.security.jwt.JWTUtil;
 import com.github.ivanfomkin.bookshop.service.UserService;
 import com.github.ivanfomkin.bookshop.util.CommonUtils;
 import org.slf4j.helpers.MessageFormatter;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -31,6 +37,7 @@ import java.util.*;
 @Service
 public class UserServiceImpl implements UserService {
     private final JWTUtil jwtUtil;
+    private final MessageSource messageSource;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
@@ -39,8 +46,9 @@ public class UserServiceImpl implements UserService {
 
     private static final String LOGIN_ERROR = "Неверное имя пользователя или пароль";
 
-    public UserServiceImpl(JWTUtil jwtUtil, UserRepository userRepository, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, UserContactRepository userContactRepository, BookStoreUserDetailsService userDetailsService) {
+    public UserServiceImpl(JWTUtil jwtUtil, MessageSource messageSource, UserRepository userRepository, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, UserContactRepository userContactRepository, BookStoreUserDetailsService userDetailsService) {
         this.jwtUtil = jwtUtil;
+        this.messageSource = messageSource;
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.authenticationManager = authenticationManager;
@@ -240,5 +248,80 @@ public class UserServiceImpl implements UserService {
         userDto.setName(currentUser.getName());
         userDto.setBalance(currentUser.getBalance());
         return userDto;
+    }
+
+    @Transactional
+    @Override
+    public void updateProfile(UpdateProfileDto updateProfileDto) {
+        var currentUser = getCurrentUser();
+        if (updateProfileDto.getPassword() != null && !updateProfileDto.getPassword().isBlank()) {
+            if (!updateProfileDto.getPassword().equals(updateProfileDto.getPasswordReply())) {
+                var message = messageSource.getMessage("profile.password.match.failed", new Object[]{}, LocaleContextHolder.getLocale());
+                throw new PasswordsDidNotMatchException(message);
+            } else {
+                if (updateProfileDto.getPassword().length() < 7) {
+                    var message = messageSource.getMessage("profile.password.simple", new Object[]{}, LocaleContextHolder.getLocale());
+                    throw new SimplePasswordException(message);
+                }
+                currentUser.setPassword(passwordEncoder.encode(updateProfileDto.getPassword()));
+            }
+        }
+        if (!updateProfileDto.getName().equalsIgnoreCase(currentUser.getName())) {
+            currentUser.setName(updateProfileDto.getName());
+        }
+        updateEmail(updateProfileDto, currentUser);
+        updatePhone(updateProfileDto, currentUser);
+        userRepository.save(currentUser);
+    }
+
+    private void updateEmail(UpdateProfileDto updateProfileDto, UserEntity currentUser) {
+        if (updateProfileDto.getMail() != null && !updateProfileDto.getMail().isBlank()) {
+            var email = currentUser.getEmail();
+            if (email != null) {
+                if (!email.getContact().equals(updateProfileDto.getMail())) {
+                    email.setContact(updateProfileDto.getMail());
+                    userContactRepository.save(email);
+                }
+            } else {
+                email = new UserContactEntity();
+                email.setContact(updateProfileDto.getMail());
+                email.setUser(currentUser);
+                email.setCodeTrials(0);
+                email.setType(ContactType.EMAIL);
+                userContactRepository.save(email);
+            }
+        }
+    }
+
+    private void updatePhone(UpdateProfileDto updateProfileDto, UserEntity currentUser) {
+        if (updateProfileDto.getPhone() != null && !updateProfileDto.getPhone().isBlank()) {
+            var phone = currentUser.getPhone();
+            var phoneFromDto = CommonUtils.formatPhoneNumber(updateProfileDto.getPhone());
+            if (phone != null) {
+                if (!phone.getContact().equals(phoneFromDto)) {
+                    phone.setContact(phoneFromDto);
+                    userContactRepository.save(phone);
+                }
+            } else {
+                phone = new UserContactEntity();
+                phone.setContact(phoneFromDto);
+                phone.setUser(currentUser);
+                phone.setCodeTrials(0);
+                phone.setType(ContactType.PHONE);
+                userContactRepository.save(phone);
+            }
+        }
+    }
+
+    @Override
+    public UserPageDto getUserPageDto() {
+        var user = this.getCurrentUser();
+        var dto = new UserPageDto();
+        var userPhoneEntity = user.getPhone();
+        var userEmailEntity = user.getEmail();
+        dto.setName(user.getName());
+        dto.setEmail(userEmailEntity != null ? userEmailEntity.getContact() : "");
+        dto.setPhone(userPhoneEntity != null ? String.format("+%s (%s) %s-%s-%s", userPhoneEntity.getContact().charAt(0), userPhoneEntity.getContact().substring(1, 4), userPhoneEntity.getContact().substring(4, 7), userPhoneEntity.getContact().substring(7, 9), userPhoneEntity.getContact().substring(9, 11)) : "");
+        return dto;
     }
 }

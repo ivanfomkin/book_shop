@@ -2,6 +2,7 @@ package com.github.ivanfomkin.bookshop.entity.user;
 
 import com.github.ivanfomkin.bookshop.entity.book.BookEntity;
 import com.github.ivanfomkin.bookshop.entity.book.review.BookVoteEntity;
+import com.github.ivanfomkin.bookshop.entity.enums.ContactType;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
@@ -50,4 +51,12 @@ public class UserEntity implements Serializable {
 
     @OneToMany(mappedBy = "user")
     private List<BookVoteEntity> userVotes;
+
+    public UserContactEntity getPhone() {
+        return contacts.stream().filter(c -> c.getType() == ContactType.PHONE).findFirst().orElse(null);
+    }
+
+    public UserContactEntity getEmail() {
+        return contacts.stream().filter(c -> c.getType() == ContactType.EMAIL).findFirst().orElse(null);
+    }
 }

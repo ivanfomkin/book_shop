@@ -2,6 +2,8 @@ package com.github.ivanfomkin.bookshop.controller;
 
 import com.github.ivanfomkin.bookshop.exception.EmptySearchQueryException;
 import com.github.ivanfomkin.bookshop.exception.JwtInBlackListException;
+import com.github.ivanfomkin.bookshop.exception.PasswordException;
+import com.github.ivanfomkin.bookshop.exception.PasswordsDidNotMatchException;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.SignatureException;
@@ -26,6 +28,12 @@ public class AdviceController {
         log.error(exception.getMessage());
         redirectAttributes.addFlashAttribute("searchError", exception);
         return "redirect:/";
+    }
+
+    @ExceptionHandler(PasswordException.class)
+    public String handlePasswordsDidNotMatch(PasswordException exception, RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("passwordError", exception.getLocalizedMessage());
+        return "redirect:/profile";
     }
 
     @ExceptionHandler(ExpiredJwtException.class)

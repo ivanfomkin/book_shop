@@ -1,6 +1,7 @@
 package com.github.ivanfomkin.bookshop.controller;
 
 import com.github.ivanfomkin.bookshop.dto.security.RegistrationFormDto;
+import com.github.ivanfomkin.bookshop.dto.user.UpdateProfileDto;
 import com.github.ivanfomkin.bookshop.service.Book2UserService;
 import com.github.ivanfomkin.bookshop.service.BookService;
 import com.github.ivanfomkin.bookshop.service.CookieService;
@@ -56,7 +57,13 @@ public class SecurityController extends ModelAttributeController {
 
     @GetMapping("/profile")
     public String profile(Model model) {
-        model.addAttribute("user", userService.getCurrentUser());
+        model.addAttribute("userPage", userService.getUserPageDto());
         return "profile";
+    }
+
+    @PostMapping("/profile")
+    public String updateProfile(Model model, UpdateProfileDto updateProfileDto) {
+        userService.updateProfile(updateProfileDto);
+        return "redirect:/profile";
     }
 }

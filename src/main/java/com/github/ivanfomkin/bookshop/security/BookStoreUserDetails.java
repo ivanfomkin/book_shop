@@ -17,7 +17,7 @@ public class BookStoreUserDetails implements UserDetails {
     public BookStoreUserDetails(UserEntity user) {
         this.authorities = List.of(new SimpleGrantedAuthority("ROLE_USER"));
         this.password = user.getPassword();
-        this.username = user.getContacts().stream().filter(u -> u.getType() == ContactType.EMAIL).findFirst().get().getContact();
+        this.username = user.getEmail().getContact();
     }
 
     @Override

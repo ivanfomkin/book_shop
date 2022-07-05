@@ -3,7 +3,9 @@ package com.github.ivanfomkin.bookshop.service;
 import com.github.ivanfomkin.bookshop.dto.security.ContactConfirmationRequestDto;
 import com.github.ivanfomkin.bookshop.dto.security.ContactConfirmationResponse;
 import com.github.ivanfomkin.bookshop.dto.security.RegistrationFormDto;
+import com.github.ivanfomkin.bookshop.dto.user.UpdateProfileDto;
 import com.github.ivanfomkin.bookshop.dto.user.UserDto;
+import com.github.ivanfomkin.bookshop.dto.user.UserPageDto;
 import com.github.ivanfomkin.bookshop.entity.user.UserEntity;
 
 import java.util.Map;
@@ -19,4 +21,8 @@ public interface UserService {
     UserEntity getCurrentUser();
 
     UserDto getCurrentUserInfo();
+
+    void updateProfile(UpdateProfileDto updateProfileDto);
+
+    UserPageDto getUserPageDto();
 }

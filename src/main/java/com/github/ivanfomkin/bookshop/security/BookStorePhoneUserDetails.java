@@ -10,7 +10,7 @@ public class BookStorePhoneUserDetails extends BookStoreUserDetails {
 
     public BookStorePhoneUserDetails(UserEntity user) {
         super(user);
-        UserContactEntity phoneContactEntity = user.getContacts().stream().filter(u -> u.getType() == ContactType.PHONE).findFirst().orElseThrow();
+        UserContactEntity phoneContactEntity = user.getPhone();
         this.phoneConfirmationCode = phoneContactEntity.getCode();
         this.phone = phoneContactEntity.getContact();
     }

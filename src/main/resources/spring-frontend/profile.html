@@ -38,34 +38,35 @@
                 <div class="Tabs-wrap">
                     <div class="Tabs-block" id="basic">
                         <div class="Profile">
+                            <span style="color: red" th:if="${passwordError}" th:text="${passwordError}"></span>
                             <form class="form Profile-form" action="#" method="post">
                                 <div class="row">
                                     <div class="row-block">
                                         <div class="form-group">
                                             <label class="form-label" for="name">Имя
                                             </label>
-                                            <input class="form-input" id="name" name="name" type="text" th:value="${user.name}" value="Михаил"/>
+                                            <input class="form-input" id="name" name="name" type="text" th:value="${userPage.name}" value="Михаил"/>
                                         </div>
                                         <div class="form-group">
                                             <label class="form-label" for="mail">E-mail
                                             </label>
-                                            <input class="form-input" id="mail" name="mail" type="text"
+                                            <input class="form-input" id="mail" name="mail" type="text" th:value="${userPage.email}"
                                                    value="addr@sait.com" data-validate="require mail"/>
-                                            <div class="Profile-btn Profile-btn_confirm">
-                                                <button class="btn btn_primary" type="button">Подтвердить
-                                                </button>
-                                            </div>
+<!--                                            <div class="Profile-btn Profile-btn_confirm">-->
+<!--                                                <button class="btn btn_primary" type="button">Подтвердить-->
+<!--                                                </button>-->
+<!--                                            </div>-->
                                         </div>
                                         <div class="form-group">
                                             <label class="form-label" for="phone">Телефон
                                             </label>
                                             <input class="form-input" id="phone" name="phone" type="text"
-                                                   value="+70000000000" data-mask="+7 (999) 999-99-99"
+                                                   value="+70000000000" data-mask="+7 (999) 999-99-99" th:value="${userPage.phone}"
                                                    data-validate="require"/>
-                                            <div class="Profile-btn Profile-btn_confirm">
-                                                <button class="btn btn_primary" type="button">Подтвердить
-                                                </button>
-                                            </div>
+<!--                                            <div class="Profile-btn Profile-btn_confirm">-->
+<!--                                                <button class="btn btn_primary" type="button">Подтвердить-->
+<!--                                                </button>-->
+<!--                                            </div>-->
                                         </div>
                                     </div>
                                     <div class="row-block">
