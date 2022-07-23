@@ -1,5 +1,6 @@
 package com.github.ivanfomkin.bookshop.controller;
 
+import com.github.ivanfomkin.bookshop.dto.payment.PaymentRequestDto;
 import com.github.ivanfomkin.bookshop.dto.security.RegistrationFormDto;
 import com.github.ivanfomkin.bookshop.dto.user.UpdateProfileDto;
 import com.github.ivanfomkin.bookshop.service.Book2UserService;
@@ -58,6 +59,7 @@ public class SecurityController extends ModelAttributeController {
     @GetMapping("/profile")
     public String profile(Model model) {
         model.addAttribute("userPage", userService.getUserPageDto());
+        model.addAttribute("payment", new PaymentRequestDto());
         return "profile";
     }
 

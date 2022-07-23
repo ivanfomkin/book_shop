@@ -6,6 +6,7 @@ import com.github.ivanfomkin.bookshop.dto.security.RegistrationFormDto;
 import com.github.ivanfomkin.bookshop.dto.user.UpdateProfileDto;
 import com.github.ivanfomkin.bookshop.dto.user.UserDto;
 import com.github.ivanfomkin.bookshop.dto.user.UserPageDto;
+import com.github.ivanfomkin.bookshop.entity.enums.TransactionType;
 import com.github.ivanfomkin.bookshop.entity.user.UserEntity;
 
 import java.util.Map;
@@ -25,4 +26,6 @@ public interface UserService {
     void updateProfile(UpdateProfileDto updateProfileDto);
 
     UserPageDto getUserPageDto();
+
+    void updateUserBalance(UserEntity currentUser, Double amount, TransactionType type);
 }

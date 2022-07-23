@@ -33,9 +33,7 @@ public class JWTRequestFilter extends OncePerRequestFilter {
         String token = null;
         String username = null;
         try {
-
             Cookie[] cookies = request.getCookies();
-
             if (cookies != null) {
                 for (Cookie cookie : cookies) {
                     if (cookie.getName().equals("token")) {

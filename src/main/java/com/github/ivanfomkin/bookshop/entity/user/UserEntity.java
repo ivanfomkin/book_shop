@@ -30,7 +30,7 @@ public class UserEntity implements Serializable {
     private LocalDateTime regTime;
 
     @Column(columnDefinition = "INT NOT NULL")
-    private Integer balance = 0;
+    private Double balance = 0.;
 
     @Column(columnDefinition = "VARCHAR(255) NOT NULL")
     private String name;

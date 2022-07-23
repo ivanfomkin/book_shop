@@ -7,8 +7,10 @@ import com.github.ivanfomkin.bookshop.dto.user.UpdateProfileDto;
 import com.github.ivanfomkin.bookshop.dto.user.UserDto;
 import com.github.ivanfomkin.bookshop.dto.user.UserPageDto;
 import com.github.ivanfomkin.bookshop.entity.enums.ContactType;
+import com.github.ivanfomkin.bookshop.entity.enums.TransactionType;
 import com.github.ivanfomkin.bookshop.entity.user.UserContactEntity;
 import com.github.ivanfomkin.bookshop.entity.user.UserEntity;
+import com.github.ivanfomkin.bookshop.exception.InsufficientFundsException;
 import com.github.ivanfomkin.bookshop.exception.PasswordsDidNotMatchException;
 import com.github.ivanfomkin.bookshop.exception.SimplePasswordException;
 import com.github.ivanfomkin.bookshop.repository.UserContactRepository;
@@ -30,7 +32,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 
 import java.util.*;
 
@@ -95,7 +99,7 @@ public class UserServiceImpl implements UserService {
         var email = attributes.get("email");
         UserEntity user = new UserEntity();
         user.setName(Objects.requireNonNull((String) login));
-        user.setBalance(0);
+        user.setBalance(0.);
         user.setOauthId(oAuth2Id);
         user.setHash(UUID.randomUUID().toString());
         userRepository.save(user);
@@ -111,7 +115,7 @@ public class UserServiceImpl implements UserService {
         var email = (String) attributes.get("email");
         UserEntity user = new UserEntity();
         user.setName(Objects.requireNonNull((String) login));
-        user.setBalance(0);
+        user.setBalance(0.);
         user.setOauthId(String.valueOf(oAuth2Id));
         user.setHash(UUID.randomUUID().toString());
         userRepository.save(user);
@@ -323,5 +327,21 @@ public class UserServiceImpl implements UserService {
         dto.setEmail(userEmailEntity != null ? userEmailEntity.getContact() : "");
         dto.setPhone(userPhoneEntity != null ? String.format("+%s (%s) %s-%s-%s", userPhoneEntity.getContact().charAt(0), userPhoneEntity.getContact().substring(1, 4), userPhoneEntity.getContact().substring(4, 7), userPhoneEntity.getContact().substring(7, 9), userPhoneEntity.getContact().substring(9, 11)) : "");
         return dto;
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.MANDATORY)
+    public void updateUserBalance(UserEntity user, Double amount, TransactionType transactionType) {
+        Assert.isTrue(amount >= 0, MessageFormatter.format("Expected positive amount, but actual is {}", amount).getMessage());
+        switch (transactionType) {
+            case DEBIT -> {
+                if (user.getBalance() >= amount) {
+                    userRepository.debtFromUserBalance(user, amount);
+                } else {
+                    throw new InsufficientFundsException(MessageFormatter.arrayFormat("Insufficient funds for debt {} money point from userId {}. User balance is", new Object[]{amount, user.getId(), user.getBalance()}).getMessage());
+                }
+            }
+            case DEPOSIT -> userRepository.addBalanceToUser(user, amount);
+        }
     }
 }

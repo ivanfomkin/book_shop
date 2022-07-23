@@ -55,6 +55,13 @@ spring:
   application:
     name: bookshop
 bookshop:
+  payments:
+    robokassa:
+      passwords:
+        first: ENC(BZFTbQhCH+EZcAMAGKQvsQ59uLqVMvkqUk4jUCmEyb4=)
+        second: ENC(e8PL55enjy7H6daMFqHWgDubC8ZobeWRp17C2oK5y+w=)
+      merchant:
+        login: ENC(ltT6teB/mGgbv1Dv4GzsIZAECpQDSt87)
   call:
     expiration: 5
     sms.ru:

@@ -1,0 +1,39 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+    <changeSet author="ivan.fomkin" id="16425780931">
+        <dropTable tableName="balance_transaction"/>
+        <createTable tableName="transactions">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="transactions_pkey"/>
+            </column>
+            <column name="amount" type="DOUBLE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="transaction_date" type="DATETIME" defaultValue="now()">
+                <constraints nullable="false"/>
+            </column>
+            <column name="approve_date" type="DATETIME"/>
+            <column name="type" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status" type="BOOLEAN"/>
+            <column name="user_id" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <createTable tableName="book_orders">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="book_orders_pkey"/>
+            </column>
+            <column name="book_id" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="transaction_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <modifyDataType tableName="users" columnName="balance" newDataType="DOUBLE"/>
+    </changeSet>
+</databaseChangeLog>
