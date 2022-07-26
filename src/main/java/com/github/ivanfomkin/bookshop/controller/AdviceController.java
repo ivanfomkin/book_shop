@@ -1,9 +1,7 @@
 package com.github.ivanfomkin.bookshop.controller;
 
-import com.github.ivanfomkin.bookshop.exception.EmptySearchQueryException;
-import com.github.ivanfomkin.bookshop.exception.JwtInBlackListException;
-import com.github.ivanfomkin.bookshop.exception.PasswordException;
-import com.github.ivanfomkin.bookshop.exception.PasswordsDidNotMatchException;
+import com.github.ivanfomkin.bookshop.dto.CommonResultDto;
+import com.github.ivanfomkin.bookshop.exception.*;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.SignatureException;
@@ -12,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.Cookie;
@@ -63,6 +62,33 @@ public class AdviceController {
         log.warn("Bad JWT signature:: {}", exception.getMessage());
         clearContextAndCookie(response);
         return REDIRECT_SIGNING_URL;
+    }
+
+    @ResponseBody
+    @ExceptionHandler(BookCartIsEmptyException.class)
+    public CommonResultDto handleEmptyCartException() {
+        log.warn("Try to order for empty book cart");
+        var resultDto = new CommonResultDto(false);
+        resultDto.setError("Корзина пуста");
+        return resultDto;
+    }
+
+    @ResponseBody
+    @ExceptionHandler(NotAuthorizedException.class)
+    public CommonResultDto handleNotAuthorizedException() {
+        log.warn("Try to order book when user not authorize");
+        var resultDto = new CommonResultDto(false);
+        resultDto.setError("Авторизуйтесь для покупки книг");
+        return resultDto;
+    }
+
+    @ResponseBody
+    @ExceptionHandler(InsufficientFundsException.class)
+    public CommonResultDto handleInsufficientFundsException(InsufficientFundsException exception) {
+        log.warn(exception.getMessage());
+        var resultDto = new CommonResultDto(false);
+        resultDto.setError("Недостаточно средств на счёте для покупки");
+        return resultDto;
     }
 
     private void clearContextAndCookie(HttpServletResponse response) {

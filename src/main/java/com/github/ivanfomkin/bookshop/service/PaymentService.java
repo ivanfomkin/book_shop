@@ -1,5 +1,6 @@
 package com.github.ivanfomkin.bookshop.service;
 
+import com.github.ivanfomkin.bookshop.dto.CommonResultDto;
 import com.github.ivanfomkin.bookshop.dto.payment.PaymentRequestDto;
 import com.github.ivanfomkin.bookshop.dto.payment.RobokassaPaymentResultDto;
 
@@ -14,4 +15,6 @@ public interface PaymentService {
     RobokassaPaymentResultDto approvePayment(String outSum, Long invId, String signatureValue, Double fee, String email) throws NoSuchAlgorithmException;
 
     void makePaymentFailed(Long invId);
+
+    CommonResultDto orderBooks();
 }

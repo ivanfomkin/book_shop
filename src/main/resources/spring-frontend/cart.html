@@ -107,8 +107,7 @@
                         <span class="Cart-price_old" th:if="${bookCart.cartPrice() ne bookCart.cartPriceOld()}"
                               th:text="${bookCart.cartPriceOld()} + ' р.'">658 р.</span>
                     </div>
-                    <div class="Cart-block"><a class="btn btn_success btn_md" th:href="@{/order}" href="/order.html">Купить</a>
-                    </div>
+                    <div class="Cart-block"><div id="btn_order" class="btn btn_success btn_md">Купить</div></div>
                 </div>
             </form>
         </main>

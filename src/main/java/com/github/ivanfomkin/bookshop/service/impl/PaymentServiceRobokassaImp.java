@@ -1,12 +1,13 @@
 package com.github.ivanfomkin.bookshop.service.impl;
 
+import com.github.ivanfomkin.bookshop.dto.CommonResultDto;
 import com.github.ivanfomkin.bookshop.dto.payment.PaymentRequestDto;
 import com.github.ivanfomkin.bookshop.dto.payment.RobokassaPaymentResultDto;
+import com.github.ivanfomkin.bookshop.entity.enums.Book2UserType;
 import com.github.ivanfomkin.bookshop.entity.enums.TransactionType;
-import com.github.ivanfomkin.bookshop.entity.user.UserEntity;
-import com.github.ivanfomkin.bookshop.service.PaymentService;
-import com.github.ivanfomkin.bookshop.service.TransactionService;
-import com.github.ivanfomkin.bookshop.service.UserService;
+import com.github.ivanfomkin.bookshop.exception.BookCartIsEmptyException;
+import com.github.ivanfomkin.bookshop.exception.NotAuthorizedException;
+import com.github.ivanfomkin.bookshop.service.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,8 @@ public class PaymentServiceRobokassaImp implements PaymentService {
     private static final String ALGORITHM = "MD5";
     private final TransactionService transactionService;
     private final UserService userService;
+    private final BookService bookService;
+    private final Book2UserService book2UserService;
 
     @Value("${bookshop.payments.robokassa.merchant.login}")
     private String merchantLogin;
@@ -34,9 +37,11 @@ public class PaymentServiceRobokassaImp implements PaymentService {
     @Value("${bookshop.payments.robokassa.passwords.second}")
     private String secondPassword;
 
-    public PaymentServiceRobokassaImp(TransactionService transactionService, UserService userService) {
+    public PaymentServiceRobokassaImp(TransactionService transactionService, UserService userService, BookService bookService, Book2UserService book2UserService) {
         this.transactionService = transactionService;
         this.userService = userService;
+        this.bookService = bookService;
+        this.book2UserService = book2UserService;
     }
 
     @Override
@@ -94,6 +99,23 @@ public class PaymentServiceRobokassaImp implements PaymentService {
     public void makePaymentFailed(Long invId) {
         var transaction = transactionService.findTransactionById(invId);
         transactionService.setTransactionResult(transaction, false);
+    }
+
+    @Override
+    @Transactional
+    public CommonResultDto orderBooks() {
+        var currentUser = userService.getCurrentUser();
+        if (currentUser == null) {
+            throw new NotAuthorizedException();
+        }
+        var booksInCart = bookService.getBooksByUserAndType(currentUser, Book2UserType.CART);
+        if (booksInCart == null || booksInCart.isEmpty()) {
+            throw new BookCartIsEmptyException();
+        }
+        var cartPrice = booksInCart.stream().map(b -> bookService.calculateBookDiscountPrice(b.getPrice(), b.getDiscount())).mapToInt(t -> t).sum();
+        userService.updateUserBalance(currentUser, (double) cartPrice, TransactionType.DEBIT);
+        booksInCart.parallelStream().forEach(b -> book2UserService.changeBookStatus(currentUser, b, Book2UserType.PAID));
+        return new CommonResultDto(true);
     }
 
     private String hashString(String string) throws NoSuchAlgorithmException {
