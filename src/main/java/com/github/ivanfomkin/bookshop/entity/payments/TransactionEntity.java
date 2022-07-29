@@ -9,6 +9,8 @@ import org.hibernate.annotations.CreationTimestamp;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -28,4 +30,6 @@ public class TransactionEntity implements Serializable {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private UserEntity user;
+    @OneToMany(mappedBy = "transaction")
+    private List<BookOrderEntity> bookOrders = new ArrayList<>();
 }

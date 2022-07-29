@@ -3,10 +3,7 @@ package com.github.ivanfomkin.bookshop.controller;
 import com.github.ivanfomkin.bookshop.dto.payment.PaymentRequestDto;
 import com.github.ivanfomkin.bookshop.dto.security.RegistrationFormDto;
 import com.github.ivanfomkin.bookshop.dto.user.UpdateProfileDto;
-import com.github.ivanfomkin.bookshop.service.Book2UserService;
-import com.github.ivanfomkin.bookshop.service.BookService;
-import com.github.ivanfomkin.bookshop.service.CookieService;
-import com.github.ivanfomkin.bookshop.service.UserService;
+import com.github.ivanfomkin.bookshop.service.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,11 +16,13 @@ public class SecurityController extends ModelAttributeController {
 
     private final UserService userService;
     private final BookService bookService;
+    private final TransactionService transactionService;
 
-    public SecurityController(UserService userService, CookieService cookieService, Book2UserService book2UserService, UserService userService1, BookService bookService) {
+    public SecurityController(UserService userService, CookieService cookieService, Book2UserService book2UserService, UserService userService1, BookService bookService, TransactionService transactionService) {
         super(userService, cookieService, book2UserService);
         this.userService = userService1;
         this.bookService = bookService;
+        this.transactionService = transactionService;
     }
 
     @GetMapping("/signin")
@@ -60,6 +59,7 @@ public class SecurityController extends ModelAttributeController {
     public String profile(Model model) {
         model.addAttribute("userPage", userService.getUserPageDto());
         model.addAttribute("payment", new PaymentRequestDto());
+        model.addAttribute("transactions", transactionService.getTransactionHistoryByUser(userService.getCurrentUser()));
         return "profile";
     }
 

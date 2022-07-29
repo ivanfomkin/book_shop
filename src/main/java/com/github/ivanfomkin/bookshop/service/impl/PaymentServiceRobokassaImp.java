@@ -27,6 +27,7 @@ public class PaymentServiceRobokassaImp implements PaymentService {
     private final UserService userService;
     private final BookService bookService;
     private final Book2UserService book2UserService;
+    private final BookOrderService bookOrderService;
 
     @Value("${bookshop.payments.robokassa.merchant.login}")
     private String merchantLogin;
@@ -37,14 +38,16 @@ public class PaymentServiceRobokassaImp implements PaymentService {
     @Value("${bookshop.payments.robokassa.passwords.second}")
     private String secondPassword;
 
-    public PaymentServiceRobokassaImp(TransactionService transactionService, UserService userService, BookService bookService, Book2UserService book2UserService) {
+    public PaymentServiceRobokassaImp(TransactionService transactionService, UserService userService, BookService bookService, Book2UserService book2UserService, BookOrderService bookOrderService) {
         this.transactionService = transactionService;
         this.userService = userService;
         this.bookService = bookService;
         this.book2UserService = book2UserService;
+        this.bookOrderService = bookOrderService;
     }
 
     @Override
+    @Transactional
     public String getPaymentUrl(PaymentRequestDto paymentRequest) throws NoSuchAlgorithmException {
         var paymentSum = Double.parseDouble(paymentRequest.getSum());
         var transaction = transactionService.createTransaction(paymentSum, TransactionType.DEPOSIT);
@@ -112,8 +115,10 @@ public class PaymentServiceRobokassaImp implements PaymentService {
         if (booksInCart == null || booksInCart.isEmpty()) {
             throw new BookCartIsEmptyException();
         }
-        var cartPrice = booksInCart.stream().map(b -> bookService.calculateBookDiscountPrice(b.getPrice(), b.getDiscount())).mapToInt(t -> t).sum();
-        userService.updateUserBalance(currentUser, (double) cartPrice, TransactionType.DEBIT);
+        var cartPrice = (double) booksInCart.stream().map(b -> bookService.calculateBookDiscountPrice(b.getPrice(), b.getDiscount())).mapToInt(t -> t).sum();
+        var transaction = transactionService.createTransaction(cartPrice, TransactionType.DEBIT);
+        bookOrderService.createBookOrders(booksInCart, transaction);
+        userService.updateUserBalance(currentUser, cartPrice, TransactionType.DEBIT);
         booksInCart.parallelStream().forEach(b -> book2UserService.changeBookStatus(currentUser, b, Book2UserType.PAID));
         return new CommonResultDto(true);
     }

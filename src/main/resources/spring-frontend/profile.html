@@ -115,53 +115,62 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr>
-                                        <td>15 мая 2017 10:03
+                                    <tr th:each="transaction : ${transactions}">
+                                        <td th:text="${#temporals.format(transaction.date, 'dd.MM.yyyy HH:mm')}">15
+                                            мая 2017 10:03
                                         </td>
                                         <td><span class="Transactions_textSuccess">
-                            <strong>+500 р.
-                            </strong></span>
+                                            <strong th:text="${(transaction.type.name() eq 'DEPOSIT' ? '+ ' : '- ') + #numbers.formatDecimal(transaction.amount, 0, 'WHITESPACE', 0, 'POINT') + ' руб.'}">+500 р.</strong>
+                                        </span>
                                         </td>
-                                        <td>Пополнение счета
-                                        </td>
+                                        <th:block
+                                                th:if="${transaction.type.name() eq 'DEPOSIT'}">
+                                            <td>Пополнение счета</td>
+                                        </th:block>
+                                        <th:block
+                                                th:if="${transaction.type.name() eq 'DEBIT'}">
+                                            <td>Покупка:
+                                                <a th:each="book : ${transaction.books}" th:text="${book.title + ' '}"
+                                                   th:href="'/books/' + ${book.slug}"></a></td>
+                                        </th:block>
                                     </tr>
-                                    <tr>
-                                        <td>5 марта 2017 13:40
-                                        </td>
-                                        <td><span class="Transactions_textSuccess">
-                            <strong>-480 р.
-                            </strong></span>
-                                        </td>
-                                        <td>Покупка книги&#32;<a href="/books/slug.html">История Беларуси</a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>1 февраля 2017 04:10
-                                        </td>
-                                        <td><span class="Transactions_textSuccess">
-                            <strong>+10 000 р.
-                            </strong></span>
-                                        </td>
-                                        <td>Пополнение с помощью WebMoney
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>1 января 2017 09:33
-                                        </td>
-                                        <td><span class="Transactions_textSuccess">
-                            <strong>+7 896 р.
-                            </strong></span>
-                                        </td>
-                                        <td>Пополнение с помощью Яндекс.Деньги
-                                        </td>
-                                    </tr>
+<!--                                    <tr>-->
+<!--                                        <td>5 марта 2017 13:40-->
+<!--                                        </td>-->
+<!--                                        <td><span class="Transactions_textSuccess">-->
+<!--                            <strong>-480 р.-->
+<!--                            </strong></span>-->
+<!--                                        </td>-->
+<!--                                        <td>Покупка книги&#32;<a href="/books/slug.html">История Беларуси</a>-->
+<!--                                        </td>-->
+<!--                                    </tr>-->
+<!--                                    <tr>-->
+<!--                                        <td>1 февраля 2017 04:10-->
+<!--                                        </td>-->
+<!--                                        <td><span class="Transactions_textSuccess">-->
+<!--                            <strong>+10 000 р.-->
+<!--                            </strong></span>-->
+<!--                                        </td>-->
+<!--                                        <td>Пополнение с помощью WebMoney-->
+<!--                                        </td>-->
+<!--                                    </tr>-->
+<!--                                    <tr>-->
+<!--                                        <td>1 января 2017 09:33-->
+<!--                                        </td>-->
+<!--                                        <td><span class="Transactions_textSuccess">-->
+<!--                            <strong>+7 896 р.-->
+<!--                            </strong></span>-->
+<!--                                        </td>-->
+<!--                                        <td>Пополнение с помощью Яндекс.Деньги-->
+<!--                                        </td>-->
+<!--                                    </tr>-->
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="Transactions-footer Transactions-footer_center"><a
-                                    class="btn btn_primary Transactions-get" href="#" data-transactionoffset="4"
-                                    data-transactionlimit="10" data-transactionsort="asc">Показать еще</a>
-                            </div>
+                            <!--                            <div class="Transactions-footer Transactions-footer_center"><a-->
+                            <!--                                    class="btn btn_primary Transactions-get" href="#" data-transactionoffset="4"-->
+                            <!--                                    data-transactionlimit="10" data-transactionsort="asc">Показать еще</a>-->
+                            <!--                            </div>-->
                         </div>
                     </div>
                     <div class="Tabs-block" id="topup">
