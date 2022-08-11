@@ -55,6 +55,7 @@ spring:
   application:
     name: bookshop
 bookshop:
+  host: localhost:8085
   payments:
     robokassa:
       passwords:

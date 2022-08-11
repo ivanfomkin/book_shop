@@ -28,4 +28,6 @@ public interface UserService {
     UserPageDto getUserPageDto();
 
     void updateUserBalance(UserEntity currentUser, Double amount, TransactionType type);
+
+    void updateProfileConfirm(String token);
 }

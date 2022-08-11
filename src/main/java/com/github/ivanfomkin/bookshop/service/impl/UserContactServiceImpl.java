@@ -48,7 +48,7 @@ public class UserContactServiceImpl implements UserContactService {
             var email = dto.getContact();
             contactEntity = userContactRepository.findByContact(email);
             code = CommonUtils.generateRandomCode();
-            emailMessageService.sendMessage(email, code);
+            emailMessageService.sendConfirmMessage(email, code);
             if (contactEntity == null) {
                 contactEntity = new UserContactEntity();
                 contactEntity.setContact(email);

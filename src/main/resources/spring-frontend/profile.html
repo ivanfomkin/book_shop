@@ -92,8 +92,8 @@
                                                 <button class="btn btn_primary" type="submit">Сохранить
                                                 </button>
                                             </div>
-                                            <div class="Profile-success">Профиль успешно сохранен
-                                            </div>
+                                            <div th:if="${updateSuccess}" class="Profile-success">Запрос на обновление отправлен на email</div>
+                                            <div th:if="${updateConfirmSuccess}" class="Profile-success">Профиль успешно обновлён</div>
                                         </div>
                                     </div>
                                 </div>

@@ -1,0 +1,19 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+    <changeSet author="ivan.fomkin" id="16425780931">
+        <createTable tableName="change_user_data">
+            <column autoIncrement="true" name="user_id" type="integer">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="change_user_data_pk"/>
+            </column>
+            <column name="name" type="varchar(255)"/>
+            <column name="phone" type="varchar(255)"/>
+            <column name="mail" type="varchar(255)"/>
+            <column name="token" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password" type="varchar"/>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

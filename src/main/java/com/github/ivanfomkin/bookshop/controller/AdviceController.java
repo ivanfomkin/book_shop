@@ -91,6 +91,12 @@ public class AdviceController {
         return resultDto;
     }
 
+    @ExceptionHandler(ChangeUserDataException.class)
+    public String handleChangeUserDataException(ChangeUserDataException exception, RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("searchError", exception);
+        return "redirect:/";
+    }
+
     private void clearContextAndCookie(HttpServletResponse response) {
         Cookie tokenCookie = new Cookie("token", null);
         tokenCookie.setMaxAge(0);

@@ -28,4 +28,5 @@
     <include file="db/changelog/2022/07/01-03-make-code-in-table-user_contact-may-be-null.xml"/>
     <include file="db/changelog/2022/07/05-01-update-book-images-with-big-size.xml"/>
     <include file="db/changelog/2022/07/05-02-create-tables-for-transactions.xml"/>
+    <include file="db/changelog/2022/08/05-01-create-profile-change-table.xml"/>
 </databaseChangeLog>

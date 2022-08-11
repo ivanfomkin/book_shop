@@ -8,7 +8,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Slf4j
 @Controller
@@ -64,8 +66,16 @@ public class SecurityController extends ModelAttributeController {
     }
 
     @PostMapping("/profile")
-    public String updateProfile(Model model, UpdateProfileDto updateProfileDto) {
+    public String updateProfile(RedirectAttributes redirectAttributes, UpdateProfileDto updateProfileDto) {
         userService.updateProfile(updateProfileDto);
+        redirectAttributes.addFlashAttribute("updateSuccess", true);
+        return "redirect:/profile";
+    }
+
+    @GetMapping("/profile/change/{token}")
+    public String updateProfileConfirm(@PathVariable("token") String token, RedirectAttributes redirectAttributes) {
+        userService.updateProfileConfirm(token);
+        redirectAttributes.addFlashAttribute("updateConfirmSuccess", true);
         return "redirect:/profile";
     }
 }

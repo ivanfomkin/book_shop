@@ -8,8 +8,10 @@ import com.github.ivanfomkin.bookshop.dto.user.UserDto;
 import com.github.ivanfomkin.bookshop.dto.user.UserPageDto;
 import com.github.ivanfomkin.bookshop.entity.enums.ContactType;
 import com.github.ivanfomkin.bookshop.entity.enums.TransactionType;
+import com.github.ivanfomkin.bookshop.entity.user.ChangeUserDataEntity;
 import com.github.ivanfomkin.bookshop.entity.user.UserContactEntity;
 import com.github.ivanfomkin.bookshop.entity.user.UserEntity;
+import com.github.ivanfomkin.bookshop.exception.ChangeUserDataException;
 import com.github.ivanfomkin.bookshop.exception.InsufficientFundsException;
 import com.github.ivanfomkin.bookshop.exception.PasswordsDidNotMatchException;
 import com.github.ivanfomkin.bookshop.exception.SimplePasswordException;
@@ -19,6 +21,8 @@ import com.github.ivanfomkin.bookshop.security.BookStorePhoneUserDetails;
 import com.github.ivanfomkin.bookshop.security.BookStoreUserDetails;
 import com.github.ivanfomkin.bookshop.security.BookStoreUserDetailsService;
 import com.github.ivanfomkin.bookshop.security.jwt.JWTUtil;
+import com.github.ivanfomkin.bookshop.service.ChangeUserDataService;
+import com.github.ivanfomkin.bookshop.service.EmailMessageService;
 import com.github.ivanfomkin.bookshop.service.UserService;
 import com.github.ivanfomkin.bookshop.util.CommonUtils;
 import org.slf4j.helpers.MessageFormatter;
@@ -44,20 +48,24 @@ public class UserServiceImpl implements UserService {
     private final MessageSource messageSource;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final EmailMessageService emailMessageService;
     private final AuthenticationManager authenticationManager;
+    private final ChangeUserDataService changeUserDataService;
     private final UserContactRepository userContactRepository;
     private final BookStoreUserDetailsService userDetailsService;
 
     private static final String LOGIN_ERROR = "Неверное имя пользователя или пароль";
 
-    public UserServiceImpl(JWTUtil jwtUtil, MessageSource messageSource, UserRepository userRepository, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, UserContactRepository userContactRepository, BookStoreUserDetailsService userDetailsService) {
+    public UserServiceImpl(JWTUtil jwtUtil, MessageSource messageSource, UserRepository userRepository, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, EmailMessageService emailMessageService, ChangeUserDataService changeUserDataService, UserContactRepository userContactRepository, BookStoreUserDetailsService userDetailsService) {
         this.jwtUtil = jwtUtil;
         this.messageSource = messageSource;
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.userDetailsService = userDetailsService;
+        this.emailMessageService = emailMessageService;
+        this.changeUserDataService = changeUserDataService;
         this.authenticationManager = authenticationManager;
         this.userContactRepository = userContactRepository;
-        this.userDetailsService = userDetailsService;
     }
 
     @Transactional
@@ -267,28 +275,45 @@ public class UserServiceImpl implements UserService {
                     var message = messageSource.getMessage("profile.password.simple", new Object[]{}, LocaleContextHolder.getLocale());
                     throw new SimplePasswordException(message);
                 }
-                currentUser.setPassword(passwordEncoder.encode(updateProfileDto.getPassword()));
+                updateProfileDto.setPassword(passwordEncoder.encode(updateProfileDto.getPassword()));
             }
         }
-        if (!updateProfileDto.getName().equalsIgnoreCase(currentUser.getName())) {
-            currentUser.setName(updateProfileDto.getName());
-        }
-        updateEmail(updateProfileDto, currentUser);
-        updatePhone(updateProfileDto, currentUser);
-        userRepository.save(currentUser);
+
+        var changeUserDataEntity = changeUserDataService.createChangeUserData(currentUser, updateProfileDto);
+        emailMessageService.sendChangeDataMessage(currentUser.getEmail().getContact(), changeUserDataEntity.getToken());
     }
 
-    private void updateEmail(UpdateProfileDto updateProfileDto, UserEntity currentUser) {
-        if (updateProfileDto.getMail() != null && !updateProfileDto.getMail().isBlank()) {
+    @Override
+    public void updateProfileConfirm(String token) {
+        var changeDataEntity = changeUserDataService.findChangeUserDataByToken(token);
+        if (changeDataEntity != null) {
+            var user = changeDataEntity.getId().getUserEntity();
+            if (changeDataEntity.getPassword() != null && !changeDataEntity.getPassword().isBlank()) {
+                user.setPassword(changeDataEntity.getPassword());
+            }
+            if (changeDataEntity.getName() != null && !changeDataEntity.getName().isBlank() && !changeDataEntity.getName().equals(user.getName())) {
+                user.setName(changeDataEntity.getName());
+            }
+            updatePhone(changeDataEntity, user);
+            updateEmail(changeDataEntity, user);
+            userRepository.save(user);
+            changeUserDataService.deleteChangeUserData(changeDataEntity);
+        } else {
+            throw new ChangeUserDataException(messageSource.getMessage("profile.edit.exception", new Object[]{}, LocaleContextHolder.getLocale()));
+        }
+    }
+
+    private void updateEmail(ChangeUserDataEntity changeUserDataEntity, UserEntity currentUser) {
+        if (changeUserDataEntity.getMail() != null && !changeUserDataEntity.getMail().isBlank()) {
             var email = currentUser.getEmail();
             if (email != null) {
-                if (!email.getContact().equals(updateProfileDto.getMail())) {
-                    email.setContact(updateProfileDto.getMail());
+                if (!email.getContact().equals(changeUserDataEntity.getMail())) {
+                    email.setContact(changeUserDataEntity.getMail());
                     userContactRepository.save(email);
                 }
             } else {
                 email = new UserContactEntity();
-                email.setContact(updateProfileDto.getMail());
+                email.setContact(changeUserDataEntity.getMail());
                 email.setUser(currentUser);
                 email.setCodeTrials(0);
                 email.setType(ContactType.EMAIL);
@@ -297,10 +322,10 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    private void updatePhone(UpdateProfileDto updateProfileDto, UserEntity currentUser) {
-        if (updateProfileDto.getPhone() != null && !updateProfileDto.getPhone().isBlank()) {
+    private void updatePhone(ChangeUserDataEntity changeUserDataEntity, UserEntity currentUser) {
+        if (changeUserDataEntity.getPhone() != null && !changeUserDataEntity.getPhone().isBlank()) {
             var phone = currentUser.getPhone();
-            var phoneFromDto = CommonUtils.formatPhoneNumber(updateProfileDto.getPhone());
+            var phoneFromDto = CommonUtils.formatPhoneNumber(changeUserDataEntity.getPhone());
             if (phone != null) {
                 if (!phone.getContact().equals(phoneFromDto)) {
                     phone.setContact(phoneFromDto);
