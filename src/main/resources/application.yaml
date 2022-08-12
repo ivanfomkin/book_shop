@@ -77,7 +77,7 @@ bookshop:
   upload:
     path: F:\dev\spring-learn\MyBookShopApp_m3_6\uploads
   download:
-    path: F:\dev\spring-learn\MyBookShopApp_m3_6\books
+    path: books
 jasypt:
   encryptor:
     bean: encryptorBean

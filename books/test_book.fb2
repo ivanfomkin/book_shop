@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FictionBook xmlns="http://www.gribuser.ru/xml/fictionbook/2.0" xmlns:l="http://www.w3.org/1999/xlink">
+<description>
+    <title-info>
+        <genre>antique</genre>
+        <author><first-name></first-name><last-name>Unknown</last-name></author>
+        <book-title>test_book</book-title>
+        <lang>ru</lang>
+    </title-info>
+    <document-info>
+        <author><first-name></first-name><last-name>Unknown</last-name></author>
+        <program-used>calibre 6.2.1</program-used>
+        <date>12.8.2022</date>
+        <id>00fda7a7-4cd3-441b-bb55-294b9d407097</id>
+        <version>1.0</version>
+    </document-info>
+    <publish-info>
+    </publish-info>
+</description>
+<body>
+<section>
+<p>
+      Это демо-книга для магазина книг. Спасибо, что скачали её!</p>
+</section>
+</body>
+
+</FictionBook>

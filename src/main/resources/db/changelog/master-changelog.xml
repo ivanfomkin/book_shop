@@ -29,4 +29,5 @@
     <include file="db/changelog/2022/07/05-01-update-book-images-with-big-size.xml"/>
     <include file="db/changelog/2022/07/05-02-create-tables-for-transactions.xml"/>
     <include file="db/changelog/2022/08/05-01-create-profile-change-table.xml"/>
+    <include file="db/changelog/2022/08/12-01-add-book-files.xml"/>
 </databaseChangeLog>

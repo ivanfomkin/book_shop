@@ -1,0 +1,31 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+    <changeSet author="ivan.fomkin" id="16425780931">
+        <insert tableName="book_file_type">
+            <column name="id" valueNumeric="1"/>
+            <column name="name" value="PDF"/>
+            <column name="description"
+                    value="PDF — межплатформенный открытый формат электронных документов, изначально разработанный фирмой Adobe Systems с использованием ряда возможностей языка PostScript. В первую очередь предназначен для представления полиграфической продукции в электронном виде"/>
+        </insert>
+        <insert tableName="book_file_type">
+            <column name="id" valueNumeric="2"/>
+            <column name="name" value="EPUB"/>
+            <column name="description"
+                    value="EPUB — открытый формат электронных версий книг с расширением .epub, разработанный Международным форумом по цифровым публикациям в 2007 году"/>
+        </insert>
+        <insert tableName="book_file_type">
+            <column name="id" valueNumeric="3"/>
+            <column name="name" value="FB2"/>
+            <column name="description"
+                    value="FB2 — формат представления электронных версий книг в виде XML-документов, где каждый элемент книги описывается своими тегами. Стандарт призван обеспечить совместимость с любыми устройствами и форматами."/>
+        </insert>
+        <sql>
+            WITH book_ids AS (SELECT generate_series(1, 1000) AS i),
+            inserted_fb2 AS (INSERT INTO book_file (hash, path, type_id, book_id) SELECT gen_random_uuid()::varchar, 'test_book.fb2', 3, book_ids.i FROM book_ids),
+            inserted_epub AS (INSERT INTO book_file (hash, path, type_id, book_id) SELECT gen_random_uuid()::varchar, 'test_book.epub', 2, book_ids.i FROM book_ids)
+            INSERT INTO book_file (hash, path, type_id, book_id) SELECT gen_random_uuid()::varchar, 'test_book.pdf', 1, book_ids.i FROM book_ids;
+        </sql>
+    </changeSet>
+</databaseChangeLog>
