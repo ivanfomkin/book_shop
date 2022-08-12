@@ -1,0 +1,96 @@
+server:
+  port: 8005
+spring:
+  profiles:
+    active: prod
+  datasource:
+    url: jdbc:postgresql://195.161.114.18:5433/book_shop
+    username: ENC(OpuZGf7wYLn03ZMaMVdeoL1Ah7UJPVCY)
+    password: ENC(2JlOwOCRGKWHlZ4NqARaq10BXCd/jHUeqDNyNXz/B0o=)
+  messages:
+    basename: lang.messages
+  web:
+    resources:
+      static-locations: classpath:/spring-frontend/
+  thymeleaf:
+    prefix: classpath:/spring-frontend/
+  jpa:
+    hibernate:
+      ddl-auto: validate
+  liquibase:
+    change-log: classpath:db/changelog/master-changelog.xml
+    enabled: true
+  security:
+    oauth2:
+      client:
+        registration:
+          github:
+            client-id: ENC(IpnHRekKmEcn3Lb5G/uW0z9OktvtUEv5nCtmKlr6xFQ=)
+            client-secret: ENC(7NhI7bsN7oRz7ht0v/R7jOdBzHb1DhYRynk2ufiETSU0dtta5NRrgsxFRFFNHvA6I3+4iGVvW18=)
+          google:
+            client-id: ENC(eAlnv9JuWdJ7nJVnuRoxbRvxDnh0kr81y6zCzH3/YJEHwY5QtHPSDDynxAAutvIBYouJSw7WH9h/aSkj+EzptwMTH2zT8KlKgWRWUm/ZvtE=)
+            client-secret: ENC(KbYqwaR0cxF+v8Zx4kcz3zM3e9FKVfJoRr136j28qDgvPRLwuLxNgK4NkCreSbfF)
+  main:
+    allow-circular-references: true
+  mail:
+    host: smtp.mail.ru
+    password: ENC(67kP748goyonCSjrbO/EHeZeSk5xfXS2ArYYpHZ3xCM=)
+    port: 465
+    protocol: smtp
+    username: ENC(wqGgEEBlVBboHYlkd1GN+hIMGvvHp+Endchg4Hc6wdE=)
+    test-connection: true
+    properties:
+      mail:
+        debug: false
+        transport:
+          protocol: smtps
+        smtp:
+          ssl:
+            enable: true
+          starttls:
+            enable: true
+          auth: true
+  boot:
+    admin:
+      client:
+        url: http://195.161.114.18:8099/
+  application:
+    name: bookshop
+bookshop:
+  host: 195.161.114.18:8005
+  payments:
+    robokassa:
+      passwords:
+        first: ENC(BZFTbQhCH+EZcAMAGKQvsQ59uLqVMvkqUk4jUCmEyb4=)
+        second: ENC(e8PL55enjy7H6daMFqHWgDubC8ZobeWRp17C2oK5y+w=)
+      merchant:
+        login: ENC(ltT6teB/mGgbv1Dv4GzsIZAECpQDSt87)
+  call:
+    expiration: 5
+    sms.ru:
+      token: ENC(4+wPptP0hbJe1tawDOVtjlE/Nr6Ejo6MqPTNTzf+eQM6LxwShrKTAlFVk9hz+5+l)
+  auth:
+    secret: ENC(XerjY39wf1l2nTKh5yXZ0nvBOLqpEIIk)
+    blacklist:
+      delete:
+        cron: '0 0 */3 * * *'
+  review:
+    min-size: 30
+  upload:
+    path: /uploads/
+  download:
+    path: /books/
+jasypt:
+  encryptor:
+    bean: encryptorBean
+logging:
+  level:
+    com.github.ivanfomkin.bookshop: info
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: '*'

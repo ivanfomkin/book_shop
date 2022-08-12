@@ -5,53 +5,23 @@ services:
     restart: always
     ports:
       - "5433:5432"
+    volumes:
+      - ./postgres/data:/var/lib/postgres/data
     environment:
       POSTGRES_PASSWORD: myRandomPassword
       POSTGRES_USER: book_shop_admin
       POSTGRES_DB: book_shop
-  sonarqube:
-    image: sonarqube
+  bookshop:
     restart: always
-    container_name: sonarqube
-    depends_on:
-      - sonar_postgres
-    ports:
-      - "9000:9000"
-    networks:
-      - tools
-    environment:
-      SONAR_JDBC_URL: jdbc:postgresql://postgres:5432/sonar
-      SONAR_JDBC_USERNAME: sonar
-      SONAR_JDBC_PASSWORD: sonar
+    image: azul/zulu-openjdk-alpine:17-jre
     volumes:
-      - ./sonarqube/sonarqube_data:/opt/sonarqube/data
-      - ./sonarqube/sonarqube_extensions:/opt/sonarqube/extensions
-      - ./sonarqube/sonarqube_logs:/opt/sonarqube/logs
-      - ./sonarqube/sonarqube_temp:/opt/sonarqube/temp
-  sonar_postgres:
-    image: postgres
-    restart: always
-    container_name: postgres
-    environment:
-      POSTGRES_DB: sonar
-      POSTGRES_USER: sonar
-      POSTGRES_PASSWORD: sonar
+      - ./:/app
+    working_dir: /app
+    command: java -jar bookshop-1.0.jar --spring.profiles.active=prod
     ports:
-      - "5434:5432"
-    networks:
-      - tools
-    volumes:
-      - ./postgres/data:/var/lib/postgres/data
-    healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -U sonar" ]
-      interval: 10s
-      timeout: 5s
-      retries: 5
+      - "8005:8005"
   spring-admin:
     image: ifomkin/bookshopadmin
     restart: always
     ports:
       - "8099:8080"
-networks:
-  tools:
-    driver: bridge

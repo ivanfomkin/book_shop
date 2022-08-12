@@ -32,7 +32,7 @@ public class JwtBlacklistServiceImpl implements JwtBlacklistService {
         }
     }
 
-    @Scheduled(cron = "${bookshop.auth.blacklist.delete.crone}")
+    @Scheduled(cron = "${bookshop.auth.blacklist.delete.cron}")
     @Override
     public void deleteExpiredTokens() {
         int tokenCount = jwtBlackListRepository.deleteExpiredTokens();
