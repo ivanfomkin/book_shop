@@ -53,7 +53,7 @@ bookshop:
     secret: ENC(XerjY39wf1l2nTKh5yXZ0nvBOLqpEIIk)
     blacklist:
       delete:
-        crone: '0 0 */3 * * *'
+        cron: '0 0 */3 * * *'
   review:
     min-size: 30
   upload:
