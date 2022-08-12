@@ -2,6 +2,7 @@ package com.github.ivanfomkin.bookshop.service.impl;
 
 import com.github.ivanfomkin.bookshop.dto.author.AuthorElementDto;
 import com.github.ivanfomkin.bookshop.entity.author.AuthorEntity;
+import com.github.ivanfomkin.bookshop.exception.NotFoundException;
 import com.github.ivanfomkin.bookshop.repository.AuthorRepository;
 import com.github.ivanfomkin.bookshop.service.AuthorService;
 import lombok.extern.slf4j.Slf4j;
@@ -29,7 +30,7 @@ public class AuthorServiceJpaImpl implements AuthorService {
 
     @Override
     public AuthorEntity getAuthorBySlug(String slug) {
-        return authorRepository.findAuthorEntityBySlug(slug);
+        return authorRepository.findAuthorEntityBySlug(slug).orElseThrow(NotFoundException::new);
     }
 
     @Override

@@ -1,32 +1,17 @@
 package com.github.ivanfomkin.bookshop.config;
 
-import com.zaxxer.hikari.HikariConfig;
-import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.boot.test.context.TestConfiguration;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Primary;
-import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.containers.wait.strategy.Wait;
 
-import javax.sql.DataSource;
-
 @TestConfiguration
 public class TestContainersConfig {
+    private static final PostgreSQLContainer<?> postgreSQLContainer = new PostgreSQLContainer<>(PostgreSQLContainer.IMAGE).waitingFor(Wait.forListeningPort());
 
-    @Bean(initMethod = "start", destroyMethod = "stop")
-    public JdbcDatabaseContainer<?> jdbcDatabaseContainer() {
-        return new PostgreSQLContainer<>(PostgreSQLContainer.IMAGE)
-                .waitingFor(Wait.forListeningPort());
-    }
-
-    @Bean
-    @Primary
-    public DataSource dataSource(JdbcDatabaseContainer<?> jdbcDatabaseContainer) {
-        var hikariConfig = new HikariConfig();
-        hikariConfig.setJdbcUrl(jdbcDatabaseContainer.getJdbcUrl());
-        hikariConfig.setUsername(jdbcDatabaseContainer.getUsername());
-        hikariConfig.setPassword(jdbcDatabaseContainer.getPassword());
-        return new HikariDataSource(hikariConfig);
+    static {
+        postgreSQLContainer.start();
+        System.setProperty("spring.datasource.url", postgreSQLContainer.getJdbcUrl());
+        System.setProperty("spring.datasource.password", postgreSQLContainer.getPassword());
+        System.setProperty("spring.datasource.username", postgreSQLContainer.getUsername());
     }
 }

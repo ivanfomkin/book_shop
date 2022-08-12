@@ -30,6 +30,13 @@ public class BookShopNavigationPage {
         return this;
     }
 
+    public BookShopNavigationPage clearFromDataField() throws InterruptedException {
+        WebElement fromDataField = getElementById("fromdaterecent");
+        fromDataField.clear();
+        Thread.sleep(1000);
+        return this;
+    }
+
     public BookShopNavigationPage callSecondBookPage() {
         List<WebElement> carTitles = getElementsByClassName("Card-title");
         carTitles.get(1).click();

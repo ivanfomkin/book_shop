@@ -123,7 +123,7 @@ class CartRestControllerTest extends AbstractTest {
     @WithUserDetails("test@user.ru")
     void changeBookStatus_addBookToCardWithAuthorizedUserWhenBookAlreadyExistInUserCart_book2UserRepoContainsCartRowOnce() throws Exception {
         changeBookStatusDto.setStatus(cartType);
-        var bookEntity = bookRepository.findBookEntityBySlug(bookSlug);
+        var bookEntity = bookRepository.findBookEntityBySlug(bookSlug).get();
         var currentUser = userRepository.findUserEntityByContacts_contact("test@user.ru");
         var alreadyExistCartEntity = new Book2UserEntity();
         alreadyExistCartEntity.setBookId(bookEntity.getId());
@@ -151,7 +151,7 @@ class CartRestControllerTest extends AbstractTest {
     @WithUserDetails("test@user.ru")
     void changeBookStatus_deleteBookFromCartWithAuthorizedUserWhenBookExistsInCart_book2userRepositoryDoesNotContainsRow() throws Exception {
         changeBookStatusDto.setStatus(deleteFromCartType);
-        var bookEntity = bookRepository.findBookEntityBySlug(bookSlug);
+        var bookEntity = bookRepository.findBookEntityBySlug(bookSlug).get();
         var currentUser = userRepository.findUserEntityByContacts_contact("test@user.ru");
         var alreadyExistCartEntity = new Book2UserEntity();
         alreadyExistCartEntity.setBookId(bookEntity.getId());

@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface BookRepository extends JpaRepository<BookEntity, Integer> {
@@ -56,7 +57,7 @@ public interface BookRepository extends JpaRepository<BookEntity, Integer> {
             """)
     Page<BookEntity> findBookEntityByAuthorsSlug(String authorSlug, Pageable pageable);
 
-    BookEntity findBookEntityBySlug(String slug);
+    Optional<BookEntity> findBookEntityBySlug(String slug);
 
     @Modifying
     @Transactional

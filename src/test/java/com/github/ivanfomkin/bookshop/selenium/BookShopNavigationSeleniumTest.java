@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class BookShopNavigationSeleniumTest extends AbstractSeleniumTest {
 
     @Test
-    void testBookShopNavigation() {
+    void testBookShopNavigation() throws InterruptedException {
         var navigation = new BookShopNavigationPage(driver, "http://localhost:8085");
         navigation.callMainPage();
         assertTrue(driver.getPageSource().contains("BOOKSHOP"));
@@ -24,6 +24,7 @@ class BookShopNavigationSeleniumTest extends AbstractSeleniumTest {
         navigation.callRecentBooksPageFromMenu();
         assertTrue(driver.getPageSource().contains("Новинки"));
 
+        navigation.clearFromDataField();
         navigation.callFirstBookPage();
         assertTrue(driver.getPageSource().contains("Оцените книгу:"));
 

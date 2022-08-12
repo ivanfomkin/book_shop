@@ -1,6 +1,7 @@
 package com.github.ivanfomkin.bookshop.service.impl;
 
 import com.github.ivanfomkin.bookshop.entity.genre.GenreEntity;
+import com.github.ivanfomkin.bookshop.exception.NotFoundException;
 import com.github.ivanfomkin.bookshop.repository.GenreRepository;
 import com.github.ivanfomkin.bookshop.service.GenreService;
 import org.springframework.cache.annotation.Cacheable;
@@ -25,6 +26,6 @@ public class GenreServiceImpl implements GenreService {
     @Cacheable(value = "genreBySlug", key = "#slug")
     @Override
     public GenreEntity getGenreBySlug(String slug) {
-        return genreRepository.findGenreEntityBySlug(slug);
+        return genreRepository.findGenreEntityBySlug(slug).orElseThrow(NotFoundException::new);
     }
 }

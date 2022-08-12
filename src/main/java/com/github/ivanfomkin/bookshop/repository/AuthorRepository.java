@@ -4,7 +4,9 @@ import com.github.ivanfomkin.bookshop.entity.author.AuthorEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface AuthorRepository extends JpaRepository<AuthorEntity, Integer> {
-    AuthorEntity findAuthorEntityBySlug(String slug);
+    Optional<AuthorEntity> findAuthorEntityBySlug(String slug);
 }

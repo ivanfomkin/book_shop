@@ -11,6 +11,7 @@ import com.github.ivanfomkin.bookshop.entity.enums.Book2UserType;
 import com.github.ivanfomkin.bookshop.entity.genre.GenreEntity;
 import com.github.ivanfomkin.bookshop.entity.tag.TagEntity;
 import com.github.ivanfomkin.bookshop.entity.user.UserEntity;
+import com.github.ivanfomkin.bookshop.exception.NotFoundException;
 import com.github.ivanfomkin.bookshop.repository.Book2UserRepository;
 import com.github.ivanfomkin.bookshop.repository.BookRepository;
 import com.github.ivanfomkin.bookshop.service.*;
@@ -188,7 +189,8 @@ public class BookServiceJpaImpl implements BookService {
 
     @Override
     public BookSlugDto getBookSlugDtoBySlug(UserEntity currentUser, String slug, String cartCookie, String keptCookie) {
-        BookSlugDto bookSlugDto = convertSingleBookEntityToBookSlugDto(bookRepository.findBookEntityBySlug(slug));
+        var bookEntity = bookRepository.findBookEntityBySlug(slug).orElseThrow(NotFoundException::new);
+        BookSlugDto bookSlugDto = convertSingleBookEntityToBookSlugDto(bookEntity);
         if (currentUser != null) {
             Book2UserType book2userType = book2UserRepository.findBook2UserTypeByUserAndSlug(currentUser, slug);
             if (book2userType != null) {
@@ -223,7 +225,7 @@ public class BookServiceJpaImpl implements BookService {
 
     @Override
     public BookEntity getBookEntityBySlug(String slug) {
-        return bookRepository.findBookEntityBySlug(slug);
+        return bookRepository.findBookEntityBySlug(slug).orElseThrow(NotFoundException::new);
     }
 
     private LocalDate parseToDate(String stringDate) {
