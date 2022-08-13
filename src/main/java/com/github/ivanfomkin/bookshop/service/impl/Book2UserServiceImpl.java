@@ -11,6 +11,8 @@ import com.github.ivanfomkin.bookshop.service.Book2UserService;
 import com.github.ivanfomkin.bookshop.service.BookService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class Book2UserServiceImpl implements Book2UserService {
     private final BookService bookService;
@@ -77,5 +79,10 @@ public class Book2UserServiceImpl implements Book2UserService {
     @Override
     public int getKeptAmount(UserEntity user) {
         return book2UserRepository.countBooksByUserAndStatus(user, Book2UserType.KEPT);
+    }
+
+    @Override
+    public int getMyBookAmount(UserEntity user) {
+        return book2UserRepository.countBooksByUserAndStatusIn(user, List.of(Book2UserType.PAID, Book2UserType.ARCHIVED));
     }
 }

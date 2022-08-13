@@ -10,6 +10,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Repository
 public interface Book2UserRepository extends JpaRepository<Book2UserEntity, Integer> {
     @Modifying
@@ -24,6 +26,9 @@ public interface Book2UserRepository extends JpaRepository<Book2UserEntity, Inte
 
     @Query("SELECT count(b2u) FROM Book2UserEntity b2u JOIN UserEntity u ON u.id = b2u.userId JOIN Book2UserTypeEntity b2ut ON b2ut.id = b2u.typeId WHERE u = :user AND b2ut.name = :type")
     int countBooksByUserAndStatus(UserEntity user, Book2UserType type);
+
+    @Query("SELECT count(b2u) FROM Book2UserEntity b2u JOIN UserEntity u ON u.id = b2u.userId JOIN Book2UserTypeEntity b2ut ON b2ut.id = b2u.typeId WHERE u = :user AND b2ut.name IN :types")
+    int countBooksByUserAndStatusIn(UserEntity user, List<Book2UserType> types);
 
     @Query("SELECT b2u from Book2UserEntity b2u JOIN UserEntity u ON u.id = b2u.userId JOIN BookEntity b ON b.id = b2u.bookId where u = :user AND b.slug = :slug")
     Book2UserEntity findBookStatusByUserAndSlug(UserEntity user, String slug);

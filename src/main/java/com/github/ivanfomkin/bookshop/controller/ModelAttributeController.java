@@ -28,6 +28,12 @@ public class ModelAttributeController {
         return currentUser == null ? cookieService.getCookieSize(cookieKept) : book2UserService.getKeptAmount(currentUser);
     }
 
+    @ModelAttribute("myBookAmount")
+    public int myBookAmount() {
+        UserEntity currentUser = userService.getCurrentUser();
+        return currentUser == null ? 0 : book2UserService.getMyBookAmount(currentUser);
+    }
+
     @ModelAttribute("userStatus")
     public String userStatus() {
         return userService.getCurrentUser() == null ? "unauthorized" : "authorized";

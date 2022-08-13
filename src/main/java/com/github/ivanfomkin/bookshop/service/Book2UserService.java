@@ -12,4 +12,6 @@ public interface Book2UserService {
     int getCartAmount(UserEntity user);
 
     int getKeptAmount(UserEntity user);
+
+    int getMyBookAmount(UserEntity user);
 }
