@@ -7,6 +7,6 @@ import lombok.Data;
 @Data
 public class ChangeBookStatusRequestDto {
     @JsonProperty("booksIds")
-    private String slug;
+    private String slugs;
     private Book2UserType status;
 }

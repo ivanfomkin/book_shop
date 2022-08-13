@@ -19,6 +19,8 @@ import org.springframework.test.context.jdbc.Sql;
 
 import javax.servlet.http.Cookie;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.cookie;
@@ -57,7 +59,7 @@ class CartRestControllerTest extends AbstractTest {
         cartType = Book2UserType.CART;
         deleteFromCartType = Book2UserType.UNLINK;
         changeBookStatusDto = new ChangeBookStatusRequestDto();
-        changeBookStatusDto.setSlug(bookSlug);
+        changeBookStatusDto.setSlugs(bookSlug);
     }
 
     @AfterEach

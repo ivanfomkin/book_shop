@@ -31,18 +31,25 @@ public class CookieServiceImpl implements CookieService {
     public void changeBookStatus(Cookie[] cookies, HttpServletResponse response, ChangeBookStatusRequestDto dto) {
         var cartCookie = getCookieByName(cookies, CART_COOKIE_NAME);
         var keptCookie = getCookieByName(cookies, KEPT_COOKIE_NAME);
+        var slugs = dto.getSlugs().split(",");
         switch (dto.getStatus()) {
             case CART -> {
-                addBookToCookie(dto.getSlug(), cartCookie);
-                removeBookFromCookie(dto.getSlug(), keptCookie);
+                for (String slug : slugs) {
+                    addBookToCookie(slug, cartCookie);
+                    removeBookFromCookie(slug, keptCookie);
+                }
             }
             case KEPT -> {
-                addBookToCookie(dto.getSlug(), keptCookie);
-                removeBookFromCookie(dto.getSlug(), cartCookie);
+                for (String slug : slugs) {
+                    addBookToCookie(slug, keptCookie);
+                    removeBookFromCookie(slug, cartCookie);
+                }
             }
             case UNLINK -> {
-                removeBookFromCookie(dto.getSlug(), cartCookie);
-                removeBookFromCookie(dto.getSlug(), keptCookie);
+                for (String slug : slugs) {
+                    removeBookFromCookie(slug, cartCookie);
+                    removeBookFromCookie(slug, keptCookie);
+                }
             }
             default ->
                     throw new NotImplementedException(MessageFormatter.format("Status change for {} not implemented", dto.getStatus()).getMessage());

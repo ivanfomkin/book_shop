@@ -27,7 +27,10 @@ public class CartRestController {
     public CommonResultDto changeBookStatus(@RequestBody ChangeBookStatusRequestDto dto, HttpServletRequest request, HttpServletResponse response) {
         UserEntity currentUser = userService.getCurrentUser();
         if (currentUser != null) {
-            book2UserService.changeBookStatus(currentUser, dto.getSlug(), dto.getStatus());
+            var slugs = dto.getSlugs().split(",");
+            for (String slug : slugs) {
+                book2UserService.changeBookStatus(currentUser, slug, dto.getStatus());
+            }
         } else {
             cookieService.changeBookStatus(request.getCookies(), response, dto);
         }

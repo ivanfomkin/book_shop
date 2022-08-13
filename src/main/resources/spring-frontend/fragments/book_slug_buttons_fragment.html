@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <div th:fragment="panel">
-    <div class="ProductCard-cart">
+    <div class="ProductCard-cart" th:unless="${book.status eq 'PAID' or book.status eq 'ARCHIVED'}">
         <div class="ProductCard-cartElement">
             <button class="btn btn_primary btn_outline" data-sendstatus="KEPT" data-bookid="[1111]"
                     th:attr="data-bookid = ${book.slug}"

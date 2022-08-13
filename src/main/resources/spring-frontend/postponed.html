@@ -106,6 +106,7 @@
                     </div>
                     <div class="Cart-block">
                         <button class="btn btn_success btn_md Cart-buyAll" data-sendstatus="CART"
+                                th:attr="data-bookid=${#strings.listJoin(books.![slug], ',')}"
                                 data-bookid="[1111, 1122, 1133]">Купить все
                         </button>
                     </div>
