@@ -58,6 +58,9 @@ spring:
     name: bookshop
 bookshop:
   host: 195.161.114.18:8005
+  books:
+    recent:
+      days: 3
   payments:
     robokassa:
       passwords:

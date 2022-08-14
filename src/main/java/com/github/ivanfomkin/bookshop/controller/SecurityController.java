@@ -57,6 +57,12 @@ public class SecurityController extends ModelAttributeController {
         return "myarchive";
     }
 
+    @GetMapping("/myviewed")
+    public String myViewed(Model model) {
+        model.addAttribute("bookList", bookService.getRecentViewedBooksByCurrentUser());
+        return "myviewed";
+    }
+
     @GetMapping("/profile")
     public String profile(Model model) {
         model.addAttribute("userPage", userService.getUserPageDto());

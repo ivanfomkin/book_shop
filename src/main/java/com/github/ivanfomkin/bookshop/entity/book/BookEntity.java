@@ -1,6 +1,7 @@
 package com.github.ivanfomkin.bookshop.entity.book;
 
 import com.github.ivanfomkin.bookshop.entity.author.AuthorEntity;
+import com.github.ivanfomkin.bookshop.entity.book.bookview.BookViewHistoryEntity;
 import com.github.ivanfomkin.bookshop.entity.book.file.BookFileEntity;
 import com.github.ivanfomkin.bookshop.entity.book.review.BookReviewEntity;
 import com.github.ivanfomkin.bookshop.entity.book.review.BookVoteEntity;
@@ -73,4 +74,7 @@ public class BookEntity implements Serializable {
 
     @OneToMany(mappedBy = "book")
     private List<BookReviewEntity> reviews;
+
+    @OneToMany(mappedBy = "bookViewHistoryId.book")
+    private List<BookViewHistoryEntity> viewHistory;
 }

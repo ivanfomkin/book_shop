@@ -35,19 +35,21 @@ public class BookServiceJpaImpl implements BookService {
     private final CookieService cookieService;
     private final BookRepository bookRepository;
     private final AuthorService authorService;
-    private final DateTimeFormatter dateTimeFormatter;
     private final BookVoteService bookVoteService;
     private final BookReviewService bookReviewService;
+    private final DateTimeFormatter dateTimeFormatter;
     private final Book2UserRepository book2UserRepository;
+    private final BookViewHistoryService bookViewHistoryService;
 
     private final LocalDate minLocalDate;
     private final LocalDate maxLocalDate;
 
     private final MessageSource messageSource;
 
-    public BookServiceJpaImpl(UserService userService, CookieService cookieService, BookRepository bookRepository, AuthorService authorService, BookVoteService bookVoteService, BookReviewService bookReviewService, Book2UserRepository book2UserRepository, MessageSource messageSource) {
+    public BookServiceJpaImpl(UserService userService, CookieService cookieService, BookRepository bookRepository, AuthorService authorService, BookVoteService bookVoteService, BookReviewService bookReviewService, Book2UserRepository book2UserRepository, BookViewHistoryService bookViewHistoryService, MessageSource messageSource) {
         this.userService = userService;
         this.authorService = authorService;
+        this.bookViewHistoryService = bookViewHistoryService;
         this.messageSource = messageSource;
         this.cookieService = cookieService;
         this.bookRepository = bookRepository;
@@ -57,6 +59,17 @@ public class BookServiceJpaImpl implements BookService {
         dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         minLocalDate = LocalDate.of(1000, 1, 1);
         maxLocalDate = LocalDate.of(3000, 12, 31);
+    }
+
+    @Override
+    public BookListDto getRecentViewedBooksByCurrentUser() {
+        var currentUser = userService.getCurrentUser();
+        var recentViewedBooks = bookViewHistoryService.findRecentBooksViewByUser(currentUser);
+        var dtoList = recentViewedBooks.stream().map(this::convertSingleBookEntityToBookListElementDto).toList();
+        BookListDto dto = new BookListDto();
+        dto.setCount(dtoList.size());
+        dto.setBooks(dtoList);
+        return addStatusesToAllBooks(dto, currentUser);
     }
 
     @Override
@@ -192,6 +205,7 @@ public class BookServiceJpaImpl implements BookService {
         var bookEntity = bookRepository.findBookEntityBySlug(slug).orElseThrow(NotFoundException::new);
         BookSlugDto bookSlugDto = convertSingleBookEntityToBookSlugDto(bookEntity);
         if (currentUser != null) {
+            bookViewHistoryService.saveBookView(currentUser, bookEntity);
             Book2UserType book2userType = book2UserRepository.findBook2UserTypeByUserAndSlug(currentUser, slug);
             if (book2userType != null) {
                 bookSlugDto.setStatus(book2userType.toString());

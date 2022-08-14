@@ -56,6 +56,9 @@ spring:
     name: bookshop
 bookshop:
   host: localhost:8085
+  books:
+    recent:
+      days: 3
   payments:
     robokassa:
       passwords:
