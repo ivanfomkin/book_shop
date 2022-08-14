@@ -1,7 +1,9 @@
-package com.github.ivanfomkin.bookshop.entity.book.review;
+package com.github.ivanfomkin.bookshop.entity.other;
 
+import com.github.ivanfomkin.bookshop.entity.user.UserEntity;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -17,11 +19,12 @@ public class MessageEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @CreationTimestamp
     @Column(columnDefinition = "TIMESTAMP NOT NULL")
     private LocalDateTime time;
 
-    @Column(columnDefinition = "INT")
-    private Integer userId;
+    @ManyToOne
+    private UserEntity user;
 
     @Column(columnDefinition = "VARCHAR(255)")
     private String email;

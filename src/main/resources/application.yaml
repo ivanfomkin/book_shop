@@ -56,6 +56,8 @@ spring:
     name: bookshop
 bookshop:
   host: localhost:8085
+  support:
+    email: test@test.ru
   payments:
     robokassa:
       passwords:

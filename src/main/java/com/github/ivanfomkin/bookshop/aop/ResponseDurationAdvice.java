@@ -26,9 +26,10 @@ public class ResponseDurationAdvice {
             returnedValue = joinPoint.proceed();
         } catch (Throwable e) {
             throwable = e;
+        } finally {
+            var stopTime = System.currentTimeMillis();
+            log.debug("Method {} execution time is {} ms", joinPoint.getSignature().getName(), stopTime - startTime);
         }
-        var stopTime = System.currentTimeMillis();
-        log.debug("Method {} execution time is {} ms", joinPoint.getSignature().getName(), stopTime - startTime);
 
         if (throwable != null) {
             throw throwable;

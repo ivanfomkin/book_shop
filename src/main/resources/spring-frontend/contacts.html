@@ -42,7 +42,7 @@
                         </div>
                         <div class="Contacts-prop">
                             <strong class="Contacts-propTitle">E-mail:
-                            </strong><span class="Contacts-propContent">test@test.ru</span>
+                            </strong><span class="Contacts-propContent" th:text="${@environment.getProperty('bookshop.support.email')}">test@test.ru</span>
                         </div>
                         <div class="Contacts-prop">
                             <strong class="Contacts-propTitle">Телеграм-бот:
