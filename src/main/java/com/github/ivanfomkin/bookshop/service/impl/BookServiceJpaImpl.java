@@ -75,6 +75,18 @@ public class BookServiceJpaImpl implements BookService {
         return applyStatusesToBookListDto(bookListDto, cartCookie, keptCookie, currentUser);
     }
 
+    @Override
+    public BookListDto getPageableAllBooks(Pageable pageable, String searchQuery) {
+        Page<BookEntity> bookEntityPage;
+        if (searchQuery == null || searchQuery.isBlank()) {
+            bookEntityPage = bookRepository.findAll(pageable);
+        } else {
+            bookEntityPage = bookRepository.findBookEntitiesByTitleContainingIgnoreCase(pageable, searchQuery);
+        }
+        var bookListDto = createBookListDtoFromPage(bookEntityPage);
+        return applyStatusesToBookListDto(bookListDto, "", "", null);
+    }
+
     private BookListDto applyStatusesToBookListDto(BookListDto bookListDto, String cartCookie, String keptCookie, UserEntity currentUser) {
         if (currentUser == null) {
             return addStatusesToAllBooks(bookListDto, cartCookie, keptCookie);
@@ -131,7 +143,7 @@ public class BookServiceJpaImpl implements BookService {
         var userBooks = bookRepository.findBookEntitiesByUserAndType(currentUser, type);
         var dtoList = userBooks.stream().map(this::convertSingleBookEntityToBookListElementDto).toList();
         BookListDto dto = new BookListDto();
-        dto.setCount(dtoList.size());
+        dto.setTotal(dtoList.size());
         dto.setBooks(dtoList);
         return addStatusesToAllBooks(dto, currentUser);
     }
@@ -238,8 +250,10 @@ public class BookServiceJpaImpl implements BookService {
 
     private BookListDto createBookListDtoFromPage(Page<BookEntity> bookEntityPage) {
         BookListDto dto = new BookListDto();
-        dto.setCount(bookEntityPage.getTotalElements());
+        dto.setTotal(bookEntityPage.getTotalElements());
         dto.setBooks(convertManyBookEntityToBookDto(bookEntityPage.getContent()));
+        dto.setPerPage(bookEntityPage.getSize());
+        dto.setPage(bookEntityPage.getNumber());
         return dto;
     }
 

@@ -7,11 +7,13 @@ import com.github.ivanfomkin.bookshop.entity.book.BookEntity;
 import com.github.ivanfomkin.bookshop.entity.enums.Book2UserType;
 import com.github.ivanfomkin.bookshop.entity.genre.GenreEntity;
 import com.github.ivanfomkin.bookshop.entity.user.UserEntity;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
 public interface BookService {
     BookListDto getPageableRecommendedBooks(int offset, int limit, String cartCookie, String keptCookie);
+    BookListDto getPageableAllBooks(Pageable pageable, String searchQuery);
 
     BookListDto getPageablePopularBooks(int offset, int limit, String cartCookie, String keptCookie);
 

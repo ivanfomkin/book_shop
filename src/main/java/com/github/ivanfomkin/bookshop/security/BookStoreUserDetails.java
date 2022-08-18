@@ -1,9 +1,7 @@
 package com.github.ivanfomkin.bookshop.security;
 
-import com.github.ivanfomkin.bookshop.entity.enums.ContactType;
 import com.github.ivanfomkin.bookshop.entity.user.UserEntity;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
@@ -15,7 +13,7 @@ public class BookStoreUserDetails implements UserDetails {
     private final String username;
 
     public BookStoreUserDetails(UserEntity user) {
-        this.authorities = List.of(new SimpleGrantedAuthority("ROLE_USER"));
+        this.authorities = user.getRoles();
         this.password = user.getPassword();
         this.username = user.getEmail().getContact();
     }

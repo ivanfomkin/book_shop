@@ -8,15 +8,18 @@ import com.github.ivanfomkin.bookshop.dto.user.UserDto;
 import com.github.ivanfomkin.bookshop.dto.user.UserPageDto;
 import com.github.ivanfomkin.bookshop.entity.enums.ContactType;
 import com.github.ivanfomkin.bookshop.entity.enums.TransactionType;
+import com.github.ivanfomkin.bookshop.entity.enums.UserRole;
 import com.github.ivanfomkin.bookshop.entity.user.ChangeUserDataEntity;
 import com.github.ivanfomkin.bookshop.entity.user.UserContactEntity;
 import com.github.ivanfomkin.bookshop.entity.user.UserEntity;
+import com.github.ivanfomkin.bookshop.entity.user.UserRoleEntity;
 import com.github.ivanfomkin.bookshop.exception.ChangeUserDataException;
 import com.github.ivanfomkin.bookshop.exception.InsufficientFundsException;
 import com.github.ivanfomkin.bookshop.exception.PasswordsDidNotMatchException;
 import com.github.ivanfomkin.bookshop.exception.SimplePasswordException;
 import com.github.ivanfomkin.bookshop.repository.UserContactRepository;
 import com.github.ivanfomkin.bookshop.repository.UserRepository;
+import com.github.ivanfomkin.bookshop.repository.UserRoleRepository;
 import com.github.ivanfomkin.bookshop.security.BookStorePhoneUserDetails;
 import com.github.ivanfomkin.bookshop.security.BookStoreUserDetails;
 import com.github.ivanfomkin.bookshop.security.BookStoreUserDetailsService;
@@ -48,6 +51,7 @@ public class UserServiceImpl implements UserService {
     private final MessageSource messageSource;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final UserRoleRepository userRoleRepository;
     private final EmailMessageService emailMessageService;
     private final AuthenticationManager authenticationManager;
     private final ChangeUserDataService changeUserDataService;
@@ -56,11 +60,12 @@ public class UserServiceImpl implements UserService {
 
     private static final String LOGIN_ERROR = "Неверное имя пользователя или пароль";
 
-    public UserServiceImpl(JWTUtil jwtUtil, MessageSource messageSource, UserRepository userRepository, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, EmailMessageService emailMessageService, ChangeUserDataService changeUserDataService, UserContactRepository userContactRepository, BookStoreUserDetailsService userDetailsService) {
+    public UserServiceImpl(JWTUtil jwtUtil, MessageSource messageSource, UserRepository userRepository, PasswordEncoder passwordEncoder, UserRoleRepository userRoleRepository, AuthenticationManager authenticationManager, EmailMessageService emailMessageService, ChangeUserDataService changeUserDataService, UserContactRepository userContactRepository, BookStoreUserDetailsService userDetailsService) {
         this.jwtUtil = jwtUtil;
         this.messageSource = messageSource;
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.userRoleRepository = userRoleRepository;
         this.userDetailsService = userDetailsService;
         this.emailMessageService = emailMessageService;
         this.changeUserDataService = changeUserDataService;
@@ -79,12 +84,13 @@ public class UserServiceImpl implements UserService {
             contactList.add(CommonUtils.formatPhoneNumber(formDto.getPhone()));
         }
         if (userRepository.countAllByContacts_contactIn(contactList) < 1) {
-            UserEntity user = new UserEntity();
+            var user = new UserEntity();
             user.setHash(UUID.randomUUID().toString());
             user.setName(formDto.getName());
             user.setPassword(passwordEncoder.encode(formDto.getPassword()));
             userRepository.save(user);
             user.setContacts(saveContacts(formDto, user));
+            createDefaultUserRole(user);
             return user;
         } else {
             return null;
@@ -93,12 +99,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserEntity registerOAuthUser(Map<String, Object> attributes, String authorizedClientRegistrationId) {
-        return switch (authorizedClientRegistrationId) {
+        var user = switch (authorizedClientRegistrationId) {
             case "github" -> saveGitHubUser(attributes);
             case "google" -> saveGoogleUser(attributes);
             default ->
                     throw new IllegalArgumentException(MessageFormatter.format("Unsupported oauth2 provider: {}", authorizedClientRegistrationId).getMessage());
         };
+        createDefaultUserRole(user);
+        return user;
     }
 
     private UserEntity saveGoogleUser(Map<String, Object> attributes) {
@@ -115,6 +123,13 @@ public class UserServiceImpl implements UserService {
         userContactRepository.save(contact);
         user.setContacts(List.of(contact));
         return user;
+    }
+
+    private void createDefaultUserRole(UserEntity user) {
+        var userRole = new UserRoleEntity();
+        userRole.setRole(UserRole.ROLE_USER);
+        userRole.setUser(user);
+        userRoleRepository.save(userRole);
     }
 
     private UserEntity saveGitHubUser(Map<String, Object> attributes) {

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <header class="Header" th:fragment="head">
     <div class="Header-rowMain">
         <div class="wrap">
@@ -63,6 +63,9 @@
                     </li>
                     <li class="menu-item" th:class="${authors}"><a class="menu-link"
                                                                    href="/authors/index.html" th:href="@{/authors}" th:text="#{topbar.authors}">Авторы</a>
+                    </li>
+                    <li sec:authorize="hasRole('ROLE_ADMIN')" class="menu-item" th:class="${admin}"><a class="menu-link"
+                                                                   href="/authors/index.html" th:href="@{/admin}" th:text="#{topbar.controlPanel}">Панель управления</a>
                     </li>
                 </ul>
             </nav>

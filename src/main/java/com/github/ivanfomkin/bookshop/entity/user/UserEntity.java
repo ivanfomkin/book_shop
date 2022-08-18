@@ -6,6 +6,8 @@ import com.github.ivanfomkin.bookshop.entity.enums.ContactType;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -51,6 +53,10 @@ public class UserEntity implements Serializable {
 
     @OneToMany(mappedBy = "user")
     private List<BookVoteEntity> userVotes;
+
+    @OneToMany(mappedBy = "user")
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<UserRoleEntity> roles;
 
     public UserContactEntity getPhone() {
         return contacts.stream().filter(c -> c.getType() == ContactType.PHONE).findFirst().orElse(null);

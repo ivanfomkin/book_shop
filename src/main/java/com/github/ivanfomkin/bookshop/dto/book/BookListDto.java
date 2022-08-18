@@ -6,6 +6,8 @@ import java.util.List;
 
 @Data
 public class BookListDto {
-    private long count;
+    private long total;
     private List<BookListElement> books;
+    private long perPage;
+    private long page;
 }
