@@ -54,6 +54,10 @@ spring:
         url: http://0.0.0.0:8099
   application:
     name: bookshop
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: on
 bookshop:
   host: localhost:8085
   support:
@@ -69,6 +73,10 @@ bookshop:
     expiration: 5
     sms.ru:
       token: ENC(4+wPptP0hbJe1tawDOVtjlE/Nr6Ejo6MqPTNTzf+eQM6LxwShrKTAlFVk9hz+5+l)
+  cloudinary:
+    cloudName: ENC(DTr6CVNVmvIkvpFmaGndbid9jGajFYbj)
+    apiKey: ENC(T4HWDFFyIiZCvOgYsun5kx1jPJHabZGs)
+    apiSecret: ENC(FP5AANqttdEBW+Skl+/wMTMYhA+D7Xwq3uNT2pwVhNWVZfEReYgOQw==)
   auth:
     secret: ENC(XerjY39wf1l2nTKh5yXZ0nvBOLqpEIIk)
     blacklist:
@@ -77,7 +85,7 @@ bookshop:
   review:
     min-size: 30
   upload:
-    path: F:\dev\spring-learn\MyBookShopApp_m3_6\uploads
+    path: uploads
   download:
     path: books
 jasypt:

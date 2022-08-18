@@ -1,6 +1,6 @@
 package com.github.ivanfomkin.bookshop.controller;
 
-import com.github.ivanfomkin.bookshop.data.ResourceStorage;
+import com.github.ivanfomkin.bookshop.service.ResourceStorageService;
 import com.github.ivanfomkin.bookshop.entity.user.UserEntity;
 import com.github.ivanfomkin.bookshop.service.*;
 import lombok.extern.slf4j.Slf4j;
@@ -22,14 +22,14 @@ public class BooksController extends ModelAttributeController {
     private final BookService bookService;
     private final UserService userService;
     private final AuthorService authorService;
-    private final ResourceStorage resourceStorage;
+    private final ResourceStorageService resourceStorageService;
 
-    public BooksController(UserService userService, Book2UserService book2UserService, CookieService cookieService, BookService bookService, UserService userService1, AuthorService authorService, ResourceStorage resourceStorage) {
+    public BooksController(UserService userService, Book2UserService book2UserService, CookieService cookieService, BookService bookService, UserService userService1, AuthorService authorService, ResourceStorageService resourceStorageService) {
         super(userService, cookieService, book2UserService);
         this.bookService = bookService;
         this.userService = userService1;
         this.authorService = authorService;
-        this.resourceStorage = resourceStorage;
+        this.resourceStorageService = resourceStorageService;
     }
 
     @GetMapping("/recent")
@@ -82,19 +82,19 @@ public class BooksController extends ModelAttributeController {
 
     @PostMapping("/{slug}/img/save")
     public String saveNewBookImage(@PathVariable String slug, @RequestParam("file") MultipartFile bookImage) throws IOException {
-        String newBookImage = resourceStorage.saveNewBookImage(bookImage, slug);
+        String newBookImage = resourceStorageService.saveNewBookImage(bookImage, slug);
         bookService.updateBookImageBySlug(slug, newBookImage);
         return "redirect:/books/" + slug;
     }
 
     @GetMapping("/download/{hash}")
     public ResponseEntity<ByteArrayResource> bookFileByHash(@PathVariable String hash) throws IOException {
-        Path path = resourceStorage.getBookPathByHash(hash);
-        byte[] data = resourceStorage.getBookFileByteArray(hash);
+        Path path = resourceStorageService.getBookPathByHash(hash);
+        byte[] data = resourceStorageService.getBookFileByteArray(hash);
         return ResponseEntity
                 .ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + path.getFileName().toString())
-                .contentType(resourceStorage.getBookFileMime(hash))
+                .contentType(resourceStorageService.getBookFileMime(hash))
                 .contentLength(data.length)
                 .body(new ByteArrayResource(data));
     }

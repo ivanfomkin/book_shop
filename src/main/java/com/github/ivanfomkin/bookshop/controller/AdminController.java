@@ -1,5 +1,6 @@
 package com.github.ivanfomkin.bookshop.controller;
 
+import com.github.ivanfomkin.bookshop.dto.book.BookEditDto;
 import com.github.ivanfomkin.bookshop.service.Book2UserService;
 import com.github.ivanfomkin.bookshop.service.BookService;
 import com.github.ivanfomkin.bookshop.service.CookieService;
@@ -9,10 +10,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+
+import java.io.IOException;
 
 @Slf4j
 @Controller
@@ -41,7 +41,14 @@ public class AdminController extends ModelAttributeController {
     }
 
     @GetMapping("/books/edit/{slug}")
-    public String editBook(Model model, @PathVariable(name = "slug") String slug) {
+    public String editBookPage(Model model, @PathVariable(name = "slug") String slug) {
+        model.addAttribute("book", bookService.getBookEditDtoBySlug(slug));
         return "admin/book_edit";
+    }
+
+    @PutMapping("/books/edit/{slug}")
+    public String editBook(@PathVariable(name = "slug") String slug, BookEditDto book) throws IOException {
+        bookService.updateBookEntity(book);
+        return "redirect:/admin/books/edit/" + book.getSlug();
     }
 }

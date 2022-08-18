@@ -56,6 +56,10 @@ spring:
         url: http://195.161.114.18:8099/
   application:
     name: bookshop
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: on
 bookshop:
   host: 195.161.114.18:8005
   support:

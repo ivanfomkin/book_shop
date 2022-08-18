@@ -3,13 +3,14 @@ package com.github.ivanfomkin.bookshop.config;
 import org.jasypt.encryption.StringEncryptor;
 import org.jasypt.encryption.pbe.PooledPBEStringEncryptor;
 import org.jasypt.encryption.pbe.config.SimpleStringPBEConfig;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class EncryptionConfig {
-    private final String password = String.copyValueOf(new char[]{105, 102, 111, 109, 107, 105, 110});
-
+    @Value("${bookshop.crypto.password}")
+    private String password;
 
     @Bean(name = "encryptorBean")
     public StringEncryptor stringEncryptor() {

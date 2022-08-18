@@ -1,6 +1,6 @@
-package com.github.ivanfomkin.bookshop.data.impl;
+package com.github.ivanfomkin.bookshop.service.impl;
 
-import com.github.ivanfomkin.bookshop.data.ResourceStorage;
+import com.github.ivanfomkin.bookshop.service.ResourceStorageService;
 import com.github.ivanfomkin.bookshop.repository.BookFileRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FilenameUtils;
@@ -18,7 +18,7 @@ import java.nio.file.Paths;
 
 @Slf4j
 @Service
-public class ResourceStorageImpl implements ResourceStorage {
+public class ResourceStorageServiceLocalFileImpl implements ResourceStorageService {
     @Value("${bookshop.upload.path}")
     private String uploadPath;
 
@@ -26,7 +26,7 @@ public class ResourceStorageImpl implements ResourceStorage {
     @Value("${bookshop.download.path}")
     private String downloadPath;
 
-    public ResourceStorageImpl(BookFileRepository bookFileRepository) {
+    public ResourceStorageServiceLocalFileImpl(BookFileRepository bookFileRepository) {
         this.bookFileRepository = bookFileRepository;
     }
 
@@ -40,7 +40,7 @@ public class ResourceStorageImpl implements ResourceStorage {
             }
             var filename = slug + "." + FilenameUtils.getExtension(file.getOriginalFilename());
             var dstPath = Paths.get(uploadPath, filename);
-            resourceUri = "/book-covers/" + filename; // TODO: 04.01.2022 Вынести в конфиг book-covers
+            resourceUri = "/book-covers/" + filename;
             file.transferTo(dstPath);
         }
         return resourceUri;

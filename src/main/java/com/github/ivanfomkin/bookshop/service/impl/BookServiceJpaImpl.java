@@ -1,10 +1,8 @@
 package com.github.ivanfomkin.bookshop.service.impl;
 
 import com.github.ivanfomkin.bookshop.aop.annotation.ExecutionTimeLog;
-import com.github.ivanfomkin.bookshop.dto.book.BookFileDto;
-import com.github.ivanfomkin.bookshop.dto.book.BookListDto;
-import com.github.ivanfomkin.bookshop.dto.book.BookListElement;
-import com.github.ivanfomkin.bookshop.dto.book.BookSlugDto;
+import com.github.ivanfomkin.bookshop.service.ResourceStorageService;
+import com.github.ivanfomkin.bookshop.dto.book.*;
 import com.github.ivanfomkin.bookshop.entity.author.AuthorEntity;
 import com.github.ivanfomkin.bookshop.entity.book.BookEntity;
 import com.github.ivanfomkin.bookshop.entity.enums.Book2UserType;
@@ -24,6 +22,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -35,8 +34,9 @@ public class BookServiceJpaImpl implements BookService {
     private final CookieService cookieService;
     private final BookRepository bookRepository;
     private final AuthorService authorService;
-    private final DateTimeFormatter dateTimeFormatter;
+    private final ResourceStorageService resourceStorageService;
     private final BookVoteService bookVoteService;
+    private final DateTimeFormatter dateTimeFormatter;
     private final BookReviewService bookReviewService;
     private final Book2UserRepository book2UserRepository;
 
@@ -45,13 +45,14 @@ public class BookServiceJpaImpl implements BookService {
 
     private final MessageSource messageSource;
 
-    public BookServiceJpaImpl(UserService userService, CookieService cookieService, BookRepository bookRepository, AuthorService authorService, BookVoteService bookVoteService, BookReviewService bookReviewService, Book2UserRepository book2UserRepository, MessageSource messageSource) {
+    public BookServiceJpaImpl(UserService userService, CookieService cookieService, BookRepository bookRepository, AuthorService authorService, ResourceStorageService resourceStorageService, BookVoteService bookVoteService, BookReviewService bookReviewService, Book2UserRepository book2UserRepository, MessageSource messageSource) {
         this.userService = userService;
         this.authorService = authorService;
         this.messageSource = messageSource;
         this.cookieService = cookieService;
         this.bookRepository = bookRepository;
         this.bookVoteService = bookVoteService;
+        this.resourceStorageService = resourceStorageService;
         this.bookReviewService = bookReviewService;
         this.book2UserRepository = book2UserRepository;
         dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
@@ -313,5 +314,36 @@ public class BookServiceJpaImpl implements BookService {
     @Override
     public List<BookEntity> getBooksBySlugIn(List<String> slugs) {
         return bookRepository.findBookEntitiesBySlugIn(slugs);
+    }
+
+    @Override
+    public BookEditDto getBookEditDtoBySlug(String slug) {
+        var bookEntity = bookRepository.findBookEntityBySlug(slug).orElseThrow(NotFoundException::new);
+        var bookEditDto = new BookEditDto();
+        bookEditDto.setId(bookEntity.getId());
+        bookEditDto.setBestseller(bookEntity.getIsBestseller());
+        bookEditDto.setDescription(bookEntity.getDescription());
+        bookEditDto.setDiscount(bookEntity.getDiscount());
+        bookEditDto.setSlug(bookEntity.getSlug());
+        bookEditDto.setPrice(bookEntity.getPrice());
+        bookEditDto.setTitle(bookEntity.getTitle());
+        return bookEditDto;
+    }
+
+    @Override
+    @Transactional
+    public void updateBookEntity(BookEditDto bookEditDto) throws IOException {
+        var bookEntity = bookRepository.findById(bookEditDto.getId()).orElseThrow(NotFoundException::new);
+        bookEntity.setDiscount(bookEditDto.getDiscount());
+        bookEntity.setPrice(bookEntity.getPrice());
+        bookEntity.setDescription(bookEntity.getDescription());
+        bookEntity.setIsBestseller(bookEditDto.isBestseller());
+        bookEntity.setSlug(bookEditDto.getSlug());
+        bookEntity.setTitle(bookEditDto.getTitle());
+        if (bookEditDto.getBookImage() != null && !bookEditDto.getBookImage().isEmpty()) {
+            var newImagePath = resourceStorageService.saveNewBookImage(bookEditDto.getBookImage(), bookEntity.getSlug());
+            bookEntity.setImage(newImagePath);
+        }
+        bookRepository.save(bookEntity);
     }
 }

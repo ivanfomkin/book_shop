@@ -57,8 +57,8 @@
                             <td th:text="${book.getAuthors()}"></td>
                             <td th:text="${#numbers.formatDecimal(book.getPrice(), 0, 'WHITESPACE', 0, 'POINT') + ' руб.'}"></td>
                             <td th:text="${#numbers.formatDecimal(book.getDiscountPrice(), 0, 'WHITESPACE', 0, 'POINT') + ' руб.'}"></td>
-                            <td><a type="button" title="Редактировать" th:href="@{admin/books/edit/} + ${book.getSlug()}">🖊</a></td>
-                            <td><a type="button" title="Удалить" th:href="@{admin/books/delete/} + ${book.getSlug()}">❌</a></td>
+                            <td><a type="button" title="Редактировать" th:href="@{/admin/books/edit/} + ${book.getSlug()}">🖊</a></td>
+                            <td><a type="button" title="Удалить" th:href="@{/admin/books/delete/} + ${book.getSlug()}">❌</a></td>
                         </tr>
                         </tbody>
                     </table>

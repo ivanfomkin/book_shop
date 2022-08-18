@@ -26,6 +26,7 @@
         <commons-io.version>2.11.0</commons-io.version>
         <springdoc.version>1.6.9</springdoc.version>
         <webdrivermanager.version>5.2.0</webdrivermanager.version>
+        <cloudinary.version>1.32.2</cloudinary.version>
     </properties>
 
     <dependencies>
@@ -90,6 +91,11 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.cloudinary</groupId>
+            <artifactId>cloudinary-http44</artifactId>
+            <version>${cloudinary.version}</version>
         </dependency>
 
         <!--        Tests-->

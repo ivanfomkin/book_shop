@@ -24,6 +24,10 @@ spring:
           google:
             client-id: ENC(eAlnv9JuWdJ7nJVnuRoxbRvxDnh0kr81y6zCzH3/YJEHwY5QtHPSDDynxAAutvIBYouJSw7WH9h/aSkj+EzptwMTH2zT8KlKgWRWUm/ZvtE=)
             client-secret: ENC(KbYqwaR0cxF+v8Zx4kcz3zM3e9FKVfJoRr136j28qDgvPRLwuLxNgK4NkCreSbfF)
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: on
   main:
     allow-circular-references: true
   mail:
@@ -57,9 +61,9 @@ bookshop:
   review:
     min-size: 30
   upload:
-    path: F:\dev\spring-learn\MyBookShopApp_m3_6\uploads
+    path: uploads
   download:
-    path: F:\dev\spring-learn\MyBookShopApp_m3_6\books
+    path: books
 jasypt:
   encryptor:
     bean: encryptorBean

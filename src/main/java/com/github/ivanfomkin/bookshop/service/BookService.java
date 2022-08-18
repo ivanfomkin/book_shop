@@ -1,5 +1,6 @@
 package com.github.ivanfomkin.bookshop.service;
 
+import com.github.ivanfomkin.bookshop.dto.book.BookEditDto;
 import com.github.ivanfomkin.bookshop.dto.book.BookListDto;
 import com.github.ivanfomkin.bookshop.dto.book.BookSlugDto;
 import com.github.ivanfomkin.bookshop.entity.author.AuthorEntity;
@@ -9,6 +10,7 @@ import com.github.ivanfomkin.bookshop.entity.genre.GenreEntity;
 import com.github.ivanfomkin.bookshop.entity.user.UserEntity;
 import org.springframework.data.domain.Pageable;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface BookService {
@@ -48,4 +50,8 @@ public interface BookService {
     BookListDto getPaidBooksByCurrentUser();
 
     BookListDto getArchivedBooksByCurrentUser();
+
+    BookEditDto getBookEditDtoBySlug(String slug);
+
+    void updateBookEntity(BookEditDto book) throws IOException;
 }
