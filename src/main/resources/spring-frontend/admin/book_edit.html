@@ -61,6 +61,18 @@
                             <input class="form-input" id="discount" name="discount" type="number" min="0" max="99" th:field="*{discount}" data-validate="Процент скидки обязателен">
                         </div>
                         <div class="form-group">
+                            <label class="form-label" for="fb2file">FB2-файл</label>
+                            <input class="form-input" id="fb2file" name="fb2file" type="file" th:field="*{fb2File}" accept=".fb2"/>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="pdfFile">PDF-файл</label>
+                            <input class="form-input" id="pdfFile" name="pdfFile" type="file" th:field="*{pdfFile}" accept="application/pdf"/>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="epubFile">EPUB-файл</label>
+                            <input class="form-input" id="epubFile" name="epubFile" type="file" th:field="*{epubFile}" accept=".epub"/>
+                        </div>
+                        <div class="form-group">
                             <div class="Profile-btn">
                                 <button class="btn btn_danger" type="button">Отменить
                                 </button>

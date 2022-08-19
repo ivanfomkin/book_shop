@@ -1,5 +1,6 @@
 package com.github.ivanfomkin.bookshop.entity.book.file;
 
+import com.github.ivanfomkin.bookshop.entity.enums.BookFiletype;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,8 +17,9 @@ public class BookFileTypeEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Enumerated(EnumType.STRING)
     @Column(columnDefinition = "VARCHAR(255) NOT NULL")
-    private String name;
+    private BookFiletype name;
 
     @Column(columnDefinition = "TEXT")
     private String description;

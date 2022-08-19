@@ -24,22 +24,9 @@
         <main class="Middle-main">
             <h1 class="Middle-title">Поиск
             </h1>
-            <div class="Section">
-                <div class="search">
-                    <form action="#" class="form form_search" data-searchlimit="20" method="post"
-                          th:object="${searchDto}">
-                        <input class="search-input" id="querypage" name="querypage" type="text"
-                               placeholder="Search over 30 million book titles" value="Техника"
-                               th:input="*{searchQuery}"
-                               th:placeholder="#{searchbar.placeholder}" th:value="*{searchQuery}"/>
-                        <button class="search-button" type="submit" name="searchpage" id="searchpage">Поиск
-                        </button>
-                    </form>
-                </div>
-            </div>
             <div class="Section Section_close">
                 <header class="Section-header">
-                    <h2 class="Section-title Middle-searchHeader" th:text="'Найдено ' + ${bookList.getTotal()} + ' книг'">
+                    <h2 class="Section-title Middle-searchHeader" th:text="'Найдено книг: ' + ${bookList.getTotal()}">
                         Найдено 40 книг
                     </h2>
                 </header>

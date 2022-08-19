@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<html lang="ru" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <title>Магазин 📚</title>
     <meta name="description" content="Описание страницы">
@@ -36,7 +36,7 @@
                                                                                   src="/assets/img/content/main/card.jpg"
                                                                                   th:src="${book.image}"/>
                             </div>
-                            <input accept="image/*" id="dialog" name="file" style="display: none" type="file"/>
+                            <input sec:authorize="hasRole('ROLE_ADMIN')" accept="image/*" id="dialog" name="file" style="display: none" type="file"/>
                         </form>
                     </div>
                     <div class="ProductCard-desc" th:replace="~{fragments/book_description_fragment :: bookDesc}"></div>

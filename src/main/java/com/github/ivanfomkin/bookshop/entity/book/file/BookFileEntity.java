@@ -31,6 +31,6 @@ public class BookFileEntity implements Serializable {
     private BookEntity book;
 
     public String getBookFileExtensionString() {
-        return BookFiletype.PDF.getFileExtensionById(typeId);
+        return BookFiletype.getFileExtensionById(typeId);
     }
 }

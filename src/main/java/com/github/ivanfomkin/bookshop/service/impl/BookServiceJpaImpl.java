@@ -1,11 +1,11 @@
 package com.github.ivanfomkin.bookshop.service.impl;
 
 import com.github.ivanfomkin.bookshop.aop.annotation.ExecutionTimeLog;
-import com.github.ivanfomkin.bookshop.service.ResourceStorageService;
 import com.github.ivanfomkin.bookshop.dto.book.*;
 import com.github.ivanfomkin.bookshop.entity.author.AuthorEntity;
 import com.github.ivanfomkin.bookshop.entity.book.BookEntity;
 import com.github.ivanfomkin.bookshop.entity.enums.Book2UserType;
+import com.github.ivanfomkin.bookshop.entity.enums.BookFiletype;
 import com.github.ivanfomkin.bookshop.entity.genre.GenreEntity;
 import com.github.ivanfomkin.bookshop.entity.tag.TagEntity;
 import com.github.ivanfomkin.bookshop.entity.user.UserEntity;
@@ -340,9 +340,18 @@ public class BookServiceJpaImpl implements BookService {
         bookEntity.setIsBestseller(bookEditDto.isBestseller());
         bookEntity.setSlug(bookEditDto.getSlug());
         bookEntity.setTitle(bookEditDto.getTitle());
-        if (bookEditDto.getBookImage() != null && !bookEditDto.getBookImage().isEmpty()) {
+        if (bookEditDto.getBookImage() != null && bookEditDto.getBookImage().getResource().contentLength() != 0) {
             var newImagePath = resourceStorageService.saveNewBookImage(bookEditDto.getBookImage(), bookEntity.getSlug());
             bookEntity.setImage(newImagePath);
+        }
+        if (bookEditDto.getEpubFile() != null && bookEditDto.getEpubFile().getResource().contentLength() != 0) {
+            resourceStorageService.saveBookFile(bookEditDto.getEpubFile(), bookEntity, BookFiletype.EPUB);
+        }
+        if (bookEditDto.getPdfFile() != null && bookEditDto.getPdfFile().getResource().contentLength() != 0) {
+            resourceStorageService.saveBookFile(bookEditDto.getPdfFile(), bookEntity, BookFiletype.PDF);
+        }
+        if (bookEditDto.getFb2File() != null && bookEditDto.getFb2File().getResource().contentLength() != 0) {
+            resourceStorageService.saveBookFile(bookEditDto.getFb2File(), bookEntity, BookFiletype.FB2);
         }
         bookRepository.save(bookEntity);
     }
