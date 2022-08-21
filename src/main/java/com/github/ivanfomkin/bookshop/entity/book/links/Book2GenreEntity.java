@@ -1,5 +1,7 @@
 package com.github.ivanfomkin.bookshop.entity.book.links;
 
+import com.github.ivanfomkin.bookshop.entity.book.BookEntity;
+import com.github.ivanfomkin.bookshop.entity.genre.GenreEntity;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,9 +18,9 @@ public class Book2GenreEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "book_id", columnDefinition = "INT NOT NULL")
-    private Integer bookId;
+    @ManyToOne
+    private BookEntity book;
 
-    @Column(name = "genre_id", columnDefinition = "INT NOT NULL")
-    private Integer genreId;
+    @ManyToOne
+    private GenreEntity genre;
 }

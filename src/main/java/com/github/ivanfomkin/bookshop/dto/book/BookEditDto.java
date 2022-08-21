@@ -8,6 +8,9 @@ public class BookEditDto {
     private int id;
     private String slug;
     private String title;
+    private String[] authorSlug;
+    private String[] tags;
+    private String[] genreSlug;
     private boolean isBestseller;
     private String description;
     private int price;

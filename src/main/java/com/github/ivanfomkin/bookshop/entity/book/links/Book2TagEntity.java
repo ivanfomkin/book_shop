@@ -1,5 +1,7 @@
 package com.github.ivanfomkin.bookshop.entity.book.links;
 
+import com.github.ivanfomkin.bookshop.entity.book.BookEntity;
+import com.github.ivanfomkin.bookshop.entity.tag.TagEntity;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,9 +17,9 @@ public class Book2TagEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "book_id")
-    private Integer bookId;
+    @ManyToOne
+    private BookEntity book;
 
-    @Column(name = "tag_id")
-    private Integer tagId;
+    @ManyToOne
+    private TagEntity tag;
 }

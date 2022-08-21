@@ -41,8 +41,8 @@ public interface BookRepository extends JpaRepository<BookEntity, Integer> {
             """)
     Page<BookEntity> findPopularBooks(Pageable pageable);
 
-    @Query("SELECT b FROM BookEntity b JOIN Book2TagEntity b2t ON b2t.bookId = b.id " +
-            "JOIN TagEntity t ON t.id = b2t.tagId WHERE t.name = :tagName")
+    @Query("SELECT b FROM BookEntity b JOIN Book2TagEntity b2t ON b2t.book = b " +
+            "JOIN TagEntity t ON t = b2t.tag WHERE t.name = :tagName")
     Page<BookEntity> findBookEntityByTagName(String tagName, Pageable pageable);
 
     Page<BookEntity> findBookEntityByTitleContainingIgnoreCaseOrderByTitle(String searchRequest, Pageable pageable);
@@ -52,8 +52,8 @@ public interface BookRepository extends JpaRepository<BookEntity, Integer> {
     Page<BookEntity> findBookEntityByAuthorsContaining(AuthorEntity author, Pageable pageable);
 
     @Query("""
-            SELECT b FROM BookEntity b JOIN Book2AuthorEntity b2a ON b.id = b2a.bookId
-            JOIN AuthorEntity a ON a.id = b2a.authorId WHERE a.slug = :authorSlug
+            SELECT b FROM BookEntity b JOIN Book2AuthorEntity b2a ON b = b2a.book
+            JOIN AuthorEntity a ON a = b2a.author WHERE a.slug = :authorSlug
             """)
     Page<BookEntity> findBookEntityByAuthorsSlug(String authorSlug, Pageable pageable);
 

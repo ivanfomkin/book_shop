@@ -26,6 +26,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -34,27 +35,33 @@ public class BookServiceJpaImpl implements BookService {
     private final CookieService cookieService;
     private final BookRepository bookRepository;
     private final AuthorService authorService;
-    private final ResourceStorageService resourceStorageService;
+    private final Book2TagService book2TagService;
     private final BookVoteService bookVoteService;
     private final DateTimeFormatter dateTimeFormatter;
     private final BookReviewService bookReviewService;
+    private final Book2GenreService book2GenreService;
+    private final Book2AuthorService book2AuthorService;
     private final Book2UserRepository book2UserRepository;
+    private final ResourceStorageService resourceStorageService;
 
     private final LocalDate minLocalDate;
     private final LocalDate maxLocalDate;
 
     private final MessageSource messageSource;
 
-    public BookServiceJpaImpl(UserService userService, CookieService cookieService, BookRepository bookRepository, AuthorService authorService, ResourceStorageService resourceStorageService, BookVoteService bookVoteService, BookReviewService bookReviewService, Book2UserRepository book2UserRepository, MessageSource messageSource) {
+    public BookServiceJpaImpl(UserService userService, CookieService cookieService, BookRepository bookRepository, AuthorService authorService, Book2TagService book2TagService, Book2GenreService book2GenreService, ResourceStorageService resourceStorageService, BookVoteService bookVoteService, BookReviewService bookReviewService, Book2AuthorService book2AuthorService, Book2UserRepository book2UserRepository, MessageSource messageSource) {
         this.userService = userService;
-        this.authorService = authorService;
         this.messageSource = messageSource;
+        this.authorService = authorService;
         this.cookieService = cookieService;
         this.bookRepository = bookRepository;
         this.bookVoteService = bookVoteService;
-        this.resourceStorageService = resourceStorageService;
+        this.book2TagService = book2TagService;
         this.bookReviewService = bookReviewService;
+        this.book2GenreService = book2GenreService;
+        this.book2AuthorService = book2AuthorService;
         this.book2UserRepository = book2UserRepository;
+        this.resourceStorageService = resourceStorageService;
         dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         minLocalDate = LocalDate.of(1000, 1, 1);
         maxLocalDate = LocalDate.of(3000, 12, 31);
@@ -327,6 +334,9 @@ public class BookServiceJpaImpl implements BookService {
         bookEditDto.setSlug(bookEntity.getSlug());
         bookEditDto.setPrice(bookEntity.getPrice());
         bookEditDto.setTitle(bookEntity.getTitle());
+        bookEditDto.setTags(bookEntity.getTags().stream().map(TagEntity::getName).toArray(String[]::new));
+        bookEditDto.setAuthorSlug(bookEntity.getAuthors().stream().map(AuthorEntity::getSlug).toArray(String[]::new));
+        bookEditDto.setGenreSlug(bookEntity.getGenres().stream().map(GenreEntity::getSlug).toArray(String[]::new));
         return bookEditDto;
     }
 
@@ -354,5 +364,8 @@ public class BookServiceJpaImpl implements BookService {
             resourceStorageService.saveBookFile(bookEditDto.getFb2File(), bookEntity, BookFiletype.FB2);
         }
         bookRepository.save(bookEntity);
+        book2AuthorService.setAuthorsToBook(bookEntity, Arrays.asList(bookEditDto.getAuthorSlug()));
+        book2TagService.setTagsToBook(bookEntity, Arrays.asList(bookEditDto.getTags()));
+        book2GenreService.setGenresToBook(bookEntity, Arrays.asList(bookEditDto.getGenreSlug()));
     }
 }

@@ -19,4 +19,10 @@ public class TagServiceImpl implements TagService {
     public List<TagWithWeightObject> getTagsWithWeight() {
         return tagRepository.findTagsWithWeight();
     }
+
+    @Override
+    public List<String> getAllTags() {
+        return tagRepository.findAllTagNames();
+    }
+
 }

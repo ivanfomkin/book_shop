@@ -1,10 +1,10 @@
-package com.github.ivanfomkin.bookshop.controller;
+package com.github.ivanfomkin.bookshop.controller.admin;
 
+import com.github.ivanfomkin.bookshop.controller.ModelAttributeController;
+import com.github.ivanfomkin.bookshop.dto.author.AuthorElementDto;
 import com.github.ivanfomkin.bookshop.dto.book.BookEditDto;
-import com.github.ivanfomkin.bookshop.service.Book2UserService;
-import com.github.ivanfomkin.bookshop.service.BookService;
-import com.github.ivanfomkin.bookshop.service.CookieService;
-import com.github.ivanfomkin.bookshop.service.UserService;
+import com.github.ivanfomkin.bookshop.dto.genre.GenreElementDto;
+import com.github.ivanfomkin.bookshop.service.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -13,24 +13,26 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.List;
 
 @Slf4j
 @Controller
-@RequestMapping("/admin")
-public class AdminController extends ModelAttributeController {
+@RequestMapping("/admin/books")
+public class AdminBookController extends ModelAttributeController {
+    private final TagService tagService;
     private final BookService bookService;
+    private final GenreService genreService;
+    private final AuthorService authorService;
 
-    public AdminController(UserService userService, CookieService cookieService, Book2UserService book2UserService, BookService bookService) {
+    public AdminBookController(UserService userService, CookieService cookieService, Book2UserService book2UserService, TagService tagService, BookService bookService, GenreService genreService, AuthorService authorService) {
         super(userService, cookieService, book2UserService);
+        this.tagService = tagService;
         this.bookService = bookService;
+        this.genreService = genreService;
+        this.authorService = authorService;
     }
 
     @GetMapping
-    public String getControlPanel() {
-        return "admin/index";
-    }
-
-    @GetMapping("/books")
     public String getBookList(Model model,
                               @RequestParam(name = "page", required = false, defaultValue = "0") Integer page,
                               @RequestParam(name = "perPage", required = false, defaultValue = "20") Integer perPage,
@@ -40,13 +42,28 @@ public class AdminController extends ModelAttributeController {
         return "admin/book_list";
     }
 
-    @GetMapping("/books/edit/{slug}")
+    @ModelAttribute("authors")
+    public List<AuthorElementDto> authorElementDtoList() {
+        return authorService.getAllAuthors();
+    }
+
+    @ModelAttribute("tagsList")
+    public List<String> tagList() {
+        return tagService.getAllTags();
+    }
+
+    @ModelAttribute("genreList")
+    public List<GenreElementDto> genresList() {
+        return genreService.getAllGenresDto();
+    }
+
+    @GetMapping("/edit/{slug}")
     public String editBookPage(Model model, @PathVariable(name = "slug") String slug) {
         model.addAttribute("book", bookService.getBookEditDtoBySlug(slug));
         return "admin/book_edit";
     }
 
-    @PutMapping("/books/edit/{slug}")
+    @PutMapping("/edit/{slug}")
     public String editBook(@PathVariable(name = "slug") String slug, BookEditDto book) throws IOException {
         bookService.updateBookEntity(book);
         return "redirect:/admin/books/edit/" + book.getSlug();

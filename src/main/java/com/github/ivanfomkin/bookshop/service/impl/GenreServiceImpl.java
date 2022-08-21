@@ -1,5 +1,6 @@
 package com.github.ivanfomkin.bookshop.service.impl;
 
+import com.github.ivanfomkin.bookshop.dto.genre.GenreElementDto;
 import com.github.ivanfomkin.bookshop.entity.genre.GenreEntity;
 import com.github.ivanfomkin.bookshop.exception.NotFoundException;
 import com.github.ivanfomkin.bookshop.repository.GenreRepository;
@@ -27,5 +28,10 @@ public class GenreServiceImpl implements GenreService {
     @Override
     public GenreEntity getGenreBySlug(String slug) {
         return genreRepository.findGenreEntityBySlug(slug).orElseThrow(NotFoundException::new);
+    }
+
+    @Override
+    public List<GenreElementDto> getAllGenresDto() {
+        return genreRepository.findAll().stream().map(GenreElementDto::new).toList();
     }
 }

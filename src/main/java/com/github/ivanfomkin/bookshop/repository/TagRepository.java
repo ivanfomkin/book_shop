@@ -1,5 +1,6 @@
 package com.github.ivanfomkin.bookshop.repository;
 
+import com.github.ivanfomkin.bookshop.entity.book.BookEntity;
 import com.github.ivanfomkin.bookshop.entity.tag.TagEntity;
 import com.github.ivanfomkin.bookshop.entity.tag.TagWithWeightObject;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -7,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface TagRepository extends JpaRepository<TagEntity, Integer> {
@@ -19,4 +21,11 @@ public interface TagRepository extends JpaRepository<TagEntity, Integer> {
             tag_with_weight tag, normalization_factor
             """, nativeQuery = true)
     List<TagWithWeightObject> findTagsWithWeight();
+
+    @Query("SELECT t.name FROM TagEntity t")
+    List<String> findAllTagNames();
+
+    Optional<TagEntity> findTagEntityByNameEqualsIgnoreCase(String name);
+
+    List<TagEntity> findAllByBooksContains(BookEntity book);
 }

@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface TagService {
     List<TagWithWeightObject> getTagsWithWeight();
+
+    List<String> getAllTags();
 }

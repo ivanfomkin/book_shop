@@ -12,4 +12,6 @@ public interface AuthorService {
     AuthorEntity getAuthorBySlug(String slug);
 
     List<AuthorElementDto> convertAuthorsToDto(List<AuthorEntity> authors);
+
+    List<AuthorElementDto> getAllAuthors();
 }

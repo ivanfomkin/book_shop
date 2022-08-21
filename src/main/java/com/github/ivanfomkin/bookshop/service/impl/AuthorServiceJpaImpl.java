@@ -6,6 +6,7 @@ import com.github.ivanfomkin.bookshop.exception.NotFoundException;
 import com.github.ivanfomkin.bookshop.repository.AuthorRepository;
 import com.github.ivanfomkin.bookshop.service.AuthorService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -40,5 +41,10 @@ public class AuthorServiceJpaImpl implements AuthorService {
             authorElementDtoList.add(new AuthorElementDto(authorEntity.getName(), authorEntity.getSlug()));
         }
         return authorElementDtoList;
+    }
+
+    @Override
+    public List<AuthorElementDto> getAllAuthors() {
+        return convertAuthorsToDto(authorRepository.findAll(Sort.by(Sort.Order.asc("name"))));
     }
 }
