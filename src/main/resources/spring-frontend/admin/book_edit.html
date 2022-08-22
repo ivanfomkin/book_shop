@@ -27,7 +27,7 @@
             <h1 class="Middle-title">Редактор книги
             </h1>
             <br>
-            <form class="form Profile-form" action="#" enctype="multipart/form-data" th:method="PUT" th:object="${book}">
+            <form class="form Profile-form" action="#" enctype="multipart/form-data" th:method="${method}" th:object="${book}">
                 <input type="hidden" th:field="*{id}">
                 <div class="row">
                     <div class="row-block">
@@ -71,6 +71,10 @@
                             <label class="form-label" for="bestseller">Бестселлер</label>
                                 Книга является бестселлером:
                                 <input id="bestseller" name="bestseller" type="checkbox" th:checked="*{isBestseller}"/>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="pubDate">Дата выходы</label>
+                            <input class="form-input" id="pubDate" name="pubDate" type="date" th:field="*{pubDate}"/>
                         </div>
                         <div class="form-group">
                             <label class="form-label" for="description">Описание</label>

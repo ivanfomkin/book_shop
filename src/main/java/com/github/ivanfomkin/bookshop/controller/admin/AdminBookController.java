@@ -60,6 +60,7 @@ public class AdminBookController extends ModelAttributeController {
     @GetMapping("/edit/{slug}")
     public String editBookPage(Model model, @PathVariable(name = "slug") String slug) {
         model.addAttribute("book", bookService.getBookEditDtoBySlug(slug));
+        model.addAttribute("method", "PUT");
         return "admin/book_edit";
     }
 
@@ -67,5 +68,18 @@ public class AdminBookController extends ModelAttributeController {
     public String editBook(@PathVariable(name = "slug") String slug, BookEditDto book) throws IOException {
         bookService.updateBookEntity(book);
         return "redirect:/admin/books/edit/" + book.getSlug();
+    }
+
+    @GetMapping("/create")
+    public String createBookPage(Model model) {
+        model.addAttribute("book", new BookEditDto());
+        model.addAttribute("method", "POST");
+        return "admin/book_edit";
+    }
+
+    @PostMapping("/create")
+    public String createBook(BookEditDto bookEditDto) throws IOException {
+        bookService.createBook(bookEditDto);
+        return "redirect:/admin/books/";
     }
 }

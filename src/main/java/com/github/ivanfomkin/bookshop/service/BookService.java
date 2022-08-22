@@ -54,4 +54,6 @@ public interface BookService {
     BookEditDto getBookEditDtoBySlug(String slug);
 
     void updateBookEntity(BookEditDto book) throws IOException;
+
+    void createBook(BookEditDto bookEditDto) throws IOException;
 }

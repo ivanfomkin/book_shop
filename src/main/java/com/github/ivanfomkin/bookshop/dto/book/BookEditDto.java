@@ -1,7 +1,10 @@
 package com.github.ivanfomkin.bookshop.dto.book;
 
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.time.LocalDate;
 
 @Data
 public class BookEditDto {
@@ -19,4 +22,6 @@ public class BookEditDto {
     private MultipartFile pdfFile;
     private MultipartFile fb2File;
     private MultipartFile epubFile;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate pubDate;
 }
