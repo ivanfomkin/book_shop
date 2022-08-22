@@ -87,6 +87,7 @@ jasypt:
 logging:
   level:
     com.github.ivanfomkin.bookshop: info
+    org.apache.mahout.cf.taste: debug
 management:
   endpoint:
     health:
