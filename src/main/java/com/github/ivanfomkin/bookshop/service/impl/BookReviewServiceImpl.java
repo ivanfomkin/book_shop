@@ -3,13 +3,20 @@ package com.github.ivanfomkin.bookshop.service.impl;
 import com.github.ivanfomkin.bookshop.dto.CommonResultDto;
 import com.github.ivanfomkin.bookshop.dto.book.review.BookReviewDto;
 import com.github.ivanfomkin.bookshop.dto.book.review.BookReviewListElementDto;
+import com.github.ivanfomkin.bookshop.dto.review.BookReviewElementDto;
+import com.github.ivanfomkin.bookshop.dto.review.PageableBookReviewDto;
+import com.github.ivanfomkin.bookshop.dto.review.ReviewBookInfo;
+import com.github.ivanfomkin.bookshop.dto.review.ReviewUserInfo;
 import com.github.ivanfomkin.bookshop.entity.book.BookEntity;
 import com.github.ivanfomkin.bookshop.entity.book.review.BookReviewEntity;
 import com.github.ivanfomkin.bookshop.entity.user.UserEntity;
 import com.github.ivanfomkin.bookshop.repository.BookReviewRepository;
 import com.github.ivanfomkin.bookshop.service.BookReviewService;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -64,6 +71,37 @@ public class BookReviewServiceImpl implements BookReviewService {
             resultDto.setError(errorMessage);
         }
         return resultDto;
+    }
+
+    @Override
+    public PageableBookReviewDto getPageableAllReviews(Pageable pageable, String searchQuery) {
+        var dto = new PageableBookReviewDto();
+        Page<BookReviewEntity> reviewEntities;
+        if (searchQuery == null || searchQuery.isBlank()) {
+            reviewEntities = bookReviewRepository.findAll(pageable);
+        } else {
+            reviewEntities = bookReviewRepository.findAllBySearchQuery(pageable, searchQuery);
+        }
+        dto.setTotal(reviewEntities.getTotalElements());
+        dto.setPage(reviewEntities.getNumber());
+        dto.setPerPage(pageable.getPageSize());
+        var books = reviewEntities.stream().map(e -> {
+            var reviewDto = new BookReviewElementDto();
+            reviewDto.setId(e.getId());
+            reviewDto.setText(e.getText());
+            reviewDto.setTime(e.getTime());
+            reviewDto.setUser(new ReviewUserInfo(e.getUser().getId(), e.getUser().getName()));
+            reviewDto.setBook(new ReviewBookInfo(e.getBook().getSlug(), e.getBook().getTitle()));
+            return reviewDto;
+        }).toList();
+        dto.setReviews(books);
+        return dto;
+    }
+
+    @Override
+    @Transactional
+    public void deleteReviewById(Integer reviewId) {
+        bookReviewRepository.deleteById(reviewId);
     }
 
     private List<BookReviewListElementDto> convertBookReviewsEntityToDto(List<BookReviewEntity> bookReviewEntities) {
