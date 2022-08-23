@@ -1,8 +1,8 @@
 package com.github.ivanfomkin.bookshop.service.impl;
 
+import com.github.ivanfomkin.bookshop.dto.CommonPageableDto;
 import com.github.ivanfomkin.bookshop.dto.author.AuthorEditDto;
 import com.github.ivanfomkin.bookshop.dto.author.AuthorElementDto;
-import com.github.ivanfomkin.bookshop.dto.author.AuthorListDto;
 import com.github.ivanfomkin.bookshop.entity.author.AuthorEntity;
 import com.github.ivanfomkin.bookshop.exception.NotFoundException;
 import com.github.ivanfomkin.bookshop.repository.AuthorRepository;
@@ -58,16 +58,16 @@ public class AuthorServiceJpaImpl implements AuthorService {
     }
 
     @Override
-    public AuthorListDto getPageableAllAuthors(Pageable pageable, String searchQuery) {
+    public CommonPageableDto<AuthorElementDto> getPageableAllAuthors(Pageable pageable, String searchQuery) {
         Page<AuthorEntity> authorEntityPage;
         if (searchQuery == null || searchQuery.isBlank()) {
             authorEntityPage = authorRepository.findAll(pageable);
         } else {
             authorEntityPage = authorRepository.findAuthorEntitiesByNameContainingIgnoreCase(pageable, searchQuery);
         }
-        var dto = new AuthorListDto();
+        CommonPageableDto<AuthorElementDto> dto = new CommonPageableDto<>();
         dto.setTotal(authorEntityPage.getTotalElements());
-        dto.setAuthors(convertAuthorsToDto(authorEntityPage));
+        dto.setData(convertAuthorsToDto(authorEntityPage));
         dto.setPerPage(authorEntityPage.getSize());
         dto.setPage(authorEntityPage.getNumber());
         return dto;

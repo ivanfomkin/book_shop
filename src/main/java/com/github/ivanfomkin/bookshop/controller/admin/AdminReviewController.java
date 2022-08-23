@@ -28,6 +28,7 @@ public class AdminReviewController extends ModelAttributeController {
                                  @RequestParam(name = "page", required = false, defaultValue = "0") Integer page,
                                  @RequestParam(name = "perPage", required = false, defaultValue = "20") Integer perPage,
                                  @RequestParam(name = "searchQuery", required = false, defaultValue = "") String searchQuery) {
+        model.addAttribute("searchQuery", searchQuery);
         model.addAttribute("reviews", bookReviewService.getPageableAllReviews(PageRequest.of(page, perPage, Sort.by(Sort.Direction.DESC, "time")), searchQuery));
         return "admin/review_list";
     }

@@ -1,8 +1,9 @@
 package com.github.ivanfomkin.bookshop.controller.rest;
 
 import com.github.ivanfomkin.bookshop.aop.annotation.ExecutionTimeLog;
+import com.github.ivanfomkin.bookshop.dto.CommonPageableDto;
 import com.github.ivanfomkin.bookshop.dto.CommonResultDto;
-import com.github.ivanfomkin.bookshop.dto.book.BookListDto;
+import com.github.ivanfomkin.bookshop.dto.book.BookListElement;
 import com.github.ivanfomkin.bookshop.dto.book.rate.BookRateRequestDto;
 import com.github.ivanfomkin.bookshop.dto.book.review.BookReviewLikeRequestDto;
 import com.github.ivanfomkin.bookshop.dto.book.review.BookReviewRequestDto;
@@ -32,33 +33,33 @@ public class BookRestController {
     }
 
     @GetMapping("/recommended")
-    public BookListDto recommendedBooks(@RequestParam(value = "offset", required = false, defaultValue = "0") Integer offset,
-                                        @RequestParam(value = "limit", required = false, defaultValue = "20") Integer limit,
-                                        @CookieValue(value = "cartContent", required = false, defaultValue = "") String cartCookie,
-                                        @CookieValue(value = "keptContent", required = false, defaultValue = "") String keptCookie) {
+    public CommonPageableDto<BookListElement> recommendedBooks(@RequestParam(value = "offset", required = false, defaultValue = "0") Integer offset,
+                                                               @RequestParam(value = "limit", required = false, defaultValue = "20") Integer limit,
+                                                               @CookieValue(value = "cartContent", required = false, defaultValue = "") String cartCookie,
+                                                               @CookieValue(value = "keptContent", required = false, defaultValue = "") String keptCookie) {
         return bookService.getPageableRecommendedBooks(offset, limit, cartCookie, keptCookie);
     }
 
     @GetMapping("/recent")
-    public BookListDto recentBooks(@RequestParam(name = "offset", required = false, defaultValue = "0") Integer offset,
-                                   @RequestParam(name = "limit", required = false, defaultValue = "20") Integer limit,
-                                   @RequestParam(name = "from", required = false, defaultValue = "0") String fromDate,
-                                   @CookieValue(value = "cartContent", required = false, defaultValue = "") String cartCookie,
-                                   @CookieValue(value = "keptContent", required = false, defaultValue = "") String keptCookie,
-                                   @RequestParam(name = "to", required = false, defaultValue = "0") String toDate) {
+    public CommonPageableDto<BookListElement> recentBooks(@RequestParam(name = "offset", required = false, defaultValue = "0") Integer offset,
+                                                          @RequestParam(name = "limit", required = false, defaultValue = "20") Integer limit,
+                                                          @RequestParam(name = "from", required = false, defaultValue = "0") String fromDate,
+                                                          @CookieValue(value = "cartContent", required = false, defaultValue = "") String cartCookie,
+                                                          @CookieValue(value = "keptContent", required = false, defaultValue = "") String keptCookie,
+                                                          @RequestParam(name = "to", required = false, defaultValue = "0") String toDate) {
         return bookService.getPageableRecentBooks(offset, limit, fromDate, toDate, cartCookie, keptCookie);
     }
 
     @GetMapping("/popular")
-    public BookListDto popularBooks(@RequestParam(value = "offset", required = false, defaultValue = "0") Integer offset,
-                                    @RequestParam(value = "limit", required = false, defaultValue = "20") Integer limit,
-                                    @CookieValue(value = "cartContent", required = false, defaultValue = "") String cartCookie,
-                                    @CookieValue(value = "keptContent", required = false, defaultValue = "") String keptCookie) {
+    public CommonPageableDto<BookListElement> popularBooks(@RequestParam(value = "offset", required = false, defaultValue = "0") Integer offset,
+                                                           @RequestParam(value = "limit", required = false, defaultValue = "20") Integer limit,
+                                                           @CookieValue(value = "cartContent", required = false, defaultValue = "") String cartCookie,
+                                                           @CookieValue(value = "keptContent", required = false, defaultValue = "") String keptCookie) {
         return bookService.getPageablePopularBooks(offset, limit, cartCookie, keptCookie);
     }
 
     @GetMapping("/author/{slug}")
-    public BookListDto booksByAuthor(
+    public CommonPageableDto<BookListElement> booksByAuthor(
             @PathVariable(name = "slug") String slug,
             @RequestParam(value = "offset", required = false, defaultValue = "0") Integer offset,
             @RequestParam(value = "limit", required = false, defaultValue = "20") Integer limit,
@@ -68,7 +69,7 @@ public class BookRestController {
     }
 
     @GetMapping("/tag/{name}")
-    public BookListDto booksByTag(
+    public CommonPageableDto<BookListElement> booksByTag(
             @PathVariable(name = "name") String tag,
             @RequestParam(value = "offset", required = false, defaultValue = "0") Integer offset,
             @RequestParam(value = "limit", required = false, defaultValue = "20") Integer limit,
@@ -78,11 +79,11 @@ public class BookRestController {
     }
 
     @GetMapping("/genre/{slug}")
-    public BookListDto booksByGenre(@RequestParam(value = "offset", required = false, defaultValue = "0") Integer offset,
-                                    @RequestParam(value = "limit", required = false, defaultValue = "20") Integer limit,
-                                    @CookieValue(value = "cartContent", required = false, defaultValue = "") String cartCookie,
-                                    @CookieValue(value = "keptContent", required = false, defaultValue = "") String keptCookie,
-                                    @PathVariable String slug) {
+    public CommonPageableDto<BookListElement> booksByGenre(@RequestParam(value = "offset", required = false, defaultValue = "0") Integer offset,
+                                                           @RequestParam(value = "limit", required = false, defaultValue = "20") Integer limit,
+                                                           @CookieValue(value = "cartContent", required = false, defaultValue = "") String cartCookie,
+                                                           @CookieValue(value = "keptContent", required = false, defaultValue = "") String keptCookie,
+                                                           @PathVariable String slug) {
         var genre = genreService.getGenreBySlug(slug);
         return bookService.getPageableBooksByGenre(offset, limit, genre, cartCookie, keptCookie);
     }

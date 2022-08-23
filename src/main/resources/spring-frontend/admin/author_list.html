@@ -52,7 +52,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="author : ${authorList.getAuthors()}">
+            <tr th:each="author : ${authorList.getData()}">
               <td th:text="${author.getId()}">id</td>
               <td><a th:text="${author.getName()}" th:href="@{/authors/} + ${author.getSlug()}"></a></td>
               <td><a type="button" title="Редактировать" th:href="@{/admin/authors/edit/} + ${author.getSlug()}">🖊</a></td>

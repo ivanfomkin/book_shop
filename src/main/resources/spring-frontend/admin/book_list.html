@@ -54,7 +54,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr th:each="book : ${bookList.getBooks()}">
+                        <tr th:each="book : ${bookList.getData()}">
                             <td th:text="${book.getId()}">id</td>
                             <td><a th:text="${book.getTitle()}" th:href="@{/books/} + ${book.getSlug()}"></a></td>
                             <td th:text="${book.getAuthors()}"></td>

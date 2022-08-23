@@ -1,10 +1,12 @@
 package com.github.ivanfomkin.bookshop.service.impl;
 
+import com.github.ivanfomkin.bookshop.dto.CommonPageableDto;
 import com.github.ivanfomkin.bookshop.dto.security.ContactConfirmationRequestDto;
 import com.github.ivanfomkin.bookshop.dto.security.ContactConfirmationResponse;
 import com.github.ivanfomkin.bookshop.dto.security.RegistrationFormDto;
 import com.github.ivanfomkin.bookshop.dto.user.UpdateProfileDto;
 import com.github.ivanfomkin.bookshop.dto.user.UserDto;
+import com.github.ivanfomkin.bookshop.dto.user.UserInfoElementDto;
 import com.github.ivanfomkin.bookshop.dto.user.UserPageDto;
 import com.github.ivanfomkin.bookshop.entity.enums.ContactType;
 import com.github.ivanfomkin.bookshop.entity.enums.TransactionType;
@@ -31,6 +33,8 @@ import com.github.ivanfomkin.bookshop.util.CommonUtils;
 import org.slf4j.helpers.MessageFormatter;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -383,5 +387,32 @@ public class UserServiceImpl implements UserService {
             }
             case DEPOSIT -> userRepository.addBalanceToUser(user, amount);
         }
+    }
+
+    @Override
+    public CommonPageableDto<UserInfoElementDto> getPageableAllUsers(Pageable pageable, String searchQuery) {
+        Page<UserEntity> userEntityPage;
+        if (searchQuery == null || searchQuery.isBlank()) {
+            userEntityPage = userRepository.findAll(pageable);
+        } else {
+            userEntityPage = userRepository.findUsersBySearchQuery(pageable, searchQuery);
+        }
+        var dto = new CommonPageableDto<UserInfoElementDto>();
+        dto.setTotal(userEntityPage.getTotalElements());
+        dto.setPerPage(pageable.getPageSize());
+        dto.setPage(userEntityPage.getNumber());
+        var data = userEntityPage.stream().map(u -> {
+            var element = new UserInfoElementDto();
+            element.setId(u.getId());
+            element.setOauthUser(u.getOauthId() != null && !u.getOauthId().isBlank());
+            element.setBalance(u.getBalance());
+            element.setName(u.getName());
+            element.setEmail(u.getEmail() == null ? "" : u.getEmail().getContact());
+            element.setPhone(u.getPhone() == null ? "" : u.getPhone().getContact());
+            element.setRegDate(u.getRegTime());
+            return element;
+        }).toList();
+        dto.setData(data);
+        return dto;
     }
 }

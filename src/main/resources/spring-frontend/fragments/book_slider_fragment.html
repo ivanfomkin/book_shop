@@ -8,7 +8,7 @@
     <div class="Slider Slider_carousel">
         <div class="Slider-box Cards" data-loadlimit="20" data-loadoffset="0"
              th:attr="data-load = ${dataLoad}, data-value = ${dataValue}">
-            <div class="Slider-item" th:each="book : ${bookList.books}">
+            <div class="Slider-item" th:each="book : ${bookList.data}">
                 <div class="Slider-content">
                     <th:block th:replace="~{fragments/book_card_fragment::book(book=${book})}"></th:block>
                 </div>

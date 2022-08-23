@@ -34,8 +34,8 @@
                     </div>
                 </div>
                 <div class="Cards">
-                    <div th:if="${bookList.books.isEmpty()}" th:text="#{my.booklist.empty}">Тут ничего нет :-(</div>
-                    <div class="Card" th:each="book : ${bookList.books}">
+                    <div th:if="${bookList.getData.isEmpty()}" th:text="#{my.booklist.empty}">Тут ничего нет :-(</div>
+                    <div class="Card" th:each="book : ${bookList.getData}">
                         <div class="Card-picture"><a th:href="'/books/' + ${book.slug}"><img th:src="${book.image}"/></a>
                             <a class="Card-status" th:if="${#strings.equals(book.status, 'PAID')}"
                                title="Куплена"><img alt="Куплена" src="/assets/img/icons/check.svg"></a>

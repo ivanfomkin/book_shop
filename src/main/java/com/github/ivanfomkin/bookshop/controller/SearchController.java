@@ -1,6 +1,7 @@
 package com.github.ivanfomkin.bookshop.controller;
 
-import com.github.ivanfomkin.bookshop.dto.book.BookListDto;
+import com.github.ivanfomkin.bookshop.dto.CommonPageableDto;
+import com.github.ivanfomkin.bookshop.dto.book.BookListElement;
 import com.github.ivanfomkin.bookshop.dto.search.SearchDto;
 import com.github.ivanfomkin.bookshop.exception.EmptySearchQueryException;
 import com.github.ivanfomkin.bookshop.service.Book2UserService;
@@ -25,8 +26,8 @@ public class SearchController extends ModelAttributeController {
     }
 
     @ModelAttribute("searchResults")
-    public BookListDto searchResults() {
-        return new BookListDto();
+    public CommonPageableDto<BookListElement> searchResults() {
+        return new CommonPageableDto<>();
     }
 
     @GetMapping(value = {"/search", "/search/{searchWord}"})

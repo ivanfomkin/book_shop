@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <div class="Cards Cards_refresh" th:fragment="pool">
-    <div class="Card" th:each="book : ${bookList.books}">
+    <div class="Card" th:each="book : ${bookList.data}">
         <div class="Card-picture"><a th:href="'/books/' + ${book.slug}"><img th:src="${book.image}"/></a>
             <a class="Card-status" th:if="${#strings.equals(book.status, 'PAID')}"
                title="Куплена"><img alt="Куплена" src="/assets/img/icons/check.svg"></a>

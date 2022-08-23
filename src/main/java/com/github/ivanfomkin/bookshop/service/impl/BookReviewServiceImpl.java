@@ -1,10 +1,10 @@
 package com.github.ivanfomkin.bookshop.service.impl;
 
+import com.github.ivanfomkin.bookshop.dto.CommonPageableDto;
 import com.github.ivanfomkin.bookshop.dto.CommonResultDto;
 import com.github.ivanfomkin.bookshop.dto.book.review.BookReviewDto;
 import com.github.ivanfomkin.bookshop.dto.book.review.BookReviewListElementDto;
 import com.github.ivanfomkin.bookshop.dto.review.BookReviewElementDto;
-import com.github.ivanfomkin.bookshop.dto.review.PageableBookReviewDto;
 import com.github.ivanfomkin.bookshop.dto.review.ReviewBookInfo;
 import com.github.ivanfomkin.bookshop.dto.review.ReviewUserInfo;
 import com.github.ivanfomkin.bookshop.entity.book.BookEntity;
@@ -74,8 +74,8 @@ public class BookReviewServiceImpl implements BookReviewService {
     }
 
     @Override
-    public PageableBookReviewDto getPageableAllReviews(Pageable pageable, String searchQuery) {
-        var dto = new PageableBookReviewDto();
+    public CommonPageableDto<BookReviewElementDto> getPageableAllReviews(Pageable pageable, String searchQuery) {
+        CommonPageableDto<BookReviewElementDto> dto = new CommonPageableDto<>();
         Page<BookReviewEntity> reviewEntities;
         if (searchQuery == null || searchQuery.isBlank()) {
             reviewEntities = bookReviewRepository.findAll(pageable);
@@ -94,7 +94,7 @@ public class BookReviewServiceImpl implements BookReviewService {
             reviewDto.setBook(new ReviewBookInfo(e.getBook().getSlug(), e.getBook().getTitle()));
             return reviewDto;
         }).toList();
-        dto.setReviews(books);
+        dto.setData(books);
         return dto;
     }
 

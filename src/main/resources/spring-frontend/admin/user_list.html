@@ -24,7 +24,7 @@
 <div class="Middle">
   <div class="wrap">
     <main class="Middle-main">
-      <h1 class="Middle-title">Управление отзывами
+      <h1 class="Middle-title">Управление авторами
       </h1>
       <br>
       <div class="Header-search">
@@ -33,7 +33,7 @@
             <input class="search-input" id="adminQuery" name="query" type="text"
                    placeholder="Поиск по названию" value="" th:value="${searchQuery}"/>
             <a class="search-button" type="button" name="search" id="search"
-               onclick="window.location.href='/admin/reviews/?searchQuery=' + document.getElementById('adminQuery').value">Поиск</a>
+               onclick="window.location.href='/admin/users/?searchQuery=' + document.getElementById('adminQuery').value">Поиск</a>
           </div>
         </div>
       </div>
@@ -43,36 +43,36 @@
             <thead>
             <tr>
               <th>Идентификатор</th>
-              <th>Книга</th>
-              <th>Пользователь</th>
-              <th>Дата отзыва</th>
-              <th>Текст отзыва</th>
-              <th></th>
+              <th>Имя</th>
+              <th>Email</th>
+              <th>Телефон</th>
+              <th>Баланс</th>
+              <th>Дата регистрации</th>
+              <th>oAuth2</th>
+              <th>Действия</th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="review : ${reviews.getData()}">
-              <td th:text="${review.getId()}">id</td>
-              <td><a th:text="${review.getBook().title()}" th:href="@{/books/} + ${review.getBook().slug()}"></a></td>
-              <td><a th:text="${review.getUser().name()}" th:href="@{/admin/users/} + ${review.getUser().id()}"></a></td>
-              <td th:text="${#temporals.format(review.getTime(), 'dd.MM.yyyy HH:mm')}"></td>
-              <td th:text="${review.getText()}"></td>
-              <td>
-              <form th:action="@{/admin/reviews/delete/} + ${review.getId()}" enctype="multipart/form-data" th:method="'DELETE'">
-                <button type="submit" title="Удалить">❌</button>
-              </form>
-              </td>
+            <tr th:each="userElement : ${users.getData()}">
+              <td th:text="${userElement.getId()}">id</td>
+              <td th:text="${userElement.getName()}">id</td>
+              <td th:text="${userElement.getEmail()}">id</td>
+              <td th:text="${userElement.getPhone()}">id</td>
+              <td th:text="${#numbers.formatDecimal(userElement.getBalance(), 0, 'WHITESPACE', 0, 'POINT') + ' руб.'}"></td>
+              <td th:text="${#temporals.format(userElement.getRegDate(), 'dd.MM.yyyy HH:mm')}"></td>
+              <td th:text="${userElement.isOauthUser() ? '✅' : '❌'}">id</td>
+              <td><a type="button" title="Книжная полка" th:href="@{/admin/users/edit/shelf/} + ${userElement.getId()}">📚</a></td>
             </tr>
             </tbody>
           </table>
         </div>
       </div>
       <div style="display: flex; overflow-x: auto">
-        <div th:if="${reviews.getTotal() > reviews.getPerPage()}" class="pagination"
-             th:each="pageNumber : ${#numbers.sequence(0, (reviews.getTotal()/reviews.getPerPage() - 1))}">
-          <a th:href="@{/admin/reviews/(perPage=${reviews.getPerPage()}, page=${pageNumber}, searchQuery=${searchQuery})}"
+        <div th:if="${users.getTotal() > users.getPerPage()}" class="pagination"
+             th:each="pageNumber : ${#numbers.sequence(0, (users.getTotal()/users.getPerPage() - 1))}">
+          <a th:href="@{/admin/users/(perPage=${users.getPerPage()}, page=${pageNumber}, searchQuery=${searchQuery})}"
              th:text="${pageNumber + 1}"
-             th:class="${pageNumber== reviews.getPage()} ? active"></a>
+             th:class="${pageNumber== users.getPage()} ? active"></a>
         </div>
       </div>
     </main>

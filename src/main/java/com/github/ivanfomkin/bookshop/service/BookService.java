@@ -1,7 +1,8 @@
 package com.github.ivanfomkin.bookshop.service;
 
+import com.github.ivanfomkin.bookshop.dto.CommonPageableDto;
 import com.github.ivanfomkin.bookshop.dto.book.BookEditDto;
-import com.github.ivanfomkin.bookshop.dto.book.BookListDto;
+import com.github.ivanfomkin.bookshop.dto.book.BookListElement;
 import com.github.ivanfomkin.bookshop.dto.book.BookSlugDto;
 import com.github.ivanfomkin.bookshop.entity.author.AuthorEntity;
 import com.github.ivanfomkin.bookshop.entity.book.BookEntity;
@@ -14,23 +15,23 @@ import java.io.IOException;
 import java.util.List;
 
 public interface BookService {
-    BookListDto getPageableRecommendedBooks(int offset, int limit, String cartCookie, String keptCookie);
+    CommonPageableDto<BookListElement> getPageableRecommendedBooks(int offset, int limit, String cartCookie, String keptCookie);
 
-    BookListDto getPageableAllBooks(Pageable pageable, String searchQuery);
+    CommonPageableDto<BookListElement> getPageableAllBooks(Pageable pageable, String searchQuery);
 
-    BookListDto getPageablePopularBooks(int offset, int limit, String cartCookie, String keptCookie);
+    CommonPageableDto<BookListElement> getPageablePopularBooks(int offset, int limit, String cartCookie, String keptCookie);
 
-    BookListDto getPageableRecentBooks(int offset, int limit, String fromDate, String toDate, String cartCookie, String keptCookie);
+    CommonPageableDto<BookListElement> getPageableRecentBooks(int offset, int limit, String fromDate, String toDate, String cartCookie, String keptCookie);
 
-    BookListDto getPageableBooksByTag(int offset, int limit, String tag, String cartCookie, String keptCookie);
+    CommonPageableDto<BookListElement> getPageableBooksByTag(int offset, int limit, String tag, String cartCookie, String keptCookie);
 
-    BookListDto getPageableBooksByTitle(int offset, int limit, String title, String cartCookie, String keptCookie);
+    CommonPageableDto<BookListElement> getPageableBooksByTitle(int offset, int limit, String title, String cartCookie, String keptCookie);
 
-    BookListDto getPageableBooksByGenre(int offset, int limit, GenreEntity genre, String cartCookie, String keptCookie);
+    CommonPageableDto<BookListElement> getPageableBooksByGenre(int offset, int limit, GenreEntity genre, String cartCookie, String keptCookie);
 
-    BookListDto getPageableBooksByAuthor(int offset, int limit, AuthorEntity author, String cartCookie, String keptCookie);
+    CommonPageableDto<BookListElement> getPageableBooksByAuthor(int offset, int limit, AuthorEntity author, String cartCookie, String keptCookie);
 
-    BookListDto getPageableBooksByAuthorSlug(int offset, int limit, String authorSlug, String cartCookie, String keptCookie);
+    CommonPageableDto<BookListElement> getPageableBooksByAuthorSlug(int offset, int limit, String authorSlug, String cartCookie, String keptCookie);
 
     BookSlugDto getBookSlugDtoBySlug(UserEntity userDto, String slug, String cartCookie, String keptCookie);
 
@@ -44,11 +45,11 @@ public interface BookService {
 
     List<BookEntity> getBooksBySlugIn(List<String> slugs);
 
-    BookListDto getPageableRecentBooks(String cartCookie, String keptCookie, int offset, int limit);
+    CommonPageableDto<BookListElement> getPageableRecentBooks(String cartCookie, String keptCookie, int offset, int limit);
 
-    BookListDto getPaidBooksByCurrentUser();
+    CommonPageableDto<BookListElement> getPaidBooksByCurrentUser();
 
-    BookListDto getArchivedBooksByCurrentUser();
+    CommonPageableDto<BookListElement> getArchivedBooksByCurrentUser();
 
     BookEditDto getBookEditDtoBySlug(String slug);
 

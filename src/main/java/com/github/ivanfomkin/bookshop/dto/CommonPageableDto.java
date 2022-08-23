@@ -1,13 +1,13 @@
-package com.github.ivanfomkin.bookshop.dto.book;
+package com.github.ivanfomkin.bookshop.dto;
 
 import lombok.Data;
 
 import java.util.List;
 
 @Data
-public class BookListDto {
+public class CommonPageableDto<T> {
     private long total;
-    private List<BookListElement> books;
+    private List<T> data;
     private long perPage;
     private long page;
 }

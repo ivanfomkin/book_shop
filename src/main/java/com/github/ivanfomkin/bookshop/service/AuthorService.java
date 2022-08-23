@@ -1,10 +1,9 @@
 package com.github.ivanfomkin.bookshop.service;
 
+import com.github.ivanfomkin.bookshop.dto.CommonPageableDto;
 import com.github.ivanfomkin.bookshop.dto.author.AuthorEditDto;
-import com.github.ivanfomkin.bookshop.dto.author.AuthorListDto;
 import com.github.ivanfomkin.bookshop.dto.author.AuthorElementDto;
 import com.github.ivanfomkin.bookshop.entity.author.AuthorEntity;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 import java.io.IOException;
@@ -21,7 +20,7 @@ public interface AuthorService {
     List<AuthorElementDto> getAllAuthors();
 
 
-    AuthorListDto getPageableAllAuthors(Pageable pageable, String searchQuery);
+    CommonPageableDto<AuthorElementDto> getPageableAllAuthors(Pageable pageable, String searchQuery);
 
     AuthorEditDto getAuthorEditDtoBySlug(String slug);
 
