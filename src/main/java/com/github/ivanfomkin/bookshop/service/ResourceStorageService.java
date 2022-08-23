@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 
 public interface ResourceStorageService {
-    String saveNewBookImage(MultipartFile file, String slug) throws IOException;
+    String saveNewEntityImage(MultipartFile file, String slug) throws IOException;
 
     Path getBookPathByHash(String hash);
 

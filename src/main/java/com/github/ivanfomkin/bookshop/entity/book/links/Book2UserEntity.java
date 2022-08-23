@@ -1,5 +1,7 @@
 package com.github.ivanfomkin.bookshop.entity.book.links;
 
+import com.github.ivanfomkin.bookshop.entity.book.BookEntity;
+import com.github.ivanfomkin.bookshop.entity.user.UserEntity;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -25,10 +27,10 @@ public class Book2UserEntity implements Serializable {
     @Column(name = "type_id", columnDefinition = "INT NOT NULL")
     private Integer typeId;
 
-    @Column(name = "book_id", columnDefinition = "INT NOT NULL")
-    private Integer bookId;
+    @ManyToOne
+    private BookEntity book;
 
-    @Column(name = "user_id", columnDefinition = "INT NOT NULL")
-    private Integer userId;
+    @ManyToOne
+    private UserEntity user;
 
 }

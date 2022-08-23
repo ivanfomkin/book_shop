@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Админ-панель 📚</title>
+  <meta name="description" content="Описание страницы">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+  <link href="../favicon.ico" rel="shortcut icon">
+  <link rel="preload" href="/assets/fonts/Montserrat/Montserrat-SemiBold.woff2" as="font" crossorigin="anonymous">
+  <link rel="preload" href="/assets/fonts/Montserrat/Montserrat-Light.woff2" as="font" crossorigin="anonymous">
+  <link rel="preload" href="/assets/fonts/Montserrat/Montserrat-Medium.woff2" as="font" crossorigin="anonymous">
+  <link rel="preload" href="/assets/fonts/Montserrat/Montserrat-ExtraBold.woff2" as="font" crossorigin="anonymous">
+  <link rel="stylesheet" href="/assets/css/fonts.min.css?v=59641147">
+  <link rel="stylesheet" href="/assets/css/basic.min.css?v=59641147">
+  <link rel="stylesheet" href="/assets/css/extra.min.css?v=59641147">
+  <link rel="stylesheet" href="/assets/css/pagination.css">
+  <script src="/assets/plg/html5shiv/html5shiv.js"></script>
+  <script src="/assets/plg/html5shiv/html5shiv-printshiv.js"></script>
+  <script defer="defer" src="/assets/js/scripts.min.js?v=59641147"></script>
+</head>
+<body class="Site">
+<header class="Header"
+        th:replace="~{fragments/common_header_fragment :: head(admin='menu-item menu-item_ACTIVE', status='unauthorized')}"></header>
+<div class="Middle">
+  <div class="wrap">
+    <main class="Middle-main">
+      <h1 class="Middle-title">Управление авторами
+      </h1>
+      <br>
+      <div class="Header-search">
+        <div class="search">
+          <div class="form form_search">
+            <input class="search-input" id="adminQuery" name="query" type="text"
+                   placeholder="Поиск по названию" value="" th:value="${searchQuery}"/>
+            <a class="search-button" type="button" name="search" id="search"
+               onclick="window.location.href='/admin/authors/?searchQuery=' + document.getElementById('adminQuery').value">Поиск</a>
+          </div>
+        </div>
+      </div>
+      <div class="Section">
+        <div class="Profile-btn">
+          <a class="btn btn_primary" th:href="@{/admin/authors/create}"type="submit">Добавить автора</a>
+        </div>
+        <div class="tableWrap">
+          <table class="table table_noMargin">
+            <thead>
+            <tr>
+              <th>Идентификатор</th>
+              <th>Имя</th>
+              <th></th>
+              <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="author : ${authorList.getAuthors()}">
+              <td th:text="${author.getId()}">id</td>
+              <td><a th:text="${author.getName()}" th:href="@{/authors/} + ${author.getSlug()}"></a></td>
+              <td><a type="button" title="Редактировать" th:href="@{/admin/authors/edit/} + ${author.getSlug()}">🖊</a></td>
+              <td><a type="button" title="Удалить" th:href="@{/admin/authors/delete/} + ${author.getSlug()}">❌</a></td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div style="display: flex; overflow-x: auto">
+        <div th:if="${authorList.getTotal() > authorList.getPerPage()}" class="pagination"
+             th:each="pageNumber : ${#numbers.sequence(0, (authorList.getTotal()/authorList.getPerPage() - 1))}">
+          <a th:href="@{/admin/authors/(perPage=${authorList.getPerPage()}, page=${pageNumber}, searchQuery=${searchQuery})}"
+             th:text="${pageNumber + 1}"
+             th:class="${pageNumber== authorList.getPage()} ? active"></a>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+<footer class="Footer" th:replace="~{fragments/common_footer_fragment :: footer}"></footer>
+<script src="/assets/plg/jQuery/jquery-3.5.1.min.js"></script>
+</body>
+</html>

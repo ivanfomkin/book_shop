@@ -34,7 +34,7 @@ public interface BookRepository extends JpaRepository<BookEntity, Integer> {
 
     @ExecutionTimeLog
     @Query("""
-            SELECT b FROM BookEntity b LEFT OUTER JOIN Book2UserEntity b2u ON b2u.bookId = b.id
+            SELECT b FROM BookEntity b LEFT OUTER JOIN Book2UserEntity b2u ON b2u.book = b
             LEFT OUTER JOIN Book2UserTypeEntity b2ut ON b2ut.id = b2u.typeId
             GROUP BY b.id
             ORDER BY SUM(CASE WHEN b2ut.name = 'PAID' THEN 1 WHEN (b2ut.name = 'CART') THEN 0.7 WHEN (b2ut.name = 'KEPT') THEN 0.4 ELSE 0 END) DESC, b.publishDate DESC
@@ -64,20 +64,21 @@ public interface BookRepository extends JpaRepository<BookEntity, Integer> {
     @Query("UPDATE BookEntity SET image = :image WHERE slug = :slug")
     void updateBookImageBySlug(String slug, @Param("image") String imagePath);
 
-    @Query("SELECT b FROM BookEntity b JOIN Book2UserEntity b2u ON b2u.bookId = b.id JOIN Book2UserTypeEntity b2ute ON b2ute.id = b2u.typeId JOIN UserEntity u ON b2u.userId = u.id WHERE b2ute.name = :type AND u = :user")
+    @Query("SELECT b FROM BookEntity b JOIN Book2UserEntity b2u ON b2u.book = b JOIN Book2UserTypeEntity b2ute ON b2ute.id = b2u.typeId JOIN UserEntity u ON b2u = u WHERE b2ute.name = :type AND u = :user")
     List<BookEntity> findBookEntitiesByUserAndType(UserEntity user, Book2UserType type);
-
-    @Query("SELECT id FROM BookEntity where slug = :slug")
-    Integer findBookIdBySlug(String slug);
 
     List<BookEntity> findBookEntitiesBySlugIn(List<String> slugList);
 
     @Query("""
             SELECT b FROM BookEntity b LEFT OUTER JOIN b.votes v
-            WHERE b.id NOT IN (SELECT b2u.bookId FROM Book2UserEntity b2u JOIN UserEntity u ON u.id = b2u.userId WHERE u = :currentUser)
+            WHERE b NOT IN (SELECT b2u.book FROM Book2UserEntity b2u JOIN UserEntity u ON u = b2u.user WHERE u = :currentUser)
             GROUP BY b.id ORDER BY AVG(v.value) DESC, count(v) DESC, b.publishDate DESC
             """)
     Page<BookEntity> findRecommendedBooksForUser(Pageable pageable, UserEntity currentUser);
 
     Page<BookEntity> findBookEntitiesByTitleContainingIgnoreCase(Pageable pageable, String searchQuery);
+
+    @Modifying
+    @Transactional
+    void deleteBookEntityBySlug(String slug);
 }

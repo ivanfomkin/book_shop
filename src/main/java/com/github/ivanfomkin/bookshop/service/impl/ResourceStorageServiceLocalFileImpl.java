@@ -38,7 +38,7 @@ public class ResourceStorageServiceLocalFileImpl implements ResourceStorageServi
     }
 
     @Override
-    public String saveNewBookImage(MultipartFile file, String slug) throws IOException {
+    public String saveNewEntityImage(MultipartFile file, String slug) throws IOException {
         String resourceUri = null;
         if (file != null && !file.isEmpty()) {
             if (!new File(uploadPath).exists()) {

@@ -82,7 +82,7 @@ public class BooksController extends ModelAttributeController {
 
     @PostMapping("/{slug}/img/save")
     public String saveNewBookImage(@PathVariable String slug, @RequestParam("file") MultipartFile bookImage) throws IOException {
-        String newBookImage = resourceStorageService.saveNewBookImage(bookImage, slug);
+        String newBookImage = resourceStorageService.saveNewEntityImage(bookImage, slug);
         bookService.updateBookImageBySlug(slug, newBookImage);
         return "redirect:/books/" + slug;
     }

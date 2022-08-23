@@ -65,12 +65,12 @@ public class BookEntity implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "genre_id"))
     private List<GenreEntity> genres;
 
-    @OneToMany(mappedBy = "book")
+    @OneToMany(mappedBy = "book", cascade = CascadeType.REMOVE)
     private List<BookFileEntity> files;
 
-    @OneToMany(mappedBy = "book")
+    @OneToMany(mappedBy = "book", cascade = CascadeType.REMOVE)
     private List<BookVoteEntity> votes;
 
-    @OneToMany(mappedBy = "book")
+    @OneToMany(mappedBy = "book", cascade = CascadeType.REMOVE)
     private List<BookReviewEntity> reviews;
 }

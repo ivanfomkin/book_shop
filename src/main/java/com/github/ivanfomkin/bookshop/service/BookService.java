@@ -15,6 +15,7 @@ import java.util.List;
 
 public interface BookService {
     BookListDto getPageableRecommendedBooks(int offset, int limit, String cartCookie, String keptCookie);
+
     BookListDto getPageableAllBooks(Pageable pageable, String searchQuery);
 
     BookListDto getPageablePopularBooks(int offset, int limit, String cartCookie, String keptCookie);
@@ -41,8 +42,6 @@ public interface BookService {
 
     List<BookEntity> getBooksByUserAndType(UserEntity user, Book2UserType cart);
 
-    Integer getBookIdBuSlug(String slug);
-
     List<BookEntity> getBooksBySlugIn(List<String> slugs);
 
     BookListDto getPageableRecentBooks(String cartCookie, String keptCookie, int offset, int limit);
@@ -56,4 +55,6 @@ public interface BookService {
     void updateBookEntity(BookEditDto book) throws IOException;
 
     void createBook(BookEditDto bookEditDto) throws IOException;
+
+    void deleteBookBySlug(String slug);
 }

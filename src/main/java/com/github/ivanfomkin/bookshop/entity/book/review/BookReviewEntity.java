@@ -37,7 +37,7 @@ public class BookReviewEntity implements Serializable {
     @JoinColumn(name = "user_id")
     private UserEntity user;
 
-    @OneToMany(mappedBy = "bookReview")
+    @OneToMany(mappedBy = "bookReview", cascade = CascadeType.REMOVE)
     private List<BookReviewLikeEntity> reviewLikes;
 
     @Formula("(SELECT count(l.id) FROM book_review_like l WHERE l.value = 1 AND l.review_id = id)")

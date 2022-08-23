@@ -32,7 +32,7 @@ public class AuthorEntity implements Serializable {
     @Column(columnDefinition = "TEXT")
     private String description;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.REMOVE)
     @JoinTable(name = "book2author",
             joinColumns = @JoinColumn(name = "author_id"),
             inverseJoinColumns = @JoinColumn(name = "book_id"))

@@ -35,8 +35,8 @@ public class Book2UserServiceImpl implements Book2UserService {
         var bookStatus = book2UserRepository.findBookStatusByUserAndSlug(user, slug);
         if (bookStatus == null) {
             bookStatus = new Book2UserEntity();
-            bookStatus.setUserId(user.getId());
-            bookStatus.setBookId(bookService.getBookIdBuSlug(slug));
+            bookStatus.setUser(user);
+            bookStatus.setBook(bookService.getBookEntityBySlug(slug));
             bookStatus.setTypeId(book2UserTypeRepository.findBook2UserTypeEntityByName(status).getId());
             book2UserRepository.save(bookStatus);
         } else {
@@ -53,8 +53,8 @@ public class Book2UserServiceImpl implements Book2UserService {
         var bookStatus = book2UserRepository.findBookStatusByUserAndBook(user, bookEntity);
         if (bookStatus == null) {
             bookStatus = new Book2UserEntity();
-            bookStatus.setUserId(user.getId());
-            bookStatus.setBookId(bookEntity.getId());
+            bookStatus.setUser(user);
+            bookStatus.setBook(bookEntity);
             bookStatus.setTypeId(book2UserTypeRepository.findBook2UserTypeEntityByName(status).getId());
             book2UserRepository.save(bookStatus);
         } else {

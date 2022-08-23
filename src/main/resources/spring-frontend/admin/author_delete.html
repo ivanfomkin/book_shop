@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Админ-панель 📚</title>
+  <meta name="description" content="Описание страницы">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+  <link href="../favicon.ico" rel="shortcut icon">
+  <link rel="preload" href="/assets/fonts/Montserrat/Montserrat-SemiBold.woff2" as="font" crossorigin="anonymous">
+  <link rel="preload" href="/assets/fonts/Montserrat/Montserrat-Light.woff2" as="font" crossorigin="anonymous">
+  <link rel="preload" href="/assets/fonts/Montserrat/Montserrat-Medium.woff2" as="font" crossorigin="anonymous">
+  <link rel="preload" href="/assets/fonts/Montserrat/Montserrat-ExtraBold.woff2" as="font" crossorigin="anonymous">
+  <link rel="stylesheet" href="/assets/css/fonts.min.css?v=59641147">
+  <link rel="stylesheet" href="/assets/css/basic.min.css?v=59641147">
+  <link rel="stylesheet" href="/assets/css/extra.min.css?v=59641147">
+  <link rel="stylesheet" href="/assets/css/pagination.css">
+  <script src="/assets/plg/html5shiv/html5shiv.js"></script>
+  <script src="/assets/plg/html5shiv/html5shiv-printshiv.js"></script>
+  <script defer="defer" src="/assets/js/scripts.min.js?v=59641147"></script>
+</head>
+<body class="Site">
+<header class="Header"
+        th:replace="~{fragments/common_header_fragment :: head(admin='menu-item menu-item_ACTIVE', status='unauthorized')}"></header>
+<div class="Middle">
+  <div class="wrap">
+    <main class="Middle-main">
+      <h1 class="Middle-title">Удаление автора
+      </h1>
+      <br>
+      <div class="Section">
+        <p>
+          Вы действительно хотите удалить автора? <br>
+          Вместе с автором удалятся так же его книги, отзывы на книгу, лайки на отзывы и оценки книги
+        </p>
+        <br>
+        <form class="form Profile-form" action="#" enctype="multipart/form-data" th:method="${method}">
+          <div class="row">
+            <div class="row-block">
+              <div class="form-group">
+                <div>
+                  <a class="btn btn_primary" th:href="@{/admin/authors/}" type="button">Отменить
+                  </a>
+                  <button class="btn btn_warning" type="submit">Удалить
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+
+      </div>
+    </main>
+  </div>
+</div>
+<footer class="Footer" th:replace="~{fragments/common_footer_fragment :: footer}"></footer>
+<script src="/assets/plg/jQuery/jquery-3.5.1.min.js"></script>
+</body>
+</html>

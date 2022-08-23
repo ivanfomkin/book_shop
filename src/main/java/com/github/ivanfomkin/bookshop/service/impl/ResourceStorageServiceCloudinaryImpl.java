@@ -23,7 +23,7 @@ public class ResourceStorageServiceCloudinaryImpl extends ResourceStorageService
     }
 
     @Override
-    public String saveNewBookImage(MultipartFile file, String slug) throws IOException {
+    public String saveNewEntityImage(MultipartFile file, String slug) throws IOException {
         var cloudinaryUploadResult = cloudinary.uploader().upload(file.getBytes(), Map.of());
         return cloudinaryUploadResult.get("url").toString();
     }

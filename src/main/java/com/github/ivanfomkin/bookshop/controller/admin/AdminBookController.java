@@ -82,4 +82,16 @@ public class AdminBookController extends ModelAttributeController {
         bookService.createBook(bookEditDto);
         return "redirect:/admin/books/";
     }
+
+    @GetMapping("/delete/{slug}")
+    public String deleteBookPage(Model model, @PathVariable(name = "slug") String slug) {
+        model.addAttribute("method", "DELETE");
+        return "admin/book_delete";
+    }
+
+    @DeleteMapping("/delete/{slug}")
+    public String deleteAuthor(@PathVariable(name = "slug") String slug) {
+        bookService.deleteBookBySlug(slug);
+        return "redirect:/admin/books/";
+    }
 }
