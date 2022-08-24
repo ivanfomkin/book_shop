@@ -77,7 +77,7 @@ public class UserServiceImpl implements UserService {
         this.userContactRepository = userContactRepository;
     }
 
-    @Transactional
+    @Transactional(propagation = Propagation.REQUIRED)
     @Override
     public UserEntity registerNewUser(RegistrationFormDto formDto) {
         List<String> contactList = new ArrayList<>();

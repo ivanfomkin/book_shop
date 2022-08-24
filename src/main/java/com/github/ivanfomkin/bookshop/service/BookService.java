@@ -2,6 +2,7 @@ package com.github.ivanfomkin.bookshop.service;
 
 import com.github.ivanfomkin.bookshop.dto.CommonPageableDto;
 import com.github.ivanfomkin.bookshop.dto.book.BookEditDto;
+import com.github.ivanfomkin.bookshop.dto.book.BookGiftDto;
 import com.github.ivanfomkin.bookshop.dto.book.BookListElement;
 import com.github.ivanfomkin.bookshop.dto.book.BookSlugDto;
 import com.github.ivanfomkin.bookshop.entity.author.AuthorEntity;
@@ -58,4 +59,6 @@ public interface BookService {
     void createBook(BookEditDto bookEditDto) throws IOException;
 
     void deleteBookBySlug(String slug);
+
+    List<BookGiftDto> getBooksForUserGift(Integer userId);
 }

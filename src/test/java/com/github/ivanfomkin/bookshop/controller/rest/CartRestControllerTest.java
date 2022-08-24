@@ -19,13 +19,11 @@ import org.springframework.test.context.jdbc.Sql;
 
 import javax.servlet.http.Cookie;
 
-import java.util.List;
-
+import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.cookie;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.hamcrest.Matchers.*;
 
 class CartRestControllerTest extends AbstractTest {
     private static String cartCookieName;
@@ -115,7 +113,7 @@ class CartRestControllerTest extends AbstractTest {
                 .andExpect(jsonPath("$.result", is(true)));
         var currentUser = userRepository.findUserEntityByContacts_contact("test@user.ru");
         var book2userEntity = book2UserRepository.findBookStatusByUserAndSlug(currentUser, bookSlug);
-        var book2UserType = book2UserTypeRepository.findById(book2userEntity.getTypeId()).get();
+        var book2UserType = book2userEntity.getType();
         assertNotNull(book2userEntity);
         assertEquals(cartType, book2UserType.getName());
     }
@@ -128,9 +126,9 @@ class CartRestControllerTest extends AbstractTest {
         var bookEntity = bookRepository.findBookEntityBySlug(bookSlug).get();
         var currentUser = userRepository.findUserEntityByContacts_contact("test@user.ru");
         var alreadyExistCartEntity = new Book2UserEntity();
-        alreadyExistCartEntity.setBookId(bookEntity.getId());
-        alreadyExistCartEntity.setUserId(currentUser.getId());
-        alreadyExistCartEntity.setTypeId(book2UserTypeRepository.findBook2UserTypeEntityByName(cartType).getId());
+        alreadyExistCartEntity.setBook(bookEntity);
+        alreadyExistCartEntity.setUser(currentUser);
+        alreadyExistCartEntity.setType(book2UserTypeRepository.findBook2UserTypeEntityByName(cartType));
         book2UserRepository.save(alreadyExistCartEntity);
 
         mockMvc.perform(
@@ -140,10 +138,10 @@ class CartRestControllerTest extends AbstractTest {
                 .andExpect(jsonPath("$.result", is(true)));
 
         var book2userEntity = book2UserRepository.findBookStatusByUserAndSlug(currentUser, bookSlug);
-        var book2UserType = book2UserTypeRepository.findById(book2userEntity.getTypeId()).get();
+        var book2UserType = book2userEntity.getType();
         assertNotNull(book2userEntity);
         assertEquals(cartType, book2UserType.getName());
-        assertEquals(alreadyExistCartEntity.getId(),book2userEntity.getId());
+        assertEquals(alreadyExistCartEntity.getId(), book2userEntity.getId());
 
     }
 
@@ -156,9 +154,9 @@ class CartRestControllerTest extends AbstractTest {
         var bookEntity = bookRepository.findBookEntityBySlug(bookSlug).get();
         var currentUser = userRepository.findUserEntityByContacts_contact("test@user.ru");
         var alreadyExistCartEntity = new Book2UserEntity();
-        alreadyExistCartEntity.setBookId(bookEntity.getId());
-        alreadyExistCartEntity.setUserId(currentUser.getId());
-        alreadyExistCartEntity.setTypeId(book2UserTypeRepository.findBook2UserTypeEntityByName(cartType).getId());
+        alreadyExistCartEntity.setBook(bookEntity);
+        alreadyExistCartEntity.setUser(currentUser);
+        alreadyExistCartEntity.setType(book2UserTypeRepository.findBook2UserTypeEntityByName(cartType));
         book2UserRepository.save(alreadyExistCartEntity);
 
         mockMvc.perform(

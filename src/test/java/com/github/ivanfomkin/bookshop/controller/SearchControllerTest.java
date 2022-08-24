@@ -11,7 +11,7 @@ class SearchControllerTest extends AbstractTest {
     void searchPage_searchExistsBookByName_searchPageResultContainsRequestedBook() throws Exception {
         mockMvc.perform(get("/search/Doom"))
                 .andExpect(status().isOk())
-                .andExpect(xpath("/html/body/div/div/main/div[2]/div/div[1]/div[2]/strong/a").string("Sword of Doom, The (Dai-bosatsu tôge)"));
+                .andExpect(xpath("/html/body/div/div/main/div/div/div[1]/div[2]/strong/a").string("Sword of Doom, The (Dai-bosatsu tôge)"));
     }
 
     @Test

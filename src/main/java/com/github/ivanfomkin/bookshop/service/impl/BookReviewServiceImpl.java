@@ -5,7 +5,7 @@ import com.github.ivanfomkin.bookshop.dto.CommonResultDto;
 import com.github.ivanfomkin.bookshop.dto.book.review.BookReviewDto;
 import com.github.ivanfomkin.bookshop.dto.book.review.BookReviewListElementDto;
 import com.github.ivanfomkin.bookshop.dto.review.BookReviewElementDto;
-import com.github.ivanfomkin.bookshop.dto.review.ReviewBookInfo;
+import com.github.ivanfomkin.bookshop.dto.review.BookSlugInfoDto;
 import com.github.ivanfomkin.bookshop.dto.review.ReviewUserInfo;
 import com.github.ivanfomkin.bookshop.entity.book.BookEntity;
 import com.github.ivanfomkin.bookshop.entity.book.review.BookReviewEntity;
@@ -91,7 +91,7 @@ public class BookReviewServiceImpl implements BookReviewService {
             reviewDto.setText(e.getText());
             reviewDto.setTime(e.getTime());
             reviewDto.setUser(new ReviewUserInfo(e.getUser().getId(), e.getUser().getName()));
-            reviewDto.setBook(new ReviewBookInfo(e.getBook().getSlug(), e.getBook().getTitle()));
+            reviewDto.setBook(new BookSlugInfoDto(e.getBook().getSlug(), e.getBook().getTitle()));
             return reviewDto;
         }).toList();
         dto.setData(books);

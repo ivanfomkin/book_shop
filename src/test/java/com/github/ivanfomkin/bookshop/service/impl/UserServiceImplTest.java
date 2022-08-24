@@ -8,15 +8,18 @@ import com.github.ivanfomkin.bookshop.entity.user.UserContactEntity;
 import com.github.ivanfomkin.bookshop.entity.user.UserEntity;
 import com.github.ivanfomkin.bookshop.repository.UserContactRepository;
 import com.github.ivanfomkin.bookshop.repository.UserRepository;
+import com.github.ivanfomkin.bookshop.repository.UserRoleRepository;
 import com.github.ivanfomkin.bookshop.security.BookStoreUserDetails;
 import com.github.ivanfomkin.bookshop.security.BookStoreUserDetailsService;
 import com.github.ivanfomkin.bookshop.service.UserService;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.test.util.ReflectionTestUtils;
 
 import java.util.List;
 
@@ -37,6 +40,9 @@ class UserServiceImplTest extends AbstractTest {
 
     @MockBean
     private BookStoreUserDetailsService userDetailsService;
+
+    @MockBean
+    private UserRoleRepository userRoleRepository;
 
     private static RegistrationFormDto registrationFormDto;
 
@@ -64,6 +70,10 @@ class UserServiceImplTest extends AbstractTest {
 
     @Test
     void registerNewUser_validRegistrationForm_userEntityFieldsEqualsRegistrationFormFields() {
+        doAnswer(invocation -> {
+            ReflectionTestUtils.setField((UserEntity) invocation.getArgument(0), "id", 10000);
+            return null;
+        }).when(userRepositoryMock).save(any());
         var registeredUser = userService.registerNewUser(registrationFormDto);
         var registeredUserContacts = registeredUser.getContacts().stream().map(UserContactEntity::getContact).toList();
         assertNotNull(registeredUser);

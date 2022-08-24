@@ -24,8 +24,9 @@ public class Book2UserEntity implements Serializable {
     @Column(columnDefinition = "TIMESTAMP NOT NULL")
     private LocalDateTime time;
 
-    @Column(name = "type_id", columnDefinition = "INT NOT NULL")
-    private Integer typeId;
+    @ManyToOne
+    @JoinColumn(name = "type_id")
+    private Book2UserTypeEntity type;
 
     @ManyToOne
     private BookEntity book;

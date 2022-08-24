@@ -35,7 +35,7 @@ public interface BookRepository extends JpaRepository<BookEntity, Integer> {
     @ExecutionTimeLog
     @Query("""
             SELECT b FROM BookEntity b LEFT OUTER JOIN Book2UserEntity b2u ON b2u.book = b
-            LEFT OUTER JOIN Book2UserTypeEntity b2ut ON b2ut.id = b2u.typeId
+            LEFT OUTER JOIN b2u.type b2ut ON b2ut.id = b2u.type.id
             GROUP BY b.id
             ORDER BY SUM(CASE WHEN b2ut.name = 'PAID' THEN 1 WHEN (b2ut.name = 'CART') THEN 0.7 WHEN (b2ut.name = 'KEPT') THEN 0.4 ELSE 0 END) DESC, b.publishDate DESC
             """)
@@ -64,7 +64,7 @@ public interface BookRepository extends JpaRepository<BookEntity, Integer> {
     @Query("UPDATE BookEntity SET image = :image WHERE slug = :slug")
     void updateBookImageBySlug(String slug, @Param("image") String imagePath);
 
-    @Query("SELECT b FROM BookEntity b JOIN Book2UserEntity b2u ON b2u.book = b JOIN Book2UserTypeEntity b2ute ON b2ute.id = b2u.typeId JOIN UserEntity u ON b2u = u WHERE b2ute.name = :type AND u = :user")
+    @Query("SELECT b2u.book FROM Book2UserEntity b2u WHERE b2u.type.name = :type AND b2u.user = :user")
     List<BookEntity> findBookEntitiesByUserAndType(UserEntity user, Book2UserType type);
 
     List<BookEntity> findBookEntitiesBySlugIn(List<String> slugList);
@@ -81,4 +81,7 @@ public interface BookRepository extends JpaRepository<BookEntity, Integer> {
     @Modifying
     @Transactional
     void deleteBookEntityBySlug(String slug);
+
+    @Query("SELECT b FROM BookEntity b WHERE b NOT IN (SELECT b2u.book FROM Book2UserEntity b2u WHERE b2u.user.id = :userId AND (b2u.type.name = com.github.ivanfomkin.bookshop.entity.enums.Book2UserType.ARCHIVED OR b2u.type.name = com.github.ivanfomkin.bookshop.entity.enums.Book2UserType.PAID))")
+    List<BookEntity> findBooksForGiftByUserId(Integer userId);
 }

@@ -9,6 +9,6 @@ public class BookReviewElementDto {
     private int id;
     private String text;
     private LocalDateTime time;
-    private ReviewBookInfo book;
+    private BookSlugInfoDto book;
     private ReviewUserInfo user;
 }
