@@ -10,7 +10,6 @@ import com.github.ivanfomkin.bookshop.dto.user.UserInfoElementDto;
 import com.github.ivanfomkin.bookshop.dto.user.UserPageDto;
 import com.github.ivanfomkin.bookshop.entity.enums.TransactionType;
 import com.github.ivanfomkin.bookshop.entity.user.UserEntity;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 import java.util.Map;

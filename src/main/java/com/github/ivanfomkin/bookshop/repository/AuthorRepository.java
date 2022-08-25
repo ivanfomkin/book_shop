@@ -1,7 +1,6 @@
 package com.github.ivanfomkin.bookshop.repository;
 
 import com.github.ivanfomkin.bookshop.entity.author.AuthorEntity;
-import liquibase.pro.packaged.S;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

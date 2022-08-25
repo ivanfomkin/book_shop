@@ -1,0 +1,17 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+    <changeSet author="ivan.fomkin" id="16425780931">
+        <sql>
+            DELETE FROM book2user WHERE user_id NOT IN (SELECT id FROM users);
+        </sql>
+        <sql>
+            WITH admin AS (
+            INSERT INTO users (balance, hash, name, reg_time, password) VALUES (100000, gen_random_uuid()::varchar, 'Admin', now(), '{bcrypt}$2a$10$S6yTp43OBe91Yl4KH1piReieJvVzIq/FPK3Py72v4M3HeGurC7sV2') RETURNING id),
+                inserted_contact AS (INSERT INTO user_contact (approved, contact, type, user_id) SELECT 1, 'admin@admin.ru', 'EMAIL', a.id FROM admin a),
+                inserdet_user_role AS (INSERT INTO user_roles (user_id, role) SELECT a.id, 'ROLE_USER' FROM admin a)
+            INSERT INTO user_roles (user_id, role) SELECT a.id, 'ROLE_ADMIN' FROM admin a
+        </sql>
+    </changeSet>
+</databaseChangeLog>

@@ -30,6 +30,7 @@ import com.github.ivanfomkin.bookshop.service.ChangeUserDataService;
 import com.github.ivanfomkin.bookshop.service.EmailMessageService;
 import com.github.ivanfomkin.bookshop.service.UserService;
 import com.github.ivanfomkin.bookshop.util.CommonUtils;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.helpers.MessageFormatter;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -50,6 +51,7 @@ import org.springframework.util.Assert;
 import java.util.*;
 
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
     private final JWTUtil jwtUtil;
     private final MessageSource messageSource;
@@ -63,19 +65,6 @@ public class UserServiceImpl implements UserService {
     private final BookStoreUserDetailsService userDetailsService;
 
     private static final String LOGIN_ERROR = "Неверное имя пользователя или пароль";
-
-    public UserServiceImpl(JWTUtil jwtUtil, MessageSource messageSource, UserRepository userRepository, PasswordEncoder passwordEncoder, UserRoleRepository userRoleRepository, AuthenticationManager authenticationManager, EmailMessageService emailMessageService, ChangeUserDataService changeUserDataService, UserContactRepository userContactRepository, BookStoreUserDetailsService userDetailsService) {
-        this.jwtUtil = jwtUtil;
-        this.messageSource = messageSource;
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
-        this.userRoleRepository = userRoleRepository;
-        this.userDetailsService = userDetailsService;
-        this.emailMessageService = emailMessageService;
-        this.changeUserDataService = changeUserDataService;
-        this.authenticationManager = authenticationManager;
-        this.userContactRepository = userContactRepository;
-    }
 
     @Transactional(propagation = Propagation.REQUIRED)
     @Override

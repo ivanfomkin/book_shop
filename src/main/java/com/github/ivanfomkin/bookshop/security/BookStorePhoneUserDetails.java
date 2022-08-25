@@ -1,6 +1,5 @@
 package com.github.ivanfomkin.bookshop.security;
 
-import com.github.ivanfomkin.bookshop.entity.enums.ContactType;
 import com.github.ivanfomkin.bookshop.entity.user.UserContactEntity;
 import com.github.ivanfomkin.bookshop.entity.user.UserEntity;
 
