@@ -1,0 +1,21 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+    <changeSet author="ivan.fomkin" id="16425780931">
+        <createTable tableName="book_recommendations">
+            <column name="user_id" type="INTEGER">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="recommendations" type="INTEGER[]">
+                <constraints nullable="false"/>
+            </column>
+            <column name="update_date" type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="book_recommendations" baseColumnNames="user_id"
+                                 constraintName="user_id_recommendations_fk" referencedTableName="users"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+</databaseChangeLog>

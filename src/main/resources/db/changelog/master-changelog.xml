@@ -31,4 +31,7 @@
     <include file="db/changelog/2022/08/05-01-create-profile-change-table.xml"/>
     <include file="db/changelog/2022/08/12-01-add-book-files.xml"/>
     <include file="db/changelog/2022/08/13-01-add-book-view-history-data.xml"/>
+    <include file="db/changelog/2022/08/25-01-add-book-like-data.xml"/>
+    <include file="db/changelog/2022/08/27-01-edit-book-view-history-table.xml"/>
+    <include file="db/changelog/2022/08/27-02-add-book-reccomendations-table.xml"/>
 </databaseChangeLog>

@@ -75,6 +75,6 @@ public class BookEntity implements Serializable {
     @OneToMany(mappedBy = "book")
     private List<BookReviewEntity> reviews;
 
-    @OneToMany(mappedBy = "bookViewHistoryId.book")
+    @OneToMany(mappedBy = "book")
     private List<BookViewHistoryEntity> viewHistory;
 }
