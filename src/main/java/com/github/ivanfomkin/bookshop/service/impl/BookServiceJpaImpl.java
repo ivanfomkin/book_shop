@@ -15,6 +15,7 @@ import com.github.ivanfomkin.bookshop.exception.NotFoundException;
 import com.github.ivanfomkin.bookshop.repository.Book2UserRepository;
 import com.github.ivanfomkin.bookshop.repository.BookRepository;
 import com.github.ivanfomkin.bookshop.service.*;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.data.domain.Page;
@@ -29,25 +30,30 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Service
 public class BookServiceJpaImpl implements BookService {
     private final UserService userService;
     private final CookieService cookieService;
     private final BookRepository bookRepository;
     private final AuthorService authorService;
-    private final DateTimeFormatter dateTimeFormatter;
     private final BookVoteService bookVoteService;
     private final BookReviewService bookReviewService;
+    private final DateTimeFormatter dateTimeFormatter;
     private final Book2UserRepository book2UserRepository;
+    private final RecommendationService recommendationService;
+    private final BookViewHistoryService bookViewHistoryService;
 
     private final LocalDate minLocalDate;
     private final LocalDate maxLocalDate;
 
     private final MessageSource messageSource;
 
-    public BookServiceJpaImpl(UserService userService, CookieService cookieService, BookRepository bookRepository, AuthorService authorService, BookVoteService bookVoteService, BookReviewService bookReviewService, Book2UserRepository book2UserRepository, MessageSource messageSource) {
+    public BookServiceJpaImpl(UserService userService, CookieService cookieService, BookRepository bookRepository, AuthorService authorService, BookVoteService bookVoteService, BookReviewService bookReviewService, Book2UserRepository book2UserRepository, RecommendationService recommendationService, BookViewHistoryService bookViewHistoryService, MessageSource messageSource) {
         this.userService = userService;
         this.authorService = authorService;
+        this.recommendationService = recommendationService;
+        this.bookViewHistoryService = bookViewHistoryService;
         this.messageSource = messageSource;
         this.cookieService = cookieService;
         this.bookRepository = bookRepository;
@@ -60,6 +66,17 @@ public class BookServiceJpaImpl implements BookService {
     }
 
     @Override
+    public BookListDto getRecentViewedBooksByCurrentUser() {
+        var currentUser = userService.getCurrentUser();
+        var recentViewedBooks = bookViewHistoryService.findRecentBooksViewByUser(currentUser);
+        var dtoList = recentViewedBooks.stream().map(this::convertSingleBookEntityToBookListElementDto).toList();
+        BookListDto dto = new BookListDto();
+        dto.setCount(dtoList.size());
+        dto.setBooks(dtoList);
+        return addStatusesToAllBooks(dto, currentUser);
+    }
+
+    @Override
     public BookListDto getPageableRecommendedBooks(int offset, int limit, String cartCookie, String keptCookie) {
         Page<BookEntity> bookEntityPage;
         Pageable pageable = PageRequest.of(offset, limit);
@@ -69,7 +86,12 @@ public class BookServiceJpaImpl implements BookService {
             userCartAndKeptBookSlugs.add(keptCookie);
             bookEntityPage = bookRepository.findRecommendedBooksWhereSlugsNotIn(pageable, userCartAndKeptBookSlugs);
         } else {
-            bookEntityPage = bookRepository.findRecommendedBooksForUser(pageable, currentUser);
+            var recommendedIds = recommendationService.getRecommendations(currentUser.getId(), offset == 0 ? limit : offset * limit);
+            log.info("Recommendation size: {}", recommendedIds.size());
+            bookEntityPage = bookRepository.findBookEntityByIdIn(pageable, recommendedIds);
+            if (bookEntityPage.isEmpty()) {
+                bookEntityPage = bookRepository.findRecommendedBooksForUser(pageable, currentUser);
+            }
         }
         var bookListDto = createBookListDtoFromPage(bookEntityPage);
         return applyStatusesToBookListDto(bookListDto, cartCookie, keptCookie, currentUser);
@@ -192,6 +214,7 @@ public class BookServiceJpaImpl implements BookService {
         var bookEntity = bookRepository.findBookEntityBySlug(slug).orElseThrow(NotFoundException::new);
         BookSlugDto bookSlugDto = convertSingleBookEntityToBookSlugDto(bookEntity);
         if (currentUser != null) {
+            bookViewHistoryService.saveBookView(currentUser, bookEntity);
             Book2UserType book2userType = book2UserRepository.findBook2UserTypeByUserAndSlug(currentUser, slug);
             if (book2userType != null) {
                 bookSlugDto.setStatus(book2userType.toString());

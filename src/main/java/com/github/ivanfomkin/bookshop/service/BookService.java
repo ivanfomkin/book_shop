@@ -46,4 +46,6 @@ public interface BookService {
     BookListDto getPaidBooksByCurrentUser();
 
     BookListDto getArchivedBooksByCurrentUser();
+
+    BookListDto getRecentViewedBooksByCurrentUser();
 }

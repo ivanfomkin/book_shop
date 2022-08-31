@@ -1,0 +1,14 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+    <changeSet author="ivan.fomkin" id="16425780931">
+        <sql>
+            WITH book_ids AS (SELECT generate_series(1, 1000) AS i)
+            INSERT
+            INTO book_votes (user_id, book_id, value)
+            SELECT u.id, i, floor(random() * (5-1+1) + 1)::int
+            FROM users u, book_ids ON CONFLICT DO NOTHING ;
+        </sql>
+    </changeSet>
+</databaseChangeLog>

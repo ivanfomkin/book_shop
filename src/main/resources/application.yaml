@@ -5,6 +5,9 @@ spring:
     url: jdbc:postgresql://localhost:5433/book_shop
     username: ENC(OpuZGf7wYLn03ZMaMVdeoL1Ah7UJPVCY)
     password: ENC(2JlOwOCRGKWHlZ4NqARaq10BXCd/jHUeqDNyNXz/B0o=)
+    hikari:
+      idle-timeout: 300000
+      maximum-pool-size: 10
   messages:
     basename: lang.messages
   web:
@@ -56,6 +59,9 @@ spring:
     name: bookshop
 bookshop:
   host: localhost:8085
+  books:
+    recent:
+      days: 3
   support:
     email: test@test.ru
   payments:
@@ -76,6 +82,9 @@ bookshop:
         cron: '0 0 */3 * * *'
   review:
     min-size: 30
+  recommendations:
+    update:
+      cron: '0 0 */2 * * *'
   upload:
     path: F:\dev\spring-learn\MyBookShopApp_m3_6\uploads
   download:

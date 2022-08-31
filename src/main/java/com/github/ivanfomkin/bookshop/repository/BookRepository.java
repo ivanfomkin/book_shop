@@ -78,4 +78,9 @@ public interface BookRepository extends JpaRepository<BookEntity, Integer> {
             GROUP BY b.id ORDER BY AVG(v.value) DESC, count(v) DESC, b.publishDate DESC
             """)
     Page<BookEntity> findRecommendedBooksForUser(Pageable pageable, UserEntity currentUser);
+
+    Page<BookEntity> findBookEntityByIdIn(Pageable pageable, List<Integer> ids);
+
+    @Query("SELECT COUNT(b) FROM BookEntity b")
+    int countAll();
 }

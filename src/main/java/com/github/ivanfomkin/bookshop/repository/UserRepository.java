@@ -28,4 +28,7 @@ public interface UserRepository extends JpaRepository<UserEntity, Integer> {
     @Transactional
     @Query("UPDATE UserEntity u SET u.balance = (u.balance + :amount) WHERE u = :user")
     void addBalanceToUser(UserEntity user, Double amount);
+
+    @Query("SELECT id FROM UserEntity ")
+    List<Integer> findAllUserId();
 }
