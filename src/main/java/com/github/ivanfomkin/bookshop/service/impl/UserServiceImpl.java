@@ -260,7 +260,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto getCurrentUserInfo() {
-        var currentUser = this.getCurrentUser();
+        var currentUser = getCurrentUser();
         if (currentUser == null) {
             return new UserDto();
         }
@@ -352,7 +352,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserPageDto getUserPageDto() {
-        var user = this.getCurrentUser();
+        var user = getCurrentUser();
         var dto = new UserPageDto();
         var userPhoneEntity = user.getPhone();
         var userEmailEntity = user.getEmail();
