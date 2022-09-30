@@ -19,6 +19,8 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -30,28 +32,15 @@ public class JWTRequestFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain filterChain) throws ServletException, IOException {
-        String token = null;
-        String username = null;
         try {
             Cookie[] cookies = request.getCookies();
             if (cookies != null) {
-                for (Cookie cookie : cookies) {
-                    if (cookie.getName().equals("token")) {
-                        token = cookie.getValue();
-                        username = jwtUtil.extractUsername(token);
-                    }
+                Optional<Cookie> tokenCookie = Arrays.stream(cookies).filter(c -> c.getName().equals("token")).findFirst();
+                if (tokenCookie.isPresent()) {
+                    String token = tokenCookie.get().getValue();
+                    String username = jwtUtil.extractUsername(token);
                     if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-                        UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-                        if (jwtUtil.validateToken(token, userDetails)) {
-                            if (!jwtBlacklistService.existInBlacklist(token)) {
-                                UsernamePasswordAuthenticationToken passwordAuthenticationToken = new UsernamePasswordAuthenticationToken(
-                                        userDetails, null, userDetails.getAuthorities());
-                                passwordAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                                SecurityContextHolder.getContext().setAuthentication(passwordAuthenticationToken);
-                            } else {
-                                throw new JwtInBlackListException("Current token in blacklist");
-                            }
-                        }
+                        authenticateUser(request, token, username);
                     }
                 }
             }
@@ -60,5 +49,19 @@ public class JWTRequestFilter extends OncePerRequestFilter {
         }
 
         filterChain.doFilter(request, response);
+    }
+
+    private void authenticateUser(HttpServletRequest request, String token, String username) {
+        UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+        if (jwtUtil.validateToken(token, userDetails)) {
+            if (!jwtBlacklistService.existInBlacklist(token)) {
+                UsernamePasswordAuthenticationToken passwordAuthenticationToken = new UsernamePasswordAuthenticationToken(
+                        userDetails, null, userDetails.getAuthorities());
+                passwordAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                SecurityContextHolder.getContext().setAuthentication(passwordAuthenticationToken);
+            } else {
+                throw new JwtInBlackListException("Current token in blacklist");
+            }
+        }
     }
 }
