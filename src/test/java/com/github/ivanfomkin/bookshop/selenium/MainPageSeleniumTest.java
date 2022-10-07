@@ -1,5 +1,6 @@
 package com.github.ivanfomkin.bookshop.selenium;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -8,6 +9,7 @@ import java.util.Locale;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+@Disabled
 class MainPageSeleniumTest extends AbstractSeleniumTest {
     private final MessageSource messageSource;
 

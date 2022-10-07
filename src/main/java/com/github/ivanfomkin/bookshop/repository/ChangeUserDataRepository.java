@@ -12,5 +12,5 @@ import java.util.Optional;
 public interface ChangeUserDataRepository extends JpaRepository<ChangeUserDataEntity, ChangeUserDataEntityId> {
     Optional<ChangeUserDataEntity> findByToken(String token);
 
-    ChangeUserDataEntity findById_UserEntity(UserEntity user);
+    ChangeUserDataEntity findByIdUserEntity(UserEntity user);
 }

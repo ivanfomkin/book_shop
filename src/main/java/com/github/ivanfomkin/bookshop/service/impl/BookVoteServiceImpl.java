@@ -19,6 +19,7 @@ public class BookVoteServiceImpl implements BookVoteService {
         this.bookVoteRepository = bookVoteRepository;
     }
 
+    @SuppressWarnings("java:S1125")
     @Override
     public Object getBookRating(BookEntity bookEntity) {
         var bookRatingFromDb = bookVoteRepository.getBookRating(bookEntity);

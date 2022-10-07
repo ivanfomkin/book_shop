@@ -30,6 +30,7 @@ public class BookShopNavigationPage {
         return this;
     }
 
+    @SuppressWarnings("java:S2925")
     public BookShopNavigationPage clearFromDataField() throws InterruptedException {
         WebElement fromDataField = getElementById("fromdaterecent");
         fromDataField.clear();

@@ -111,7 +111,7 @@ class CartRestControllerTest extends AbstractTest {
                                 .content(objectMapper.writeValueAsString(changeBookStatusDto))
                                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.result", is(true)));
-        var currentUser = userRepository.findUserEntityByContacts_contact("test@user.ru");
+        var currentUser = userRepository.findUserEntityByContactsContact("test@user.ru");
         var book2userEntity = book2UserRepository.findBookStatusByUserAndSlug(currentUser, bookSlug);
         var book2UserType = book2userEntity.getType();
         assertNotNull(book2userEntity);
@@ -124,7 +124,7 @@ class CartRestControllerTest extends AbstractTest {
     void changeBookStatus_addBookToCardWithAuthorizedUserWhenBookAlreadyExistInUserCart_book2UserRepoContainsCartRowOnce() throws Exception {
         changeBookStatusDto.setStatus(cartType);
         var bookEntity = bookRepository.findBookEntityBySlug(bookSlug).get();
-        var currentUser = userRepository.findUserEntityByContacts_contact("test@user.ru");
+        var currentUser = userRepository.findUserEntityByContactsContact("test@user.ru");
         var alreadyExistCartEntity = new Book2UserEntity();
         alreadyExistCartEntity.setBook(bookEntity);
         alreadyExistCartEntity.setUser(currentUser);
@@ -152,7 +152,7 @@ class CartRestControllerTest extends AbstractTest {
     void changeBookStatus_deleteBookFromCartWithAuthorizedUserWhenBookExistsInCart_book2userRepositoryDoesNotContainsRow() throws Exception {
         changeBookStatusDto.setStatus(deleteFromCartType);
         var bookEntity = bookRepository.findBookEntityBySlug(bookSlug).get();
-        var currentUser = userRepository.findUserEntityByContacts_contact("test@user.ru");
+        var currentUser = userRepository.findUserEntityByContactsContact("test@user.ru");
         var alreadyExistCartEntity = new Book2UserEntity();
         alreadyExistCartEntity.setBook(bookEntity);
         alreadyExistCartEntity.setUser(currentUser);

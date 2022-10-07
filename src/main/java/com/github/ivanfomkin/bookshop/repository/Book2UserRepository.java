@@ -41,7 +41,7 @@ public interface Book2UserRepository extends JpaRepository<Book2UserEntity, Inte
 
     @Modifying
     @Transactional
-    void deleteAllByBook_Slug(String slug);
+    void deleteAllByBookSlug(String slug);
 
-    List<Book2UserEntity> findAllByUser_IdOrderByTimeDesc(Integer userId);
+    List<Book2UserEntity> findAllByUserIdOrderByTimeDesc(Integer userId);
 }

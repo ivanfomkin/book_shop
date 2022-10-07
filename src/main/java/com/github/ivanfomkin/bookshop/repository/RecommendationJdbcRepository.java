@@ -17,27 +17,29 @@ import java.util.Map;
 public class RecommendationJdbcRepository {
     private final JdbcTemplate jdbcTemplate;
 
+    @SuppressWarnings("java:S2259")
     public void saveRecommendation(Map<Integer, List<Integer>> calculatedRecommendations) throws SQLException {
         var mapKeys = calculatedRecommendations.keySet().toArray(Integer[]::new);
-        var conn = jdbcTemplate.getDataSource().getConnection();
-        jdbcTemplate.batchUpdate("""
-                INSERT INTO book_recommendations (user_id, recommendations, update_date) VALUES (?, ?, now()) ON CONFLICT (user_id) DO UPDATE SET recommendations = ?, update_date = now()
-                """, new BatchPreparedStatementSetter() {
-            @Override
-            public void setValues(PreparedStatement ps, int i) throws SQLException {
-                Integer userId = mapKeys[i];
-                var idArray = calculatedRecommendations.get(userId).toArray(Integer[]::new);
-                Array recommendationsArray = conn.createArrayOf("integer", idArray);
-                ps.setInt(1, userId);
-                ps.setArray(2, recommendationsArray);
-                ps.setArray(3, recommendationsArray);
-            }
+        try (var conn = jdbcTemplate.getDataSource().getConnection()) {
+            jdbcTemplate.batchUpdate("""
+                    INSERT INTO book_recommendations (user_id, recommendations, update_date) VALUES (?, ?, now()) ON CONFLICT (user_id) DO UPDATE SET recommendations = ?, update_date = now()
+                    """, new BatchPreparedStatementSetter() {
+                @Override
+                public void setValues(PreparedStatement ps, int i) throws SQLException {
+                    Integer userId = mapKeys[i];
+                    var idArray = calculatedRecommendations.get(userId).toArray(Integer[]::new);
+                    Array recommendationsArray = conn.createArrayOf("integer", idArray);
+                    ps.setInt(1, userId);
+                    ps.setArray(2, recommendationsArray);
+                    ps.setArray(3, recommendationsArray);
+                }
 
-            @Override
-            public int getBatchSize() {
-                return calculatedRecommendations.size();
-            }
-        });
+                @Override
+                public int getBatchSize() {
+                    return calculatedRecommendations.size();
+                }
+            });
+        }
     }
 
     public List<Integer> getRecommendations(int userId, int howMany) {

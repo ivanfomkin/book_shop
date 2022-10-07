@@ -76,7 +76,7 @@ public class UserServiceImpl implements UserService {
         if (formDto.getPhone() != null) {
             contactList.add(CommonUtils.formatPhoneNumber(formDto.getPhone()));
         }
-        if (userRepository.countAllByContacts_contactIn(contactList) < 1) {
+        if (userRepository.countAllByContactsContactIn(contactList) < 1) {
             var user = new UserEntity();
             user.setHash(UUID.randomUUID().toString());
             user.setName(formDto.getName());
@@ -184,35 +184,43 @@ public class UserServiceImpl implements UserService {
         UserEntity user = null;
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication.getPrincipal() instanceof BookStoreUserDetails userDetails) {
-            user = userRepository.findUserEntityByContacts_contact(userDetails.getUsername());
+            user = userRepository.findUserEntityByContactsContact(userDetails.getUsername());
             return user;
         }
         if (authentication instanceof OAuth2AuthenticationToken oAuth2) {
             Map<String, Object> attributes = oAuth2.getPrincipal().getAttributes();
-            switch (oAuth2.getAuthorizedClientRegistrationId()) {
-                case "github" -> {
-                    String email = (String) attributes.get("email");
-                    Integer id = (Integer) attributes.get("id");
-                    if (email != null) {
-                        user = userRepository.findUserEntityByContacts_contact(email);
-                    } else {
-                        Objects.requireNonNull(id, "User oAuth2 id or user email must be not null");
-                        user = userRepository.findUserEntityByOauthId(String.valueOf(id));
-                    }
-                    if (user == null) {
-                        user = registerOAuthUser(attributes, oAuth2.getAuthorizedClientRegistrationId());
-                    }
-                }
-                case "google" -> {
-                    String email = (String) attributes.get("email");
-                    user = userRepository.findUserEntityByContacts_contact(email);
-                    if (user == null) {
-                        user = registerOAuthUser(attributes, oAuth2.getAuthorizedClientRegistrationId());
-                    }
-                }
+            user = switch (oAuth2.getAuthorizedClientRegistrationId()) {
+                case "github" -> getGitHubUser(oAuth2, attributes);
+                case "google" -> getGoogleUser(oAuth2, attributes);
                 default ->
                         throw new OAuth2AuthenticationException(MessageFormatter.format("Unsupported oauth2 provider: {}", oAuth2.getAuthorizedClientRegistrationId()).getMessage());
-            }
+            };
+        }
+        return user;
+    }
+
+    private UserEntity getGitHubUser(OAuth2AuthenticationToken oAuth2, Map<String, Object> attributes) {
+        UserEntity user;
+        String email = (String) attributes.get("email");
+        Integer id = (Integer) attributes.get("id");
+        if (email != null) {
+            user = userRepository.findUserEntityByContactsContact(email);
+        } else {
+            Objects.requireNonNull(id, "User oAuth2 id or user email must be not null");
+            user = userRepository.findUserEntityByOauthId(String.valueOf(id));
+        }
+        if (user == null) {
+            user = registerOAuthUser(attributes, oAuth2.getAuthorizedClientRegistrationId());
+        }
+        return user;
+    }
+
+    private UserEntity getGoogleUser(OAuth2AuthenticationToken oAuth2, Map<String, Object> attributes) {
+        UserEntity user;
+        String email = (String) attributes.get("email");
+        user = userRepository.findUserEntityByContactsContact(email);
+        if (user == null) {
+            user = registerOAuthUser(attributes, oAuth2.getAuthorizedClientRegistrationId());
         }
         return user;
     }
@@ -258,6 +266,7 @@ public class UserServiceImpl implements UserService {
         return contactEntities;
     }
 
+    @SuppressWarnings("java:S2229")
     @Override
     public UserDto getCurrentUserInfo() {
         var currentUser = getCurrentUser();
@@ -350,6 +359,7 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    @SuppressWarnings("java:S2229")
     @Override
     public UserPageDto getUserPageDto() {
         var user = getCurrentUser();
@@ -362,6 +372,7 @@ public class UserServiceImpl implements UserService {
         return dto;
     }
 
+    @SuppressWarnings("java:S1301")
     @Override
     @Transactional(propagation = Propagation.MANDATORY)
     public void updateUserBalance(UserEntity user, Double amount, TransactionType transactionType) {

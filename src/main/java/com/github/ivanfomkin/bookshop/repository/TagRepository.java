@@ -1,6 +1,5 @@
 package com.github.ivanfomkin.bookshop.repository;
 
-import com.github.ivanfomkin.bookshop.entity.book.BookEntity;
 import com.github.ivanfomkin.bookshop.entity.tag.TagEntity;
 import com.github.ivanfomkin.bookshop.entity.tag.TagWithWeightObject;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -26,6 +25,4 @@ public interface TagRepository extends JpaRepository<TagEntity, Integer> {
     List<String> findAllTagNames();
 
     Optional<TagEntity> findTagEntityByNameEqualsIgnoreCase(String name);
-
-    List<TagEntity> findAllByBooksContains(BookEntity book);
 }

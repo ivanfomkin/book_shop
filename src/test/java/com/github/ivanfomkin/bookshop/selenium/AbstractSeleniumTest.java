@@ -3,12 +3,14 @@ package com.github.ivanfomkin.bookshop.selenium;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.Duration;
 import java.time.temporal.ChronoUnit;
 
+@Disabled
 @SpringBootTest
 public abstract class AbstractSeleniumTest {
     protected static ChromeDriver driver;

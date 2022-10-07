@@ -13,13 +13,13 @@ import java.util.List;
 
 @Repository
 public interface UserRepository extends JpaRepository<UserEntity, Integer> {
-    UserEntity findUserEntityByContacts_contact(String contact);
+    UserEntity findUserEntityByContactsContact(String contact);
 
     UserEntity findUserEntityByOauthId(String oAuth2Id);
 
-    boolean existsByContacts_contactIn(List<String> contacts);
+    boolean existsByContactsContactIn(List<String> contacts);
 
-    int countAllByContacts_contactIn(List<String> contact);
+    int countAllByContactsContactIn(List<String> contact);
 
     @Modifying
     @Transactional

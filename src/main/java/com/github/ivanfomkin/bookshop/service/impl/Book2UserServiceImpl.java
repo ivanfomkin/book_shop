@@ -96,7 +96,7 @@ public class Book2UserServiceImpl implements Book2UserService {
 
     @Override
     public List<UserBookShelfDto> getUserBookShelf(Integer userId) {
-        var book2UserList = book2UserRepository.findAllByUser_IdOrderByTimeDesc(userId);
+        var book2UserList = book2UserRepository.findAllByUserIdOrderByTimeDesc(userId);
         return book2UserList.stream().map(b2u -> {
             var dto = new UserBookShelfDto();
             dto.setBook2UserId(b2u.getId());
@@ -119,7 +119,7 @@ public class Book2UserServiceImpl implements Book2UserService {
     @Override
     @Transactional
     public void changeBookStatus(Integer userId, String[] bookSlugs, Book2UserType book2UserType) {
-        var book2Users = book2UserRepository.findAllByUser_IdOrderByTimeDesc(userId);
+        var book2Users = book2UserRepository.findAllByUserIdOrderByTimeDesc(userId);
         List<Book2UserEntity> entitiesForSave = new ArrayList<>();
         for (String slug : bookSlugs) {
             var book2UserEntity = book2Users.stream().filter(b2u -> b2u.getBook().getSlug().equals(slug)).findFirst().orElse(new Book2UserEntity());

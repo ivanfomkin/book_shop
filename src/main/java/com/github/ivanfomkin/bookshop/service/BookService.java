@@ -16,6 +16,8 @@ import java.io.IOException;
 import java.util.List;
 
 public interface BookService {
+    CommonPageableDto<BookListElement> getRecentViewedBooksByCurrentUser();
+
     CommonPageableDto<BookListElement> getPageableRecommendedBooks(int offset, int limit, String cartCookie, String keptCookie);
 
     CommonPageableDto<BookListElement> getPageableAllBooks(Pageable pageable, String searchQuery);

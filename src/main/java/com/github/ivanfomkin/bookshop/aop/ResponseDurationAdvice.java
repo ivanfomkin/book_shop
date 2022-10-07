@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 @Aspect
 @Component
 public class ResponseDurationAdvice {
+    @SuppressWarnings("java:S1186")
     @Pointcut("within(@org.springframework.stereotype.Controller * ) || within(@org.springframework.web.bind.annotation.RestController *)")
     public void allControllers() {
     }

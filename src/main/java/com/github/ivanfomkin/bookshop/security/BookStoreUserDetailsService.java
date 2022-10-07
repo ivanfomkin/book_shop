@@ -20,7 +20,7 @@ public class BookStoreUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         var usernameIsPhone = CommonUtils.isPhoneNumber(username);
         var contact = !usernameIsPhone ? username : CommonUtils.formatPhoneNumber(username);
-        var userFromDb = userRepository.findUserEntityByContacts_contact(contact);
+        var userFromDb = userRepository.findUserEntityByContactsContact(contact);
         if (userFromDb != null) {
             if (usernameIsPhone) {
                 return new BookStorePhoneUserDetails(userFromDb);

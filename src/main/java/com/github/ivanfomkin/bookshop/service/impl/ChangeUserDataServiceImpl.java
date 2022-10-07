@@ -22,7 +22,7 @@ public class ChangeUserDataServiceImpl implements ChangeUserDataService {
 
     @Override
     public ChangeUserDataEntity createChangeUserData(UserEntity user, UpdateProfileDto dto) {
-        ChangeUserDataEntity changeUserData = repository.findById_UserEntity(user);
+        ChangeUserDataEntity changeUserData = repository.findByIdUserEntity(user);
         if (changeUserData == null) {
             changeUserData = new ChangeUserDataEntity(user, dto);
         } else {

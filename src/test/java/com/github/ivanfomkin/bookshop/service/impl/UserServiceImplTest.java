@@ -14,7 +14,6 @@ import com.github.ivanfomkin.bookshop.security.BookStoreUserDetailsService;
 import com.github.ivanfomkin.bookshop.service.UserService;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -86,7 +85,7 @@ class UserServiceImplTest extends AbstractTest {
 
     @Test
     void registerNewUser_userAlreadyExistsByContact_userEqualsNull() {
-        doReturn(1).when(userRepositoryMock).countAllByContacts_contactIn(any());
+        doReturn(1).when(userRepositoryMock).countAllByContactsContactIn(any());
         var registeredUser = userService.registerNewUser(registrationFormDto);
         assertNull(registeredUser);
         verify(userRepositoryMock, never()).save(any());

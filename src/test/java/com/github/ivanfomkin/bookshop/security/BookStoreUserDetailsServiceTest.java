@@ -43,14 +43,14 @@ class BookStoreUserDetailsServiceTest extends AbstractTest {
         fakeContact.setType(ContactType.EMAIL);
         fakeContact.setContact(testUserEmail);
         fakeUser.setContacts(List.of(fakeContact));
-        doReturn(fakeUser).when(userRepository).findUserEntityByContacts_contact(testUserEmail);
+        doReturn(fakeUser).when(userRepository).findUserEntityByContactsContact(testUserEmail);
         var userDetails = userDetailsService.loadUserByUsername(testUserEmail);
         assertNotNull(userDetails);
     }
 
     @Test
     void loadUserByUsername_loadIncorrectUser_throwUsernameNotFoundException() {
-        doThrow(new UsernameNotFoundException("user not found")).when(userRepository).findUserEntityByContacts_contact(testUserEmail);
+        doThrow(new UsernameNotFoundException("user not found")).when(userRepository).findUserEntityByContactsContact(testUserEmail);
         assertThrows(UsernameNotFoundException.class, () -> userDetailsService.loadUserByUsername(testUserEmail));
     }
 }
