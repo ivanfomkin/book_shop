@@ -18,6 +18,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 @Service
@@ -46,7 +47,7 @@ public class BookReviewServiceImpl implements BookReviewService {
 
     @Override
     public BookReviewEntity getBookReviewEntityById(int id) {
-        return bookReviewRepository.getById(id);
+        return bookReviewRepository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 
     @Override
