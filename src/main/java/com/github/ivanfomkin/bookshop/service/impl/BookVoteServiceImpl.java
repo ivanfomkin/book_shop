@@ -52,10 +52,10 @@ public class BookVoteServiceImpl implements BookVoteService {
             vote.setBook(book);
             vote.setUser(user);
             vote.setValue(rateValue);
-            bookVoteRepository.save(vote);
         } else {
             vote.setValue(rateValue);
         }
+        bookVoteRepository.save(vote);
     }
 
     private void initStarDistributionMapDefaultValues(Map<Integer, Integer> map) {

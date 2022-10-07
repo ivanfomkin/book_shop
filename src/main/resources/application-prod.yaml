@@ -7,6 +7,9 @@ spring:
     url: jdbc:postgresql://195.161.114.18:5433/book_shop
     username: ENC(OpuZGf7wYLn03ZMaMVdeoL1Ah7UJPVCY)
     password: ENC(2JlOwOCRGKWHlZ4NqARaq10BXCd/jHUeqDNyNXz/B0o=)
+    hikari:
+      idle-timeout: 300000
+      maximum-pool-size: 10
   messages:
     basename: lang.messages
   web:
@@ -64,6 +67,9 @@ bookshop:
   host: 195.161.114.18:8005
   support:
     email: test@test.ru
+  books:
+    recent:
+      days: 3
   payments:
     robokassa:
       passwords:
@@ -82,6 +88,9 @@ bookshop:
         cron: '0 0 */3 * * *'
   review:
     min-size: 30
+  recommendations:
+    update:
+      cron: '0 0 */2 * * *'
   upload:
     path: /uploads/
   download:

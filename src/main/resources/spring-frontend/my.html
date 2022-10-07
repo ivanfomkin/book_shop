@@ -23,14 +23,20 @@
 <div class="Middle">
     <div class="wrap">
         <main class="Middle-main">
-            <ul class="breadcrumbs"
-                th:replace="~{fragments/breadcrumb_fragment :: breadcrumps(category='Мои книги')}"></ul>
-            <div class="Section">
+            <ul class="breadcrumbs">
+                <li class="breadcrumbs-item"><a th:href="@{/}" href="/index.html">Главная</a>
+                </li>
+                <li class="breadcrumbs-item"><a th:href="@{/profile}" href="/profile.html">Мой профиль</a>
+                </li>
+                <li class="breadcrumbs-item breadcrumbs-item_current"><span>Мои книги</span>
+                </li>
+            </ul>
                 <div class="Section-header">
                     <h1 class="Section-title">Мои книги
                     </h1>
                     <div class="Section-header-links"><span class="Section-header-link Section-header-link_ACTIVE">Непрочитанные</span><a
-                            class="Section-header-link" th:href="@{/myarchive}" href="/myarchive.html">Архив</a>
+                            class="Section-header-link" th:href="@{/myarchive}" href="/myarchive.html">Архив</a><a
+                            class="Section-header-link" th:href="@{/myviewed}">Просмотренное</a>
                     </div>
                 </div>
                 <div class="Cards">

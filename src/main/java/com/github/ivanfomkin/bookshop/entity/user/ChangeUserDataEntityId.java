@@ -20,4 +20,19 @@ public class ChangeUserDataEntityId implements Serializable {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private UserEntity userEntity;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ChangeUserDataEntityId that = (ChangeUserDataEntityId) o;
+
+        return userEntity.getId().equals(that.userEntity.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return userEntity.getId().hashCode();
+    }
 }

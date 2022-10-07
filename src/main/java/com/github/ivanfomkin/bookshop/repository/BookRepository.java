@@ -67,6 +67,9 @@ public interface BookRepository extends JpaRepository<BookEntity, Integer> {
     @Query("SELECT b2u.book FROM Book2UserEntity b2u WHERE b2u.type.name = :type AND b2u.user = :user")
     List<BookEntity> findBookEntitiesByUserAndType(UserEntity user, Book2UserType type);
 
+    @Query("SELECT id FROM BookEntity where slug = :slug")
+    Integer findBookIdBySlug(String slug);
+
     List<BookEntity> findBookEntitiesBySlugIn(List<String> slugList);
 
     @Query("""
@@ -84,4 +87,9 @@ public interface BookRepository extends JpaRepository<BookEntity, Integer> {
 
     @Query("SELECT b FROM BookEntity b WHERE b NOT IN (SELECT b2u.book FROM Book2UserEntity b2u WHERE b2u.user.id = :userId AND (b2u.type.name = com.github.ivanfomkin.bookshop.entity.enums.Book2UserType.ARCHIVED OR b2u.type.name = com.github.ivanfomkin.bookshop.entity.enums.Book2UserType.PAID))")
     List<BookEntity> findBooksForGiftByUserId(Integer userId);
+
+    Page<BookEntity> findBookEntityByIdIn(Pageable pageable, List<Integer> ids);
+
+    @Query("SELECT COUNT(b) FROM BookEntity b")
+    int countAll();
 }

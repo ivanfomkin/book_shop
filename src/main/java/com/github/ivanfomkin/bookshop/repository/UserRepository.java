@@ -33,4 +33,7 @@ public interface UserRepository extends JpaRepository<UserEntity, Integer> {
 
     @Query("SELECT u FROM UserEntity u LEFT JOIN u.contacts c WHERE u.name LIKE CONCAT('%',:searchQuery,'%') OR c.contact LIKE CONCAT('%',:searchQuery,'%')")
     Page<UserEntity> findUsersBySearchQuery(Pageable pageable, String searchQuery);
+
+    @Query("SELECT id FROM UserEntity ")
+    List<Integer> findAllUserId();
 }

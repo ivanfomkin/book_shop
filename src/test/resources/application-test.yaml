@@ -49,6 +49,9 @@ spring:
             enable: true
           auth: true
 bookshop:
+  books:
+    recent:
+      days: 3
   call:
     expiration: 5
     sms.ru:
